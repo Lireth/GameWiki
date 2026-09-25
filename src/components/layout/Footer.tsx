@@ -3,17 +3,47 @@ import { db } from '../../db/db';
 import type { Character, LightCone, NewsEvent, RelicSet } from '../../db/types';
 import { MAX_IMAGE_DATA_URL_LENGTH } from '../../lib/entryValidation';
 import { getFavorites, mergeFavorites } from '../../lib/favorites';
+import { blobToDataURL, parseImageRef } from '../../lib/imageRef';
+
+/** 导出时把 idb: 图片引用还原为 data URL，保证备份 JSON 自包含可迁移 */
+async function resolveExportImage(
+  value: string | undefined,
+): Promise<string | undefined> {
+  if (!value) return undefined;
+  const ref = parseImageRef(value);
+  if (!ref) return value;
+  const row = await db.images.get(ref);
+  return row ? await blobToDataURL(row.blob) : undefined;
+}
 
 /** 导出全部数据表与收藏为 JSON 备份文件 */
 async function exportData() {
   try {
+    const characters = await Promise.all(
+      (await db.characters.toArray()).map(async (character) => ({
+        ...character,
+        avatar: await resolveExportImage(character.avatar),
+      })),
+    );
+    const lightCones = await Promise.all(
+      (await db.lightCones.toArray()).map(async (lightCone) => ({
+        ...lightCone,
+        image: await resolveExportImage(lightCone.image),
+      })),
+    );
+    const relics = await Promise.all(
+      (await db.relics.toArray()).map(async (relic) => ({
+        ...relic,
+        image: await resolveExportImage(relic.image),
+      })),
+    );
     const payload = {
       app: 'hsr-wiki',
       exportedAt: new Date().toISOString(),
       favorites: [...getFavorites()],
-      characters: await db.characters.toArray(),
-      lightCones: await db.lightCones.toArray(),
-      relics: await db.relics.toArray(),
+      characters,
+      lightCones,
+      relics,
       newsEvents: await db.newsEvents.toArray(),
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], {

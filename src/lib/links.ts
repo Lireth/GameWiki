@@ -6,12 +6,14 @@
 export interface LinkableEvent {
   relatedCharacterId?: string;
   relatedLightConeId?: string;
+  relatedRelicId?: string;
 }
 
-/** 资讯事件的关联详情页链接：角色优先，其次光锥，无关联时为 null */
+/** 资讯事件的关联详情页链接：角色优先，其次光锥、遗器，无关联时为 null */
 export function eventLink(event: LinkableEvent): string | null {
   if (event.relatedCharacterId) return `/characters/${event.relatedCharacterId}`;
   if (event.relatedLightConeId) return `/light-cones/${event.relatedLightConeId}`;
+  if (event.relatedRelicId) return `/relics/${event.relatedRelicId}`;
   return null;
 }
 

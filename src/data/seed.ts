@@ -22,6 +22,7 @@ import type { Character, LightCone, NewsEvent, RelicSet } from '../db/types';
  *      bodyType: 'youngFemale',   // 体型：adultMale(成男) | youngMale(男青年) | teenBoy(少年) | adultFemale(成女) | youngFemale(女青年) | teenGirl(少女) | littleGirl(幼女)
  *      releaseDate: '2026-01-01', // 实装日期 YYYY-MM-DD
  *      releaseVersion: '1.0',     // 实装版本
+ *      // aliases: ['Seele'],     // 别名 / 英文名（可选，搜索时一并匹配）
  *    },
  *  ];
  */

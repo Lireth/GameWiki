@@ -22,6 +22,7 @@ import {
   useFavoriteFilter,
   useLightCones,
 } from '../hooks/useWikiData';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import {
   ACQUISITION_LABEL,
   buildVersionGroups,
@@ -46,7 +47,9 @@ function facetValue(lightCone: LightCone, key: FacetKey): string {
 }
 
 function matchesKeyword(lightCone: LightCone, keyword: string): boolean {
-  return lightCone.name.toLowerCase().includes(keyword);
+  return [lightCone.name, ...(lightCone.aliases ?? [])].some((text) =>
+    text.toLowerCase().includes(keyword),
+  );
 }
 
 const SORT_ACCESSORS = {
@@ -56,6 +59,7 @@ const SORT_ACCESSORS = {
 };
 
 export function LightConesPage() {
+  useDocumentTitle('光锥图鉴');
   const lightCones = useLightCones();
   const dataReady = useBootstrapStatus() === 'ok';
   const { favOnly, favCount, visibleItems, toggleFavOnly } =

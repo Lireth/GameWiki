@@ -74,18 +74,22 @@ describe('validateDateRange', () => {
 describe('validateRelatedIds', () => {
   const chars = new Set(['seele']);
   const cones = new Set(['lc1']);
+  const relics = new Set(['relic1']);
 
   it('关联 id 存在或缺省时通过', () => {
-    expect(validateRelatedIds({ relatedCharacterId: 'seele' }, chars, cones)).toBeNull();
-    expect(validateRelatedIds({}, chars, cones)).toBeNull();
+    expect(validateRelatedIds({ relatedCharacterId: 'seele' }, chars, cones, relics)).toBeNull();
+    expect(validateRelatedIds({}, chars, cones, relics)).toBeNull();
   });
 
   it('关联 id 不存在时报错', () => {
-    expect(validateRelatedIds({ relatedCharacterId: 'nope' }, chars, cones)).toBe(
+    expect(validateRelatedIds({ relatedCharacterId: 'nope' }, chars, cones, relics)).toBe(
       '关联角色的 ID 不存在，请重新选择',
     );
-    expect(validateRelatedIds({ relatedLightConeId: 'nope' }, chars, cones)).toBe(
+    expect(validateRelatedIds({ relatedLightConeId: 'nope' }, chars, cones, relics)).toBe(
       '关联光锥的 ID 不存在，请重新选择',
+    );
+    expect(validateRelatedIds({ relatedRelicId: 'nope' }, chars, cones, relics)).toBe(
+      '关联遗器的 ID 不存在，请重新选择',
     );
   });
 });

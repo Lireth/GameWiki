@@ -6,9 +6,11 @@ import { RarityStars } from '../ui/Badges';
 import { FavoriteButton } from '../ui/FavoriteButton';
 import { CornerTicks } from '../ui/Panel';
 import { FAVORITE_PREFIX } from '../../hooks/useWikiData';
+import { useEntityImage } from '../../hooks/useEntityImage';
 
 export function RelicCard({ relic }: { relic: RelicSet }) {
   const category = RELIC_CATEGORY_META[relic.category];
+  const imageSrc = useEntityImage(relic.image);
 
   return (
     <Link
@@ -24,9 +26,9 @@ export function RelicCard({ relic }: { relic: RelicSet }) {
           background: `linear-gradient(135deg, ${category.color}22, transparent 65%)`,
         }}
       >
-        {relic.image ? (
+        {imageSrc ? (
           <img
-            src={relic.image}
+            src={imageSrc}
             alt={relic.name}
             loading="lazy"
             decoding="async"

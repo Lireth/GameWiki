@@ -17,6 +17,8 @@ import {
 import { formatDateCN } from '../lib/format';
 import { versionLink } from '../lib/links';
 import { ACQUISITION_LABEL, PATH_META } from '../lib/meta';
+import { useEntityImage } from '../hooks/useEntityImage';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function LightConeDetailPage() {
   const { id } = useParams();
@@ -24,7 +26,9 @@ export function LightConeDetailPage() {
   const lightConeCount = useLightConeCount();
   const newsEvents = useNewsEvents();
   const dataReady = useBootstrapStatus() === 'ok';
+  useDocumentTitle(lightCone ? `${lightCone.name} · 光锥详情` : '光锥详情');
   const [failedImage, setFailedImage] = useState<string | null>(null);
+  const imageSrc = useEntityImage(lightCone?.image);
 
   if (!lightCone) {
     return (
@@ -63,7 +67,7 @@ export function LightConeDetailPage() {
   const relatedEvents = newsEvents.filter(
     (event) => event.relatedLightConeId === lightCone.id,
   );
-  const showImage = lightCone.image && failedImage !== lightCone.image;
+  const showImage = Boolean(imageSrc) && failedImage !== imageSrc;
 
   return (
     <div>
@@ -85,11 +89,11 @@ export function LightConeDetailPage() {
           >
             {showImage ? (
               <img
-                src={lightCone.image}
+                src={imageSrc}
                 alt={lightCone.name}
                 loading="lazy"
                 decoding="async"
-                onError={() => setFailedImage(lightCone.image ?? null)}
+                onError={() => setFailedImage(imageSrc ?? null)}
                 className="h-full w-full object-cover"
               />
             ) : (

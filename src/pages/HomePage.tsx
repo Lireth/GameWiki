@@ -5,6 +5,7 @@ import {
   CalendarIcon,
   ConeIcon,
   GridIcon,
+  LayersIcon,
   ShieldIcon,
   UsersIcon,
 } from '../components/icons';
@@ -22,6 +23,7 @@ import {
 import type { Character, LightCone, RelicSet } from '../db/types';
 import { formatDateShort } from '../lib/format';
 import { newsMonthLink, versionLink } from '../lib/links';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const FEATURES = [
   {
@@ -51,6 +53,13 @@ const FEATURES = [
     title: '命途 × 属性矩阵',
     en: 'PATH × TYPE MATRIX',
     desc: '二维矩阵一览命途与战斗属性组合下的角色分布，单元格内按实装日期从新到旧排列。',
+  },
+  {
+    to: '/versions',
+    icon: LayersIcon,
+    title: '版本索引',
+    en: 'VERSIONS',
+    desc: '按大版本分组浏览全部收录版本，聚合查看每个版本实装的角色、光锥、遗器与资讯。',
   },
   {
     to: '/news',
@@ -129,6 +138,7 @@ function StatTile({ label, en, value }: { label: string; en: string; value: numb
 }
 
 export function HomePage() {
+  useDocumentTitle();
   const characters = useCharacters();
   const lightCones = useLightCones();
   const newsEvents = useNewsEvents();

@@ -13,6 +13,7 @@ import {
 } from '../hooks/useWikiData';
 import { ELEMENT_META, PATH_META, RARITY_META } from '../lib/meta';
 import { characterLink } from '../lib/links';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const CELL_KEY_SEPARATOR = '|';
 
@@ -88,6 +89,7 @@ function Legend() {
 }
 
 export function MatrixPage() {
+  useDocumentTitle('命途 × 属性矩阵');
   const characters = useCharacters();
   const dataReady = useBootstrapStatus() === 'ok';
   const {

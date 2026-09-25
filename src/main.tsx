@@ -1,8 +1,9 @@
 import { StrictMode, type ReactNode, Component } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@fontsource/rajdhani/500.css';
-import '@fontsource/rajdhani/600.css';
-import '@fontsource/rajdhani/700.css';
+// 只打包 latin 子集（站点仅用于英文 / 数字展示），裁掉用不到的天城文与扩展子集
+import '@fontsource/rajdhani/latin-500.css';
+import '@fontsource/rajdhani/latin-600.css';
+import '@fontsource/rajdhani/latin-700.css';
 import './index.css';
 import App from './App';
 import { bootstrapDatabase } from './db/bootstrap';

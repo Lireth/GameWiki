@@ -14,12 +14,19 @@ import { FavoriteButton } from '../components/ui/FavoriteButton';
 import { formatDateCN } from '../lib/format';
 import { versionLink } from '../lib/links';
 import { RELIC_CATEGORY_META, RELIC_SLOT_LABEL } from '../lib/meta';
+import { useEntityImage } from '../hooks/useEntityImage';
+import { RelatedEvents } from '../components/ui/RelatedEvents';
+import { useNewsEvents } from '../hooks/useWikiData';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function RelicDetailPage() {
   const { id } = useParams();
   const relic = useRelicById(id);
   const relicCount = useRelicCount();
+  const newsEvents = useNewsEvents();
   const dataReady = useBootstrapStatus() === 'ok';
+  const imageSrc = useEntityImage(relic?.image);
+  useDocumentTitle(relic ? `${relic.name} · 遗器详情` : '遗器详情');
 
   if (!relic) {
     return (
@@ -54,6 +61,10 @@ export function RelicDetailPage() {
   }
 
   const category = RELIC_CATEGORY_META[relic.category];
+  /** 该遗器的实装 / 活动时间线（RelatedEvents 内部按日期排序） */
+  const relatedEvents = newsEvents.filter(
+    (event) => event.relatedRelicId === relic.id,
+  );
 
   return (
     <div>
@@ -74,9 +85,9 @@ export function RelicDetailPage() {
               background: `linear-gradient(150deg, ${category.color}30, transparent 70%)`,
             }}
           >
-            {relic.image ? (
+            {imageSrc ? (
               <img
-                src={relic.image}
+                src={imageSrc}
                 alt={relic.name}
                 loading="lazy"
                 decoding="async"
@@ -192,6 +203,8 @@ export function RelicDetailPage() {
               </p>
             </Panel>
           )}
+
+          <RelatedEvents events={relatedEvents} />
         </div>
       </div>
     </div>

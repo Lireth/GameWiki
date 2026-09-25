@@ -107,3 +107,24 @@ describe('bootstrapDatabase（fake-indexeddb 集成）', () => {
     expect(await db.newsEvents.count()).toBe(1);
   });
 });
+
+describe('内联图片迁移（v6）', () => {
+  it('data URL 头像迁入 images 表并改写为 idb: 引用，迁移幂等', async () => {
+    const DATA_URL =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+    await db.open();
+    // 用不在种子中的 id，避免种子增量重灌覆盖测试记录
+    await db.characters.put({ ...SEELE, id: 'extra-img', avatar: DATA_URL });
+
+    await bootstrapDatabase();
+
+    const migrated = await db.characters.get('extra-img');
+    expect(migrated?.avatar).toBe('idb:img-character:extra-img');
+    const image = await db.images.get('img-character:extra-img');
+    expect(image?.blob).toBeInstanceOf(Blob);
+
+    // 再次启动不重复迁移（字段已是 idb: 引用）
+    await bootstrapDatabase();
+    expect(await db.images.count()).toBe(1);
+  });
+});

@@ -55,11 +55,12 @@ export function validateDateRange(
   return null;
 }
 
-/** 关联存在性校验：关联的角色 / 光锥 id 必须真实存在 */
+/** 关联存在性校验：关联的角色 / 光锥 / 遗器 id 必须真实存在 */
 export function validateRelatedIds(
   form: Record<string, string>,
   characterIds: ReadonlySet<string>,
   lightConeIds: ReadonlySet<string>,
+  relicIds: ReadonlySet<string>,
 ): string | null {
   const relChar = form.relatedCharacterId?.trim();
   if (relChar && !characterIds.has(relChar)) {
@@ -68,6 +69,10 @@ export function validateRelatedIds(
   const relCone = form.relatedLightConeId?.trim();
   if (relCone && !lightConeIds.has(relCone)) {
     return '关联光锥的 ID 不存在，请重新选择';
+  }
+  const relRelic = form.relatedRelicId?.trim();
+  if (relRelic && !relicIds.has(relRelic)) {
+    return '关联遗器的 ID 不存在，请重新选择';
   }
   return null;
 }

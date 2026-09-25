@@ -8,12 +8,19 @@ import {
 } from './links';
 
 describe('eventLink', () => {
-  it('角色关联优先，其次光锥，无关联时为 null', () => {
+  it('角色关联优先，其次光锥、遗器，无关联时为 null', () => {
     expect(eventLink({ relatedCharacterId: 'seele' })).toBe('/characters/seele');
     expect(eventLink({ relatedLightConeId: 'lc1' })).toBe('/light-cones/lc1');
+    expect(eventLink({ relatedRelicId: 'relic1' })).toBe('/relics/relic1');
     expect(
       eventLink({ relatedCharacterId: 'seele', relatedLightConeId: 'lc1' }),
     ).toBe('/characters/seele');
+    expect(
+      eventLink({
+        relatedLightConeId: 'lc1',
+        relatedRelicId: 'relic1',
+      }),
+    ).toBe('/light-cones/lc1');
     expect(eventLink({})).toBeNull();
   });
 });

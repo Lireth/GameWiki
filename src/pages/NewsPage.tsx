@@ -23,6 +23,7 @@ import {
 } from '../lib/format';
 import { eventLink, versionLink } from '../lib/links';
 import { NEWS_TYPE_META } from '../lib/meta';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const WEEKDAY_HEADERS = ['一', '二', '三', '四', '五', '六', '日'];
 
@@ -90,6 +91,7 @@ function readMonth(raw: string | null, now: Date): number {
 }
 
 export function NewsPage() {
+  useDocumentTitle('资讯日历');
   const events = useNewsEvents();
   const dataReady = useBootstrapStatus() === 'ok';
   const [params, setParams] = useSearchParams();

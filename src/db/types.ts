@@ -117,12 +117,20 @@ export interface RelicSet {
   releaseVersion?: string;
   /** 部件列表（可选，管理页或导入时维护） */
   pieces?: RelicPiece[];
+  /** 别名 / 英文名（搜索用，可选） */
+  aliases?: string[];
+  /** 套装图片地址：URL 或 idb: 引用 */
   image?: string;
   description?: string;
 }
 
+/** 本地图片：业务表以 idb:<imageId> 引用，Blob 数据独立存放，列表页不加载图片载荷 */
+export interface ImageBlob {
+  id: string;
+  blob: Blob;
+}
+
 export interface Character {
-  /** 唯一 ID（建议英文或拼音短横线，如 seele-volleymyth） */
   id: string;
   /** 角色名 */
   name: string;
@@ -143,7 +151,9 @@ export interface Character {
   releaseDate: string;
   /** 实装版本，如 1.0 */
   releaseVersion: string;
-  /** 头像 / 立绘图片地址（可选，未填时卡片显示名称首字占位） */
+  /** 别名 / 英文名（搜索用，可选） */
+  aliases?: string[];
+  /** 头像图片地址：URL 或 idb: 引用（未填时卡片显示名称首字占位） */
   avatar?: string;
   description?: string;
 }
@@ -158,6 +168,9 @@ export interface LightCone {
   acquisition?: AcquisitionType;
   releaseDate?: string;
   releaseVersion?: string;
+  /** 别名 / 英文名（搜索用，可选） */
+  aliases?: string[];
+  /** 图片地址：URL 或 idb: 引用 */
   image?: string;
   description?: string;
 }
@@ -176,4 +189,6 @@ export interface NewsEvent {
   relatedCharacterId?: string;
   /** 关联光锥 */
   relatedLightConeId?: string;
+  /** 关联遗器 */
+  relatedRelicId?: string;
 }

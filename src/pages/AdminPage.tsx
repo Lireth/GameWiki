@@ -8,7 +8,19 @@ import {
   useNewsEvents,
   useRelics,
 } from '../hooks/useWikiData';
+import { useEntityImage } from '../hooks/useEntityImage';
 import { db } from '../db/db';
+import {
+  parseImageRef,
+  makeImageKey,
+  compressImageFile,
+} from '../lib/imageRef';
+import {
+  checkWikiData,
+  HEALTH_TABLE_LABEL,
+  type HealthIssue,
+} from '../lib/healthCheck';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import {
   ACQUISITION_TYPES,
   BODY_TYPES,
@@ -91,6 +103,7 @@ const CHARACTER_FIELDS: FieldDef[] = [
   { name: 'bodyType', label: '体型', kind: 'choice', required: true, options: choice(BODY_TYPE_LABEL), values: BODY_TYPES },
   { name: 'releaseDate', label: '实装日期', kind: 'date', required: true },
   { name: 'releaseVersion', label: '实装版本（如 3.7）', kind: 'text', required: true },
+  { name: 'aliases', label: '别名 / 英文名（每行一个，可选）', kind: 'textarea', optional: true },
   { name: 'avatar', label: '头像图片（URL 或上传本地图片）', kind: 'image', optional: true },
   { name: 'description', label: '角色简介', kind: 'textarea', optional: true },
 ];
@@ -121,6 +134,7 @@ const LIGHT_CONE_FIELDS: FieldDef[] = [
   },
   { name: 'releaseDate', label: '实装日期（可选）', kind: 'date', optional: true },
   { name: 'releaseVersion', label: '实装版本（如 3.7）', kind: 'text', optional: true },
+  { name: 'aliases', label: '别名 / 英文名（每行一个，可选）', kind: 'textarea', optional: true },
   { name: 'image', label: '光锥图片（URL 或上传本地图片）', kind: 'image', optional: true },
   { name: 'description', label: '光锥描述', kind: 'textarea', optional: true },
 ];
@@ -135,6 +149,7 @@ const NEWS_EVENT_FIELDS: FieldDef[] = [
   { name: 'description', label: '说明（可选）', kind: 'textarea', optional: true },
   { name: 'relatedCharacterId', label: '关联角色（可选）', kind: 'choice', optional: true, options: [] },
   { name: 'relatedLightConeId', label: '关联光锥（可选）', kind: 'choice', optional: true, options: [] },
+  { name: 'relatedRelicId', label: '关联遗器（可选）', kind: 'choice', optional: true, options: [] },
 ];
 
 const RELIC_FIELDS: FieldDef[] = [
@@ -158,6 +173,7 @@ const RELIC_FIELDS: FieldDef[] = [
   { name: 'effect4', label: '四件套效果（位面饰品无）', kind: 'textarea', optional: true },
   { name: 'releaseDate', label: '实装日期（可选）', kind: 'date', optional: true },
   { name: 'releaseVersion', label: '实装版本（如 3.7，可选）', kind: 'text', optional: true },
+  { name: 'aliases', label: '别名 / 英文名（每行一个，可选）', kind: 'textarea', optional: true },
   { name: 'image', label: '套装图片（URL 或上传本地图片）', kind: 'image', optional: true },
   { name: 'description', label: '套装说明（可选）', kind: 'textarea', optional: true },
   // 六个部位的名称与描述：名称非空的部位才会写入 pieces
@@ -181,6 +197,19 @@ function fieldsFor(type: EntryType): FieldDef[] {
 }
 
 type FormState = Record<string, string>;
+
+/** 别名文本（每行一个，兼容逗号 / 顿号分隔）→ 去重后的数组 */
+function parseAliases(raw: string | undefined): string[] | undefined {
+  const list = [
+    ...new Set(
+      (raw ?? '')
+        .split(/[\n,，、]/)
+        .map((item) => item.trim())
+        .filter(Boolean),
+    ),
+  ];
+  return list.length > 0 ? list : undefined;
+}
 
 function emptyForm(type: EntryType): FormState {
   const form: FormState = {};
@@ -212,6 +241,7 @@ function buildEntry(
         bodyType: form.bodyType as Character['bodyType'],
         releaseDate: trim('releaseDate'),
         releaseVersion: trim('releaseVersion'),
+        aliases: parseAliases(form.aliases),
         avatar: trim('avatar') || undefined,
         description: trim('description') || undefined,
       };
@@ -224,6 +254,7 @@ function buildEntry(
         acquisition: (trim('acquisition') || undefined) as LightCone['acquisition'],
         releaseDate: trim('releaseDate') || undefined,
         releaseVersion: trim('releaseVersion') || undefined,
+        aliases: parseAliases(form.aliases),
         image: trim('image') || undefined,
         description: trim('description') || undefined,
       };
@@ -238,6 +269,7 @@ function buildEntry(
         description: trim('description') || undefined,
         relatedCharacterId: trim('relatedCharacterId') || undefined,
         relatedLightConeId: trim('relatedLightConeId') || undefined,
+        relatedRelicId: trim('relatedRelicId') || undefined,
       };
     case 'relic': {
       const pieces = RELIC_SLOTS.map((slot) => ({
@@ -255,6 +287,7 @@ function buildEntry(
         releaseDate: trim('releaseDate') || undefined,
         releaseVersion: trim('releaseVersion') || undefined,
         pieces: pieces.length > 0 ? pieces : undefined,
+        aliases: parseAliases(form.aliases),
         image: trim('image') || undefined,
         description: trim('description') || undefined,
       };
@@ -270,7 +303,12 @@ function entryToForm(
   const form = emptyForm(type);
   for (const field of fieldsFor(type)) {
     const value = data[field.name];
-    form[field.name] = value === undefined || value === null ? '' : String(value);
+    // 数组字段（aliases）展开为多行文本
+    form[field.name] = Array.isArray(value)
+      ? value.join('\n')
+      : value === undefined || value === null
+        ? ''
+        : String(value);
   }
   // 遗器部位列表拆回表单字段
   if (type === 'relic' && Array.isArray(data.pieces)) {
@@ -311,7 +349,21 @@ function entrySummary(
 const inputClass =
   'w-full border border-space-600/60 bg-space-850/80 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 focus:border-gold-500/60 focus:outline-none';
 
+/** 表单图片预览：URL / idb: 引用统一经 useEntityImage 解析 */
+function ImageFieldPreview({ src }: { src: string | undefined }) {
+  const resolved = useEntityImage(src);
+  if (!resolved) return null;
+  return (
+    <img
+      src={resolved}
+      alt="预览"
+      className="size-9 shrink-0 border border-space-600/60 object-cover"
+    />
+  );
+}
+
 export function AdminPage() {
+  useDocumentTitle('数据管理');
   const characters = useCharacters();
   const lightCones = useLightCones();
   const newsEvents = useNewsEvents();
@@ -324,11 +376,16 @@ export function AdminPage() {
   const [listQuery, setListQuery] = useState('');
   /** 最近一次保存 / 删除的成功提示（数秒后自动消失） */
   const [notice, setNotice] = useState<string | null>(null);
+  /** 数据健康检查结果（null = 尚未检查） */
+  const [healthIssues, setHealthIssues] = useState<HealthIssue[] | null>(null);
 
   const showNotice = (message: string) => {
     setNotice(message);
     window.setTimeout(() => setNotice(null), 4000);
   };
+
+  const runHealthCheck = () =>
+    setHealthIssues(checkWikiData({ characters, lightCones, relics, newsEvents }));
 
   const fields = fieldsFor(entryType);
   const entries: (Character | LightCone | NewsEvent | RelicSet)[] =
@@ -376,6 +433,7 @@ export function AdminPage() {
             form,
             new Set(characters.map((c) => c.id)),
             new Set(lightCones.map((lc) => lc.id)),
+            new Set(relics.map((r) => r.id)),
           )
         : null);
     if (error) {
@@ -411,12 +469,31 @@ export function AdminPage() {
     }
   };
 
-  const remove = async (id: string, label: string) => {
+  /** 实体记录上的图片字段名（用于删除时同步清理 images 表） */
+  function imageFieldOf(
+    type: EntryType,
+  ): 'avatar' | 'image' | null {
+    if (type === 'character') return 'avatar';
+    if (type === 'lightCone' || type === 'relic') return 'image';
+    return null;
+  }
+
+  const remove = async (
+    entry: Character | LightCone | NewsEvent | RelicSet,
+    label: string,
+  ) => {
+    const id = entry.id;
     if (!window.confirm(`确认删除「${label}」（${id}）？此操作不可撤销。`)) return;
+    const imageField = imageFieldOf(entryType);
+    const imageValue = imageField
+      ? (entry as unknown as Record<string, unknown>)[imageField]
+      : undefined;
+    const imageKey =
+      typeof imageValue === 'string' ? parseImageRef(imageValue) : null;
     try {
       await db.transaction(
         'rw',
-        [db.characters, db.lightCones, db.newsEvents, db.relics],
+        [db.characters, db.lightCones, db.newsEvents, db.relics, db.images],
         async () => {
           if (entryType === 'character') {
             await db.characters.delete(id);
@@ -440,11 +517,19 @@ export function AdminPage() {
               );
             }
           } else if (entryType === 'relic') {
-            // 遗器无跨表关联，直接删除
             await db.relics.delete(id);
+            const linked = await db.newsEvents
+              .filter((event) => event.relatedRelicId === id)
+              .toArray();
+            if (linked.length) {
+              await db.newsEvents.bulkPut(
+                linked.map(({ relatedRelicId: _removed, ...rest }) => rest as NewsEvent),
+              );
+            }
           } else {
             await db.newsEvents.delete(id);
           }
+          if (imageKey) await db.images.delete(imageKey);
         },
       );
       showNotice(
@@ -465,21 +550,26 @@ export function AdminPage() {
     if (field.name === 'relatedLightConeId') {
       return lightCones.map((lc) => ({ value: lc.id, label: lc.name }));
     }
+    if (field.name === 'relatedRelicId') {
+      return relics.map((r) => ({ value: r.id, label: r.name }));
+    }
     return field.options ?? [];
   };
 
-  /** 本地图片读为 data URL 直接存入记录（IndexedDB 无容量瓶颈；限制 1MB 防止数据膨胀） */
-  const readImage = (file: File, fieldName: string) => {
-    if (file.size > 1024 * 1024) {
-      alert('图片超过 1MB，请压缩后再上传（图片会以 data URL 形式存入本地数据库）。');
-      return;
+  /**
+   * 本地图片上传：压缩后以 Blob 存入 images 表，字段保存 idb: 引用 ——
+   * 业务记录不再内联 1MB 级 data URL，列表页全表读取保持轻量。
+   * 上传不会立刻删除被替换的旧图（取消编辑时旧引用仍有效）。
+   */
+  const readImage = async (file: File, fieldName: string) => {
+    try {
+      const blob = await compressImageFile(file);
+      const key = makeImageKey();
+      await db.images.put({ id: key, blob });
+      setField(fieldName, `idb:${key}`);
+    } catch (error) {
+      alert(`图片处理失败：${error instanceof Error ? error.message : String(error)}`);
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === 'string') setField(fieldName, reader.result);
-    };
-    reader.onerror = () => alert('图片读取失败，请重试。');
-    reader.readAsDataURL(file);
   };
 
   return (
@@ -595,17 +685,11 @@ export function AdminPage() {
                           onChange={(e) => {
                             const file = e.target.files?.[0];
                             e.target.value = '';
-                            if (file) readImage(file, field.name);
+                            if (file) void readImage(file, field.name);
                           }}
                         />
                       </label>
-                      {form[field.name] && (
-                        <img
-                          src={form[field.name]}
-                          alt="预览"
-                          className="size-9 shrink-0 border border-space-600/60 object-cover"
-                        />
-                      )}
+                      <ImageFieldPreview src={form[field.name]} />
                     </div>
                   ) : field.kind === 'textarea' ? (
                     <textarea
@@ -700,7 +784,7 @@ export function AdminPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => void remove(entry.id, entryLabel(entry))}
+                    onClick={() => void remove(entry, entryLabel(entry))}
                     className="shrink-0 text-xs text-slate-500 transition hover:text-red-400"
                   >
                     删除
@@ -711,6 +795,59 @@ export function AdminPage() {
           )}
         </Panel>
       </div>
+
+      {/* 健康检查 */}
+      <Panel className="mt-6 p-5 md:p-6" ticks>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-semibold text-slate-100">数据健康检查</h2>
+            <p className="mt-1 text-xs leading-relaxed text-slate-500">
+              检查悬挂关联、无效枚举值、日期格式与重复名称等问题，建议在批量导入后运行。
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={runHealthCheck}
+            className="chamfer-xs border border-gold-500/50 px-3 py-1.5 text-sm text-gold-300 transition hover:bg-gold-500/10"
+          >
+            开始检查
+          </button>
+        </div>
+
+        {healthIssues !== null && (
+          healthIssues.length === 0 ? (
+            <p className="mt-4 border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-300">
+              未发现问题，数据状态良好。
+            </p>
+          ) : (
+            <ul className="mt-4 max-h-[320px] space-y-2 overflow-y-auto pr-1">
+              {healthIssues.map((issue, index) => (
+                <li
+                  key={`${issue.table}-${issue.entryId}-${index}`}
+                  className="flex items-start gap-2.5 border border-space-700/60 bg-space-850/60 px-3 py-2 text-xs"
+                >
+                  <span
+                    aria-hidden
+                    className={`mt-1 size-1.5 shrink-0 rotate-45 ${
+                      issue.severity === 'error' ? 'bg-red-400' : 'bg-gold-400'
+                    }`}
+                  />
+                  <span className="shrink-0 text-slate-500">
+                    {HEALTH_TABLE_LABEL[issue.table]}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="text-slate-200">{issue.entryLabel}</span>
+                    <span className="ml-1.5 font-display text-slate-600">
+                      {issue.entryId}
+                    </span>
+                    <span className="ml-2 text-slate-400">{issue.message}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )
+        )}
+      </Panel>
     </div>
   );
 }

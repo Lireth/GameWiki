@@ -7,10 +7,12 @@ import { PathBadge, RarityStars } from '../ui/Badges';
 import { FavoriteButton } from '../ui/FavoriteButton';
 import { CornerTicks } from '../ui/Panel';
 import { FAVORITE_PREFIX } from '../../hooks/useWikiData';
+import { useEntityImage } from '../../hooks/useEntityImage';
 
 export function LightConeCard({ lightCone }: { lightCone: LightCone }) {
   const path = PATH_META[lightCone.path];
   const [failedImage, setFailedImage] = useState(false);
+  const imageSrc = useEntityImage(lightCone.image);
 
   return (
     <Link to={lightConeLink(lightCone.id)} className="group relative block border border-space-600/50 bg-space-850/70 transition duration-200 hover:-translate-y-0.5 hover:border-gold-500/50 hover:bg-space-800/80 hover:shadow-[0_8px_28px_-12px_rgba(233,180,95,0.35)]">
@@ -23,9 +25,9 @@ export function LightConeCard({ lightCone }: { lightCone: LightCone }) {
           background: `linear-gradient(135deg, ${path.color}22, transparent 65%)`,
         }}
       >
-        {lightCone.image && !failedImage ? (
+        {imageSrc && !failedImage ? (
           <img
-            src={lightCone.image}
+            src={imageSrc}
             alt={lightCone.name}
             loading="lazy"
             decoding="async"

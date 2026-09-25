@@ -124,6 +124,16 @@ export function CalendarIcon(props: IconProps) {
   );
 }
 
+export function LayersIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...props}>
+      <path d="M12 3.5 21 8l-9 4.5L3 8z" />
+      <path d="m4.5 12.5 7.5 3.8 7.5-3.8" opacity="0.6" />
+      <path d="m4.5 16.5 7.5 3.8 7.5-3.8" opacity="0.35" />
+    </svg>
+  );
+}
+
 export function SparkIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...props}>

@@ -7,11 +7,13 @@ import { ElementBadge, PathBadge, RarityStars } from '../ui/Badges';
 import { FavoriteButton } from '../ui/FavoriteButton';
 import { CornerTicks } from '../ui/Panel';
 import { FAVORITE_PREFIX } from '../../hooks/useWikiData';
+import { useEntityImage } from '../../hooks/useEntityImage';
 
 export function CharacterCard({ character }: { character: Character }) {
   const element = ELEMENT_META[character.element];
   const rarityColor = RARITY_META[character.rarity].color;
   const [failedAvatar, setFailedAvatar] = useState(false);
+  const avatarSrc = useEntityImage(character.avatar);
 
   return (
     <Link to={characterLink(character.id)} className="group relative block border border-space-600/50 bg-space-850/70 transition duration-200 hover:-translate-y-0.5 hover:border-gold-500/50 hover:bg-space-800/80 hover:shadow-[0_8px_28px_-12px_rgba(233,180,95,0.35)]">
@@ -24,9 +26,9 @@ export function CharacterCard({ character }: { character: Character }) {
           background: `linear-gradient(135deg, ${element.color}2b, transparent 65%)`,
         }}
       >
-        {character.avatar && !failedAvatar ? (
+        {avatarSrc && !failedAvatar ? (
           <img
-            src={character.avatar}
+            src={avatarSrc}
             alt={character.name}
             loading="lazy"
             decoding="async"

@@ -23,6 +23,7 @@ import {
   useFacetFilter,
   useFavoriteFilter,
 } from '../hooks/useWikiData';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import {
   BODY_TYPE_GROUPS,
   BODY_TYPE_LABEL,
@@ -55,8 +56,8 @@ function facetValue(character: Character, key: FacetKey): string {
 }
 
 function matchesKeyword(character: Character, keyword: string): boolean {
-  return [character.name, character.faction, character.camp].some((text) =>
-    text.toLowerCase().includes(keyword),
+  return [character.name, ...(character.aliases ?? []), character.faction, character.camp].some(
+    (text) => text.toLowerCase().includes(keyword),
   );
 }
 
@@ -67,6 +68,7 @@ const SORT_ACCESSORS = {
 };
 
 export function CharactersPage() {
+  useDocumentTitle('角色图鉴');
   const characters = useCharacters();
   const dataReady = useBootstrapStatus() === 'ok';
   const { favOnly, favCount, visibleItems, toggleFavOnly } =

@@ -23,6 +23,14 @@ const VersionDetailPage = lazy(() =>
     default: m.VersionDetailPage,
   })),
 );
+const VersionIndexPage = lazy(() =>
+  import('./pages/VersionIndexPage').then((m) => ({
+    default: m.VersionIndexPage,
+  })),
+);
+const FavoritesPage = lazy(() =>
+  import('./pages/FavoritesPage').then((m) => ({ default: m.FavoritesPage })),
+);
 
 export default function App() {
   return (
@@ -39,7 +47,9 @@ export default function App() {
             <Route path="relics/:id" element={<RelicDetailPage />} />
           <Route path="matrix" element={<MatrixPage />} />
           <Route path="news" element={<NewsPage />} />
+          <Route path="versions" element={<VersionIndexPage />} />
           <Route path="versions/:version" element={<VersionDetailPage />} />
+          <Route path="favorites" element={<FavoritesPage />} />
           <Route path="admin" element={<AdminPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

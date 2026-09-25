@@ -22,6 +22,7 @@ import {
   useFavoriteFilter,
   useRelics,
 } from '../hooks/useWikiData';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 import { buildVersionGroups, RELIC_CATEGORY_META } from '../lib/meta';
 
 type FacetKey = 'category' | 'rarity' | 'version';
@@ -40,7 +41,9 @@ function facetValue(relic: RelicSet, key: FacetKey): string {
 }
 
 function matchesKeyword(relic: RelicSet, keyword: string): boolean {
-  return relic.name.toLowerCase().includes(keyword);
+  return [relic.name, ...(relic.aliases ?? [])].some((text) =>
+    text.toLowerCase().includes(keyword),
+  );
 }
 
 const SORT_ACCESSORS = {
@@ -50,6 +53,7 @@ const SORT_ACCESSORS = {
 };
 
 export function RelicsPage() {
+  useDocumentTitle('遗器图鉴');
   const relics = useRelics();
   const dataReady = useBootstrapStatus() === 'ok';
   const { favOnly, favCount, visibleItems, toggleFavOnly } =
