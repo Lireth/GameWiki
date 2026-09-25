@@ -6,6 +6,7 @@ import {
   ChevronRightIcon,
 } from '../components/icons';
 import { EmptyState } from '../components/ui/EmptyState';
+import { CopyLinkButton } from '../components/ui/FilterPanel';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import { TypeBadge } from '../components/ui/Badges';
@@ -247,6 +248,7 @@ export function NewsPage() {
               </button>
             );
           })}
+          <CopyLinkButton className="ml-1" />
         </div>
       </div>
 

@@ -1,8 +1,34 @@
+import { useState } from 'react';
 import type { ReactNode } from 'react';
 
 /** 列表页排序下拉框的共用样式 */
 export const sortSelectClass =
   'border border-space-600/60 bg-space-850/80 px-2.5 py-1.5 text-xs text-slate-200 focus:border-gold-500/60 focus:outline-none';
+
+/** 复制当前页面链接（含筛选 / 年月 / 类型等 URL 状态），便于分享当前视图 */
+export function CopyLinkButton({ className = '' }: { className?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      alert('复制失败：当前环境不支持访问剪贴板（需 HTTPS 或 localhost）。');
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={() => void copy()}
+      className={`border border-space-600/60 px-2.5 py-1 text-xs text-slate-400 transition hover:border-gold-500/50 hover:text-gold-300 ${className}`}
+    >
+      {copied ? '已复制 ✓' : '分享链接'}
+    </button>
+  );
+}
 
 interface FilterRowProps {
   label: string;

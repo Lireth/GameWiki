@@ -1,7 +1,7 @@
 import { Fragment, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { EmptyState } from '../components/ui/EmptyState';
-import { FacetChip, FilterRow } from '../components/ui/FilterPanel';
+import { FacetChip, CopyLinkButton, FilterRow } from '../components/ui/FilterPanel';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import type { Character } from '../db/types';
@@ -123,6 +123,9 @@ export function MatrixPage() {
       {hasData ? (
         <>
           {/* 筛选面板：稀有度 / 性别 / 实装版本（多选） */}
+          <div className="mb-3 flex items-center justify-end">
+            <CopyLinkButton />
+          </div>
           <Panel className="mb-6 p-0">
             <FilterRow label="查看全部">
               <FacetChip

@@ -2,6 +2,7 @@ import { Fragment, useMemo } from 'react';
 import { LightConeCard } from '../components/cards/LightConeCard';
 import { SearchIcon, StarIcon } from '../components/icons';
 import {
+  CopyLinkButton,
   FacetChip,
   FilterRow,
   FilterRowLines,
@@ -187,21 +188,24 @@ export function LightConesPage() {
               </span>{' '}
               件光锥
             </p>
-            <label className="flex items-center gap-2">
-              <span>排序</span>
-              <select
-                aria-label="排序"
-                value={sort}
-                onChange={(e) => setParam('sort', e.target.value)}
-                className={sortSelectClass}
-              >
-                {SORT_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <div className="flex items-center gap-3">
+              <CopyLinkButton />
+              <label className="flex items-center gap-2">
+                <span>排序</span>
+                <select
+                  aria-label="排序"
+                  value={sort}
+                  onChange={(e) => setParam('sort', e.target.value)}
+                  className={sortSelectClass}
+                >
+                  {SORT_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
           </div>
         </div>
       </PageHeader>
