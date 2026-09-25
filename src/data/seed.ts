@@ -29,7 +29,26 @@ import type { Character, LightCone, NewsEvent } from '../db/types';
 /** 角色种子数据 */
 export const characterSeed: Character[] = [];
 
-/** 光锥种子数据 */
+/**
+ * 光锥种子数据 —— 稀有度为 3 | 4 | 5（光锥含 3★）。
+ * acquisition（获取方式）取值：warp(跃迁) | limitedWarp(限定跃迁) | event(活动) |
+ * quest(任务) | exploration(探索) | namelessHonor(无名勋礼) | shopExchange(商店兑换) |
+ * worldShop(世界商店) | simUniverseShop(模拟宇宙「黑塔的商店」) | actionSummary(行动摘要) |
+ * echoOfWar(历战余响) | treasure(奇珍琳琅) | levelReward(等级奖励) | collabWarp(联动跃迁)
+ *
+ * 示例：
+ * export const lightConeSeed: LightCone[] = [
+ *   {
+ *     id: 'example-cone',
+ *     name: '示例光锥',
+ *     rarity: 5,
+ *     path: 'destruction',
+ *     acquisition: 'warp',
+ *     releaseDate: '2026-01-01',
+ *     releaseVersion: '1.0',
+ *   },
+ * ];
+ */
 export const lightConeSeed: LightCone[] = [];
 
 /** 资讯 / 日历事件种子数据 */

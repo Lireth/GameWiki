@@ -1,12 +1,23 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { LightConeCard } from '../components/cards/LightConeCard';
-import { SearchIcon } from '../components/icons';
+import { SearchIcon, StarIcon } from '../components/icons';
+import {
+  FacetChip,
+  FilterRow,
+  FilterRowLines,
+} from '../components/ui/FilterPanel';
 import { EmptyState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
+import { Panel } from '../components/ui/Panel';
 import type { LightCone } from '../db/types';
 import { useLightCones } from '../hooks/useWikiData';
-import { PATH_META } from '../lib/meta';
+import {
+  ACQUISITION_LABEL,
+  PATH_META,
+  RARITY_META,
+  VERSION_GROUPS,
+} from '../lib/meta';
 
 const SORT_OPTIONS = [
   { value: 'date-desc', label: '实装日期 新→旧' },
@@ -15,8 +26,58 @@ const SORT_OPTIONS = [
   { value: 'name', label: '名称排序' },
 ] as const;
 
-const selectClass =
-  'w-full border border-space-600/60 bg-space-850/80 px-2.5 py-2 text-sm text-slate-200 focus:border-gold-500/60 focus:outline-none';
+const sortSelectClass =
+  'border border-space-600/60 bg-space-850/80 px-2.5 py-1.5 text-xs text-slate-200 focus:border-gold-500/60 focus:outline-none';
+
+type FacetKey = 'rarity' | 'path' | 'acquisition' | 'version';
+
+const FACET_KEYS: FacetKey[] = ['rarity', 'path', 'acquisition', 'version'];
+
+interface FilterState extends Record<FacetKey, string> {
+  q: string;
+}
+
+const EMPTY_FACETS: Record<FacetKey, string> = {
+  rarity: '',
+  path: '',
+  acquisition: '',
+  version: '',
+};
+
+function facetValue(lightCone: LightCone, key: FacetKey): string {
+  switch (key) {
+    case 'rarity':
+      return String(lightCone.rarity);
+    case 'version':
+      return lightCone.releaseVersion ?? '';
+    case 'acquisition':
+      return lightCone.acquisition ?? '';
+    default:
+      return lightCone[key];
+  }
+}
+
+/**
+ * 判断光锥是否命中筛选条件。
+ * exclude 用于分面计数：统计某维度的选项数量时，忽略该维度自身的筛选，
+ * 但保留其它维度与搜索词，保证各选项计数随其它条件联动。
+ */
+function matchesFilters(
+  lightCone: LightCone,
+  filters: FilterState,
+  exclude?: FacetKey,
+): boolean {
+  const keyword = filters.q.trim().toLowerCase();
+  if (keyword && !lightCone.name.toLowerCase().includes(keyword)) {
+    return false;
+  }
+  for (const key of FACET_KEYS) {
+    if (key === exclude) continue;
+    const value = filters[key];
+    if (value && facetValue(lightCone, key) !== value) return false;
+  }
+  return true;
+}
 
 function sortLightCones(list: LightCone[], sort: string): LightCone[] {
   const sorted = [...list];
@@ -45,9 +106,13 @@ export function LightConesPage() {
   const lightCones = useLightCones();
   const [params, setParams] = useSearchParams();
 
-  const q = params.get('q') ?? '';
-  const rarity = params.get('rarity') ?? '';
-  const path = params.get('path') ?? '';
+  const filters: FilterState = {
+    q: params.get('q') ?? '',
+    rarity: params.get('rarity') ?? '',
+    path: params.get('path') ?? '',
+    acquisition: params.get('acquisition') ?? '',
+    version: params.get('version') ?? '',
+  };
   const sort = params.get('sort') ?? 'date-desc';
 
   const setParam = (key: string, value: string) => {
@@ -62,89 +127,189 @@ export function LightConesPage() {
     );
   };
 
+  /** 再次点击已选中的标签即取消该维度筛选 */
+  const toggleFacet = (key: FacetKey, value: string) => {
+    setParam(key, filters[key] === value ? '' : value);
+  };
+
   const clearFilters = () => setParams({}, { replace: true });
 
-  const filtered = useMemo(() => {
-    const keyword = q.trim().toLowerCase();
-    const matched = lightCones.filter((lc) => {
-      if (keyword && !lc.name.toLowerCase().includes(keyword)) return false;
-      if (rarity && lc.rarity !== Number(rarity)) return false;
-      if (path && lc.path !== path) return false;
-      return true;
-    });
-    return sortLightCones(matched, sort);
-  }, [lightCones, q, rarity, path, sort]);
+  const facetCount = (key: FacetKey, value: string) =>
+    lightCones.filter(
+      (lc) => matchesFilters(lc, filters, key) && facetValue(lc, key) === value,
+    ).length;
 
-  const hasFilters = Boolean(params.get('rarity') || params.get('path'));
+  const allCount = lightCones.filter((lc) =>
+    matchesFilters(lc, { ...filters, ...EMPTY_FACETS }),
+  ).length;
+
+  /** 实装版本分组：以常显配置为基础，数据中的新版本追加到对应大版本（或新建分组） */
+  const versionGroups = useMemo(() => {
+    const known = new Set(VERSION_GROUPS.flatMap((group) => group.values));
+    const groups = VERSION_GROUPS.map((group) => ({
+      major: group.major,
+      values: [...group.values],
+    }));
+    const dataVersions = [
+      ...new Set(
+        lightCones
+          .map((lc) => lc.releaseVersion)
+          .filter((v): v is string => Boolean(v)),
+      ),
+    ];
+    for (const value of dataVersions) {
+      if (known.has(value)) continue;
+      const major = value.split('.')[0];
+      let group = groups.find((g) => g.major === major);
+      if (!group) {
+        group = { major, values: [] };
+        groups.push(group);
+      }
+      if (!group.values.includes(value)) group.values.push(value);
+      group.values.sort((a, b) =>
+        a.localeCompare(b, undefined, { numeric: true }),
+      );
+    }
+    return groups;
+  }, [lightCones]);
+
+  const filtered = useMemo(() => {
+    const matched = lightCones.filter((lc) => matchesFilters(lc, filters));
+    return sortLightCones(matched, sort);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    lightCones,
+    filters.q,
+    filters.rarity,
+    filters.path,
+    filters.acquisition,
+    filters.version,
+    sort,
+  ]);
+
+  const hasAnyFilter =
+    Boolean(filters.q) || FACET_KEYS.some((key) => filters[key]);
 
   return (
     <div>
       <PageHeader
         en="Light Cones"
         title="光锥图鉴"
-        description="按名称、稀有度与命途筛选光锥。"
+        description="按名称、稀有度、命途、获取方式与实装版本搜索和筛选光锥。"
       >
         <div className="mt-6 space-y-3">
           <div className="relative">
             <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
             <input
-              value={q}
+              value={filters.q}
               onChange={(e) => setParam('q', e.target.value)}
               placeholder="搜索光锥名称…"
               className="w-full border border-space-600/60 bg-space-850/80 py-2.5 pl-9 pr-3 text-sm text-slate-200 placeholder:text-slate-600 focus:border-gold-500/60 focus:outline-none"
             />
           </div>
-          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-            <select
-              aria-label="稀有度"
-              value={rarity}
-              onChange={(e) => setParam('rarity', e.target.value)}
-              className={selectClass}
-            >
-              <option value="">稀有度：全部</option>
-              <option value="5">5★</option>
-              <option value="4">4★</option>
-            </select>
-            <select
-              aria-label="命途"
-              value={path}
-              onChange={(e) => setParam('path', e.target.value)}
-              className={`${selectClass} col-span-2 sm:col-span-1`}
-            >
-              <option value="">命途：全部</option>
+
+          {/* 分面筛选面板 */}
+          <Panel className="p-0">
+            <FilterRow label="查看全部">
+              <FacetChip
+                active={!hasAnyFilter}
+                count={allCount}
+                onClick={clearFilters}
+              >
+                查看全部
+              </FacetChip>
+            </FilterRow>
+
+            <FilterRow label="稀有度">
+              {([5, 4, 3] as const).map((r) => (
+                <FacetChip
+                  key={r}
+                  active={filters.rarity === String(r)}
+                  count={facetCount('rarity', String(r))}
+                  color={RARITY_META[r].color}
+                  ariaLabel={`${r}星`}
+                  onClick={() => toggleFacet('rarity', String(r))}
+                >
+                  <span className="inline-flex items-center gap-0.5">
+                    {Array.from({ length: r }).map((_, i) => (
+                      <StarIcon key={i} className="size-3" />
+                    ))}
+                  </span>
+                </FacetChip>
+              ))}
+            </FilterRow>
+
+            <FilterRow label="命途">
               {Object.entries(PATH_META).map(([value, meta]) => (
-                <option key={value} value={value}>
+                <FacetChip
+                  key={value}
+                  active={filters.path === value}
+                  count={facetCount('path', value)}
+                  color={meta.color}
+                  onClick={() => toggleFacet('path', value)}
+                >
+                  <i aria-hidden className="size-1.5 rotate-45 bg-current" />
                   {meta.label}
-                </option>
+                </FacetChip>
               ))}
-            </select>
-            <select
-              aria-label="排序"
-              value={sort}
-              onChange={(e) => setParam('sort', e.target.value)}
-              className={selectClass}
-            >
-              {SORT_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
+            </FilterRow>
+
+            <FilterRow label="获取方式">
+              {Object.entries(ACQUISITION_LABEL).map(([value, label]) => (
+                <FacetChip
+                  key={value}
+                  active={filters.acquisition === value}
+                  count={facetCount('acquisition', value)}
+                  onClick={() => toggleFacet('acquisition', value)}
+                >
+                  {label}
+                </FacetChip>
               ))}
-            </select>
-          </div>
-          <div className="flex items-center justify-between gap-3 text-xs text-slate-500">
+            </FilterRow>
+
+            {/* 实装版本：按大版本号分行，常显 */}
+            <FilterRowLines
+              label="实装版本"
+              lines={versionGroups.map((group) => (
+                <Fragment key={group.major}>
+                  {group.values.map((value) => (
+                    <FacetChip
+                      key={value}
+                      active={filters.version === value}
+                      count={facetCount('version', value)}
+                      onClick={() => toggleFacet('version', value)}
+                    >
+                      <span className="font-display">{value}</span>
+                    </FacetChip>
+                  ))}
+                </Fragment>
+              ))}
+            />
+          </Panel>
+
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
             <p>
-              共 <span className="font-display text-sm text-gold-300">{filtered.length}</span>{' '}
+              共{' '}
+              <span className="font-display text-sm text-gold-300">
+                {filtered.length}
+              </span>{' '}
               件光锥
             </p>
-            {hasFilters && (
-              <button
-                type="button"
-                onClick={clearFilters}
-                className="border border-space-600/60 px-2.5 py-1 transition hover:border-gold-500/60 hover:text-gold-300"
+            <label className="flex items-center gap-2">
+              <span>排序</span>
+              <select
+                aria-label="排序"
+                value={sort}
+                onChange={(e) => setParam('sort', e.target.value)}
+                className={sortSelectClass}
               >
-                重置筛选
-              </button>
-            )}
+                {SORT_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
         </div>
       </PageHeader>

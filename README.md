@@ -17,7 +17,7 @@
 | `/` | 首页 | Hero、数据概览、功能入口、站点说明 |
 | `/characters` | 角色图鉴 | 搜索 + 稀有度/命途/属性/体型/实装版本筛选 + 排序，状态同步到 URL |
 | `/characters/:id` | 角色详情 | 全部字段 + 简介 |
-| `/light-cones` | 光锥图鉴 | 搜索 + 稀有度/命途筛选 + 排序 |
+| `/light-cones` | 光锥图鉴 | 搜索 + 稀有度(3-5★)/命途/获取方式/实装版本筛选 + 排序，状态同步到 URL |
 | `/light-cones/:id` | 光锥详情 | 全部字段 + 描述 |
 | `/matrix` | 命途 × 属性矩阵 | 横轴命途、纵轴战斗属性；桌面端为完整二维矩阵（可横向滚动），移动端按属性分组堆叠展示；单元格内按实装日期从新到旧排列 |
 | `/news` | 资讯日历 | 年月日历视图，支持月份切换、类型筛选（版本/角色/光锥/活动/卡池/活动结束）、本月事件列表 |
@@ -43,7 +43,7 @@ npm run preview  # 预览生产构建
 字段与类型定义见 [`src/db/types.ts`](src/db/types.ts)：
 
 - `Character`：id、name、rarity（4/5）、path（命途）、element（战斗属性）、faction（派系）、camp（阵营）、gender、bodyType（体型：成男/男青年/少年/成女/女青年/少女/幼女）、releaseDate（YYYY-MM-DD）、releaseVersion、avatar?、description?
-- `LightCone`：id、name、rarity、path、releaseDate?、releaseVersion?、image?、description?
+- `LightCone`：id、name、rarity（3/4/5，光锥含 3★）、path（命途）、acquisition?（获取方式：跃迁/限定跃迁/活动/任务/探索/无名勋礼/商店兑换/世界商店/模拟宇宙/行动摘要/历战余响/奇珍琳琅/等级奖励/联动跃迁）、releaseDate?、releaseVersion?、image?、description?
 - `NewsEvent`：id、type（version/character/lightcone/event/banner/eventEnd）、title、date、endDate?、version?、description?、relatedCharacterId?、relatedLightConeId?
 
 命途 / 属性 / 事件类型的展示名与主题色、实装版本列表等「分类元数据」在 [`src/lib/meta.ts`](src/lib/meta.ts) 中维护，与具体数据条目分离。

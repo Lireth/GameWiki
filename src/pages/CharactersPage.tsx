@@ -1,8 +1,12 @@
 import { Fragment, useMemo } from 'react';
-import type { ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CharacterCard } from '../components/cards/CharacterCard';
 import { SearchIcon, StarIcon } from '../components/icons';
+import {
+  FacetChip,
+  FilterRow,
+  FilterRowLines,
+} from '../components/ui/FilterPanel';
 import { EmptyState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
@@ -105,91 +109,6 @@ function sortCharacters(list: Character[], sort: string): Character[] {
     default:
       return sorted.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
   }
-}
-
-function FilterRow({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <div className="flex flex-col gap-2 border-b border-space-700/50 px-4 py-3 last:border-b-0 sm:flex-row sm:items-start sm:gap-4">
-      <span className="w-16 shrink-0 pt-1 text-sm font-medium text-slate-400">
-        {label}
-      </span>
-      <div className="flex min-w-0 flex-1 flex-wrap gap-1.5">{children}</div>
-    </div>
-  );
-}
-
-/** 左侧维度标签 + 右侧多行标签组（如体型男/女两行、实装版本按大版本分行） */
-function FilterRowLines({ label, lines }: { label: string; lines: ReactNode[] }) {
-  return (
-    <div className="flex flex-col gap-2 border-b border-space-700/50 px-4 py-3 last:border-b-0 sm:flex-row sm:items-start sm:gap-4">
-      <span className="w-16 shrink-0 pt-1 text-sm font-medium text-slate-400">
-        {label}
-      </span>
-      <div className="min-w-0 flex-1 space-y-2">
-        {lines.map((line, index) => (
-          <div key={index} className="flex flex-wrap items-center gap-1.5">
-            {line}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-interface FacetChipProps {
-  active: boolean;
-  count: number;
-  /** 主题色（命途 / 属性 / 稀有度）；缺省为中性灰，选中时呈金色 */
-  color?: string;
-  /** 覆盖无障碍名称（如图标型标签） */
-  ariaLabel?: string;
-  onClick: () => void;
-  children: ReactNode;
-}
-
-function FacetChip({
-  active,
-  count,
-  color,
-  ariaLabel,
-  onClick,
-  children,
-}: FacetChipProps) {
-  const style = active
-    ? {
-        backgroundColor: color ?? '#e9b45f',
-        borderColor: color ?? '#e9b45f',
-        color: '#04060c',
-      }
-    : color
-      ? {
-          borderColor: `${color}44`,
-          color: `${color}d9`,
-          backgroundColor: `${color}0f`,
-        }
-      : undefined;
-
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      style={style}
-      aria-pressed={active}
-      aria-label={ariaLabel}
-      className={`inline-flex items-center gap-1.5 border px-2.5 py-1 text-xs leading-5 transition ${
-        active
-          ? 'font-semibold'
-          : color
-            ? 'hover:brightness-125'
-            : 'text-slate-300 hover:border-gold-500/60 hover:text-gold-300'
-      }`}
-    >
-      {children}
-      <span className={`font-display ${active ? 'opacity-80' : 'opacity-70'}`}>
-        ({count})
-      </span>
-    </button>
-  );
 }
 
 export function CharactersPage() {

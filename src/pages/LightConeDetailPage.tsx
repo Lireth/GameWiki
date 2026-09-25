@@ -6,7 +6,7 @@ import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import { useLightCones } from '../hooks/useWikiData';
 import { formatDateCN } from '../lib/format';
-import { PATH_META } from '../lib/meta';
+import { ACQUISITION_LABEL, PATH_META } from '../lib/meta';
 
 export function LightConeDetailPage() {
   const { id } = useParams();
@@ -97,6 +97,11 @@ export function LightConeDetailPage() {
                 <span className="font-display text-xs tracking-widest text-slate-500">
                   {path.en}
                 </span>
+              </FieldRow>
+              <FieldRow label="获取方式">
+                {lightCone.acquisition
+                  ? ACQUISITION_LABEL[lightCone.acquisition]
+                  : '—'}
               </FieldRow>
               <FieldRow label="实装日期">
                 {lightCone.releaseDate ? formatDateCN(lightCone.releaseDate) : '—'}

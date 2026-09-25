@@ -6,7 +6,13 @@ import {
   PATH_META,
   RARITY_META,
 } from '../../lib/meta';
-import type { ElementId, Gender, NewsEventType, PathId, Rarity } from '../../db/types';
+import type {
+  ElementId,
+  Gender,
+  LightConeRarity,
+  NewsEventType,
+  PathId,
+} from '../../db/types';
 
 function Diamond({ className = '' }: { className?: string }) {
   return (
@@ -18,7 +24,7 @@ export function RarityStars({
   rarity,
   className = '',
 }: {
-  rarity: Rarity;
+  rarity: LightConeRarity;
   className?: string;
 }) {
   return (

@@ -1,4 +1,4 @@
-/** 命途 ID（含「记忆」） */
+/** 命途 ID（含「记忆」「欢愉」） */
 export const PATH_IDS = [
   'destruction',
   'hunt',
@@ -8,6 +8,7 @@ export const PATH_IDS = [
   'preservation',
   'abundance',
   'remembrance',
+  'joviality',
 ] as const;
 export type PathId = (typeof PATH_IDS)[number];
 
@@ -23,9 +24,32 @@ export const ELEMENT_IDS = [
 ] as const;
 export type ElementId = (typeof ELEMENT_IDS)[number];
 
-/** 稀有度 */
+/** 稀有度（角色） */
 export const RARITIES = [4, 5] as const;
 export type Rarity = (typeof RARITIES)[number];
+
+/** 稀有度（光锥，含 3★） */
+export const LIGHT_CONE_RARITIES = [5, 4, 3] as const;
+export type LightConeRarity = (typeof LIGHT_CONE_RARITIES)[number];
+
+/** 光锥获取方式 */
+export const ACQUISITION_TYPES = [
+  'warp',
+  'limitedWarp',
+  'event',
+  'quest',
+  'exploration',
+  'namelessHonor',
+  'shopExchange',
+  'worldShop',
+  'simUniverseShop',
+  'actionSummary',
+  'echoOfWar',
+  'treasure',
+  'levelReward',
+  'collabWarp',
+] as const;
+export type AcquisitionType = (typeof ACQUISITION_TYPES)[number];
 
 /** 性别 */
 export const GENDERS = ['female', 'male'] as const;
@@ -84,8 +108,11 @@ export interface Character {
 export interface LightCone {
   id: string;
   name: string;
-  rarity: Rarity;
+  /** 稀有度：3 / 4 / 5 */
+  rarity: LightConeRarity;
   path: PathId;
+  /** 获取方式（可选，未知时不归类） */
+  acquisition?: AcquisitionType;
   releaseDate?: string;
   releaseVersion?: string;
   image?: string;

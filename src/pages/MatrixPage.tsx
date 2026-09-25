@@ -78,11 +78,11 @@ export function MatrixPage() {
       {hasData ? (
         <>
           <div className="hidden overflow-x-auto pb-2 md:block">
-            <div className="min-w-[960px]">
+            <div className="min-w-[1080px]">
               <div
                 className="grid gap-px border border-space-600/40 bg-space-600/40"
                 style={{
-                  gridTemplateColumns: '120px repeat(8, minmax(104px, 1fr))',
+                  gridTemplateColumns: `120px repeat(${PATH_IDS.length}, minmax(104px, 1fr))`,
                 }}
               >
                 {/* 表头行 */}

@@ -23,6 +23,10 @@ export class WikiDatabase extends Dexie {
       characters:
         'id, name, rarity, path, element, gender, bodyType, camp, faction, releaseDate',
     });
+    // v3：lightCones 增加 acquisition 索引（旧数据行无此字段，无需迁移）
+    this.version(3).stores({
+      lightCones: 'id, name, rarity, path, acquisition, releaseDate',
+    });
   }
 }
 

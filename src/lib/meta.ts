@@ -1,10 +1,11 @@
 import type {
+  AcquisitionType,
   BodyType,
   ElementId,
   Gender,
+  LightConeRarity,
   NewsEventType,
   PathId,
-  Rarity,
 } from '../db/types';
 
 export interface TaxonomyMeta {
@@ -23,6 +24,7 @@ export const PATH_META: Record<PathId, TaxonomyMeta> = {
   preservation: { label: '存护', en: 'Preservation', color: '#f5df85' },
   abundance: { label: '丰饶', en: 'Abundance', color: '#63dfa4' },
   remembrance: { label: '记忆', en: 'Remembrance', color: '#93b9ff' },
+  joviality: { label: '欢愉', en: 'Joviality', color: '#f56ab0' },
 };
 
 /** 战斗属性元数据 */
@@ -36,8 +38,9 @@ export const ELEMENT_META: Record<ElementId, TaxonomyMeta> = {
   imaginary: { label: '虚数', en: 'Imaginary', color: '#f0d354' },
 };
 
-/** 稀有度元数据 */
-export const RARITY_META: Record<Rarity, { color: string }> = {
+/** 稀有度元数据（光锥含 3★） */
+export const RARITY_META: Record<LightConeRarity, { color: string }> = {
+  3: { color: '#6cb2f5' },
   4: { color: '#c79bf5' },
   5: { color: '#ffce6b' },
 };
@@ -98,17 +101,20 @@ export const NEWS_TYPE_META: Record<
   eventEnd: { label: '活动结束', color: '#8a93a6' },
 };
 
-/** 通用选项列表（供筛选下拉使用） */
-export const PATH_OPTIONS = Object.entries(PATH_META).map(([value, meta]) => ({
-  value: value as PathId,
-  label: meta.label,
-}));
-
-export const ELEMENT_OPTIONS = Object.entries(ELEMENT_META).map(
-  ([value, meta]) => ({ value: value as ElementId, label: meta.label }),
-);
-
-export const RARITY_OPTIONS = [5, 4].map((r) => ({
-  value: r as Rarity,
-  label: `${r}★`,
-}));
+/** 光锥获取方式展示名（顺序与筛选面板一致） */
+export const ACQUISITION_LABEL: Record<AcquisitionType, string> = {
+  warp: '跃迁',
+  limitedWarp: '限定跃迁',
+  event: '活动',
+  quest: '任务',
+  exploration: '探索',
+  namelessHonor: '无名勋礼',
+  shopExchange: '商店兑换',
+  worldShop: '世界商店',
+  simUniverseShop: '模拟宇宙「黑塔的商店」',
+  actionSummary: '行动摘要',
+  echoOfWar: '历战余响',
+  treasure: '奇珍琳琅',
+  levelReward: '等级奖励',
+  collabWarp: '联动跃迁',
+};
