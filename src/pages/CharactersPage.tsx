@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CharacterCard } from '../components/cards/CharacterCard';
@@ -14,6 +14,7 @@ import {
   ELEMENT_META,
   PATH_META,
   RARITY_META,
+  VERSION_GROUPS,
 } from '../lib/meta';
 
 const SORT_OPTIONS = [
@@ -26,22 +27,13 @@ const SORT_OPTIONS = [
 const sortSelectClass =
   'border border-space-600/60 bg-space-850/80 px-2.5 py-1.5 text-xs text-slate-200 focus:border-gold-500/60 focus:outline-none';
 
-type FacetKey =
-  | 'rarity'
-  | 'path'
-  | 'element'
-  | 'bodyType'
-  | 'camp'
-  | 'faction'
-  | 'version';
+type FacetKey = 'rarity' | 'path' | 'element' | 'bodyType' | 'version';
 
 const FACET_KEYS: FacetKey[] = [
   'rarity',
   'path',
   'element',
   'bodyType',
-  'camp',
-  'faction',
   'version',
 ];
 
@@ -54,8 +46,6 @@ const EMPTY_FACETS: Record<FacetKey, string> = {
   path: '',
   element: '',
   bodyType: '',
-  camp: '',
-  faction: '',
   version: '',
 };
 
@@ -117,10 +107,6 @@ function sortCharacters(list: Character[], sort: string): Character[] {
   }
 }
 
-function distinct(values: string[]): string[] {
-  return [...new Set(values)].sort((a, b) => a.localeCompare(b, 'zh-Hans-CN'));
-}
-
 function FilterRow({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-2 border-b border-space-700/50 px-4 py-3 last:border-b-0 sm:flex-row sm:items-start sm:gap-4">
@@ -128,6 +114,24 @@ function FilterRow({ label, children }: { label: string; children: ReactNode }) 
         {label}
       </span>
       <div className="flex min-w-0 flex-1 flex-wrap gap-1.5">{children}</div>
+    </div>
+  );
+}
+
+/** 左侧维度标签 + 右侧多行标签组（如体型男/女两行、实装版本按大版本分行） */
+function FilterRowLines({ label, lines }: { label: string; lines: ReactNode[] }) {
+  return (
+    <div className="flex flex-col gap-2 border-b border-space-700/50 px-4 py-3 last:border-b-0 sm:flex-row sm:items-start sm:gap-4">
+      <span className="w-16 shrink-0 pt-1 text-sm font-medium text-slate-400">
+        {label}
+      </span>
+      <div className="min-w-0 flex-1 space-y-2">
+        {lines.map((line, index) => (
+          <div key={index} className="flex flex-wrap items-center gap-1.5">
+            {line}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -198,8 +202,6 @@ export function CharactersPage() {
     path: params.get('path') ?? '',
     element: params.get('element') ?? '',
     bodyType: params.get('bodyType') ?? '',
-    camp: params.get('camp') ?? '',
-    faction: params.get('faction') ?? '',
     version: params.get('version') ?? '',
   };
   const sort = params.get('sort') ?? 'date-desc';
@@ -232,21 +234,35 @@ export function CharactersPage() {
     matchesFilters(c, { ...filters, ...EMPTY_FACETS }),
   ).length;
 
-  const camps = useMemo(
-    () => distinct(characters.map((c) => c.camp)),
-    [characters],
-  );
-  const factions = useMemo(
-    () => distinct(characters.map((c) => c.faction)),
-    [characters],
-  );
-  const versions = useMemo(
+  /** 数据中实际出现的版本（用于补充常显列表之外的新版本） */
+  const dataVersions = useMemo(
     () =>
       [...new Set(characters.map((c) => c.releaseVersion))].sort((a, b) =>
         a.localeCompare(b, undefined, { numeric: true }),
       ),
     [characters],
   );
+
+  /** 实装版本分组：以常显配置为基础，数据中的新版本追加到对应大版本（或新建分组） */
+  const versionGroups = useMemo(() => {
+    const known = new Set(VERSION_GROUPS.flatMap((group) => group.values));
+    const groups = VERSION_GROUPS.map((group) => ({
+      major: group.major,
+      values: [...group.values],
+    }));
+    for (const value of dataVersions) {
+      if (known.has(value)) continue;
+      const major = value.split('.')[0];
+      let group = groups.find((g) => g.major === major);
+      if (!group) {
+        group = { major, values: [] };
+        groups.push(group);
+      }
+      group.values.push(value);
+      group.values.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    }
+    return groups;
+  }, [dataVersions]);
 
   const filtered = useMemo(() => {
     const matched = characters.filter((c) => matchesFilters(c, filters));
@@ -258,8 +274,6 @@ export function CharactersPage() {
     filters.rarity,
     filters.path,
     filters.element,
-    filters.camp,
-    filters.faction,
     filters.version,
     filters.bodyType,
     sort,
@@ -273,7 +287,7 @@ export function CharactersPage() {
       <PageHeader
         en="Characters"
         title="角色图鉴"
-        description="按名称、稀有度、命途、战斗属性、体型、派系与阵营搜索和筛选角色。"
+        description="按名称、稀有度、命途、战斗属性、体型与实装版本搜索和筛选角色。"
       >
         <div className="mt-6 space-y-3">
           <div className="relative">
@@ -348,78 +362,45 @@ export function CharactersPage() {
             </FilterRow>
 
             {/* 体型：第一行男性、第二行女性 */}
-            <div className="flex flex-col gap-2 border-b border-space-700/50 px-4 py-3 last:border-b-0 sm:flex-row sm:items-start sm:gap-4">
-              <span className="w-16 shrink-0 pt-1 text-sm font-medium text-slate-400">
-                体型
-              </span>
-              <div className="min-w-0 flex-1 space-y-2">
-                {BODY_TYPE_GROUPS.map((group) => (
-                  <div
-                    key={group.title}
-                    className="flex flex-wrap items-center gap-1.5"
-                  >
-                    <span className="mr-1 text-xs text-slate-500">
-                      {group.title}
-                    </span>
-                    {group.values.map((value) => (
-                      <FacetChip
-                        key={value}
-                        active={filters.bodyType === value}
-                        count={facetCount('bodyType', value)}
-                        onClick={() => toggleFacet('bodyType', value)}
-                      >
-                        {BODY_TYPE_LABEL[value]}
-                      </FacetChip>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <FilterRowLines
+              label="体型"
+              lines={BODY_TYPE_GROUPS.map((group) => (
+                <Fragment key={group.title}>
+                  <span className="mr-1 text-xs text-slate-500">
+                    {group.title}
+                  </span>
+                  {group.values.map((value) => (
+                    <FacetChip
+                      key={value}
+                      active={filters.bodyType === value}
+                      count={facetCount('bodyType', value)}
+                      onClick={() => toggleFacet('bodyType', value)}
+                    >
+                      {BODY_TYPE_LABEL[value]}
+                    </FacetChip>
+                  ))}
+                </Fragment>
+              ))}
+            />
 
-            {camps.length > 0 && (
-              <FilterRow label="阵营">
-                {camps.map((value) => (
-                  <FacetChip
-                    key={value}
-                    active={filters.camp === value}
-                    count={facetCount('camp', value)}
-                    onClick={() => toggleFacet('camp', value)}
-                  >
-                    {value}
-                  </FacetChip>
-                ))}
-              </FilterRow>
-            )}
-
-            {factions.length > 0 && (
-              <FilterRow label="派系">
-                {factions.map((value) => (
-                  <FacetChip
-                    key={value}
-                    active={filters.faction === value}
-                    count={facetCount('faction', value)}
-                    onClick={() => toggleFacet('faction', value)}
-                  >
-                    {value}
-                  </FacetChip>
-                ))}
-              </FilterRow>
-            )}
-
-            {versions.length > 0 && (
-              <FilterRow label="实装版本">
-                {versions.map((value) => (
-                  <FacetChip
-                    key={value}
-                    active={filters.version === value}
-                    count={facetCount('version', value)}
-                    onClick={() => toggleFacet('version', value)}
-                  >
-                    <span className="font-display">{value}</span>
-                  </FacetChip>
-                ))}
-              </FilterRow>
-            )}
+            {/* 实装版本：按大版本号分行，常显 */}
+            <FilterRowLines
+              label="实装版本"
+              lines={versionGroups.map((group) => (
+                <Fragment key={group.major}>
+                  {group.values.map((value) => (
+                    <FacetChip
+                      key={value}
+                      active={filters.version === value}
+                      count={facetCount('version', value)}
+                      onClick={() => toggleFacet('version', value)}
+                    >
+                      <span className="font-display">{value}</span>
+                    </FacetChip>
+                  ))}
+                </Fragment>
+              ))}
+            />
           </Panel>
 
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">

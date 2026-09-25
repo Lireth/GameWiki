@@ -65,6 +65,26 @@ export const BODY_TYPE_GROUPS: { title: string; values: BodyType[] }[] = [
   { title: '女', values: ['adultFemale', 'youngFemale', 'teenGirl', 'littleGirl'] },
 ];
 
+/**
+ * 实装版本分类（常显，不依赖角色数据；按大版本分行）。
+ * 数据中出现此处未列出的版本时，会自动追加到对应大版本分组（或新建分组）。
+ */
+export const VERSION_GROUPS: { major: string; values: string[] }[] = [
+  { major: '1', values: ['1.0', '1.1', '1.2', '1.3', '1.4', '1.5', '1.6'] },
+  {
+    major: '2',
+    values: ['2.0', '2.1', '2.2', '2.3', '2.4', '2.5', '2.6', '2.7'],
+  },
+  {
+    major: '3',
+    values: ['3.0', '3.1', '3.2', '3.3', '3.4', '3.5', '3.6', '3.7', '3.8'],
+  },
+  {
+    major: '4',
+    values: ['4.0', '4.1', '4.2', '4.3', '4.4', '4.5', '4.6'],
+  },
+];
+
 /** 资讯事件类型元数据 */
 export const NEWS_TYPE_META: Record<
   NewsEventType,

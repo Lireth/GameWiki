@@ -15,7 +15,7 @@
 | 路由 | 页面 | 说明 |
 | --- | --- | --- |
 | `/` | 首页 | Hero、数据概览、功能入口、站点说明 |
-| `/characters` | 角色图鉴 | 搜索 + 稀有度/命途/属性/性别/阵营/派系筛选 + 排序，状态同步到 URL |
+| `/characters` | 角色图鉴 | 搜索 + 稀有度/命途/属性/体型/实装版本筛选 + 排序，状态同步到 URL |
 | `/characters/:id` | 角色详情 | 全部字段 + 简介 |
 | `/light-cones` | 光锥图鉴 | 搜索 + 稀有度/命途筛选 + 排序 |
 | `/light-cones/:id` | 光锥详情 | 全部字段 + 描述 |
@@ -46,7 +46,7 @@ npm run preview  # 预览生产构建
 - `LightCone`：id、name、rarity、path、releaseDate?、releaseVersion?、image?、description?
 - `NewsEvent`：id、type（version/character/lightcone/event/banner/eventEnd）、title、date、endDate?、version?、description?、relatedCharacterId?、relatedLightConeId?
 
-命途 / 属性 / 事件类型的展示名与主题色等「分类元数据」在 [`src/lib/meta.ts`](src/lib/meta.ts) 中维护，与具体数据条目分离。
+命途 / 属性 / 事件类型的展示名与主题色、实装版本列表等「分类元数据」在 [`src/lib/meta.ts`](src/lib/meta.ts) 中维护，与具体数据条目分离。
 
 ### 注意事项
 
