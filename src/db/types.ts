@@ -31,6 +31,18 @@ export type Rarity = (typeof RARITIES)[number];
 export const GENDERS = ['female', 'male'] as const;
 export type Gender = (typeof GENDERS)[number];
 
+/** 体型（男系 → 女系） */
+export const BODY_TYPES = [
+  'adultMale',
+  'youngMale',
+  'teenBoy',
+  'adultFemale',
+  'youngFemale',
+  'teenGirl',
+  'littleGirl',
+] as const;
+export type BodyType = (typeof BODY_TYPES)[number];
+
 /** 资讯 / 日历事件类型 */
 export const NEWS_EVENT_TYPES = [
   'version',
@@ -58,6 +70,8 @@ export interface Character {
   /** 阵营，如「雅利洛-VI」 */
   camp: string;
   gender: Gender;
+  /** 体型：成男 / 男青年 / 少年 / 成女 / 女青年 / 少女 / 幼女 / 星 */
+  bodyType: BodyType;
   /** 实装日期，格式 YYYY-MM-DD */
   releaseDate: string;
   /** 实装版本，如 1.0 */

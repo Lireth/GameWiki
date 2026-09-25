@@ -1,4 +1,5 @@
 import type {
+  BodyType,
   ElementId,
   Gender,
   NewsEventType,
@@ -47,6 +48,23 @@ export const GENDER_LABEL: Record<Gender, string> = {
   male: '男',
 };
 
+/** 体型展示名（男系 → 女系） */
+export const BODY_TYPE_LABEL: Record<BodyType, string> = {
+  adultMale: '成男',
+  youngMale: '男青年',
+  teenBoy: '少年',
+  adultFemale: '成女',
+  youngFemale: '女青年',
+  teenGirl: '少女',
+  littleGirl: '幼女',
+};
+
+/** 体型筛选分组：第一行男性、第二行女性 */
+export const BODY_TYPE_GROUPS: { title: string; values: BodyType[] }[] = [
+  { title: '男', values: ['adultMale', 'youngMale', 'teenBoy'] },
+  { title: '女', values: ['adultFemale', 'youngFemale', 'teenGirl', 'littleGirl'] },
+];
+
 /** 资讯事件类型元数据 */
 export const NEWS_TYPE_META: Record<
   NewsEventType,
@@ -74,8 +92,3 @@ export const RARITY_OPTIONS = [5, 4].map((r) => ({
   value: r as Rarity,
   label: `${r}★`,
 }));
-
-export const GENDER_OPTIONS = [
-  { value: 'female' as Gender, label: '女' },
-  { value: 'male' as Gender, label: '男' },
-];

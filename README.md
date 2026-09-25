@@ -42,7 +42,7 @@ npm run preview  # 预览生产构建
 
 字段与类型定义见 [`src/db/types.ts`](src/db/types.ts)：
 
-- `Character`：id、name、rarity（4/5）、path（命途）、element（战斗属性）、faction（派系）、camp（阵营）、gender、releaseDate（YYYY-MM-DD）、releaseVersion、avatar?、description?
+- `Character`：id、name、rarity（4/5）、path（命途）、element（战斗属性）、faction（派系）、camp（阵营）、gender、bodyType（体型：成男/男青年/少年/成女/女青年/少女/幼女）、releaseDate（YYYY-MM-DD）、releaseVersion、avatar?、description?
 - `LightCone`：id、name、rarity、path、releaseDate?、releaseVersion?、image?、description?
 - `NewsEvent`：id、type（version/character/lightcone/event/banner/eventEnd）、title、date、endDate?、version?、description?、relatedCharacterId?、relatedLightConeId?
 

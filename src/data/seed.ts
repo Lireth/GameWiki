@@ -19,6 +19,7 @@ import type { Character, LightCone, NewsEvent } from '../db/types';
  *      faction: '示例派系',        // 派系
  *      camp: '示例阵营',           // 阵营
  *      gender: 'female',          // 性别：female | male
+ *      bodyType: 'youngFemale',   // 体型：adultMale(成男) | youngMale(男青年) | teenBoy(少年) | adultFemale(成女) | youngFemale(女青年) | teenGirl(少女) | littleGirl(幼女)
  *      releaseDate: '2026-01-01', // 实装日期 YYYY-MM-DD
  *      releaseVersion: '1.0',     // 实装版本
  *    },

@@ -11,7 +11,7 @@ import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import { useCharacters } from '../hooks/useWikiData';
 import { formatDateCN } from '../lib/format';
-import { ELEMENT_META, PATH_META } from '../lib/meta';
+import { BODY_TYPE_LABEL, ELEMENT_META, PATH_META } from '../lib/meta';
 
 export function CharacterDetailPage() {
   const { id } = useParams();
@@ -127,6 +127,9 @@ export function CharacterDetailPage() {
               <FieldRow label="派系">{character.faction || '—'}</FieldRow>
               <FieldRow label="阵营">{character.camp || '—'}</FieldRow>
               <FieldRow label="性别">{character.gender === 'female' ? '女' : '男'}</FieldRow>
+              <FieldRow label="体型">
+                {BODY_TYPE_LABEL[character.bodyType] ?? '—'}
+              </FieldRow>
               <FieldRow label="实装日期">
                 {formatDateCN(character.releaseDate)}
               </FieldRow>

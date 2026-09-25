@@ -18,6 +18,11 @@ export class WikiDatabase extends Dexie {
       lightCones: 'id, name, rarity, path, releaseDate',
       newsEvents: 'id, type, date, endDate',
     });
+    // v2：characters 增加 bodyType 索引（旧数据行无此字段，无需迁移）
+    this.version(2).stores({
+      characters:
+        'id, name, rarity, path, element, gender, bodyType, camp, faction, releaseDate',
+    });
   }
 }
 
