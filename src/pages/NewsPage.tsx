@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useMemo } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   CalendarIcon,
   ChevronLeftIcon,
@@ -78,13 +78,34 @@ function EventChip({ event }: { event: NewsEvent }) {
   );
 }
 
+/** 解析 URL 中的年（y）/ 月（m，1-12），非法或缺省时回退到当前日期 */
+function readYear(raw: string | null, now: Date): number {
+  const year = Number(raw);
+  return Number.isInteger(year) && year >= 2000 && year <= 2200
+    ? year
+    : now.getFullYear();
+}
+
+function readMonth(raw: string | null, now: Date): number {
+  const month = Number(raw);
+  return Number.isInteger(month) && month >= 1 && month <= 12
+    ? month - 1
+    : now.getMonth();
+}
+
 export function NewsPage() {
   const events = useNewsEvents();
+  const [params, setParams] = useSearchParams();
   // 「今天」在会话期内固定，避免跨午夜渲染不一致
   const now = useMemo(() => new Date(), []);
-  const [year, setYear] = useState(now.getFullYear());
-  const [month0, setMonth0] = useState(now.getMonth());
-  const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
+  // 年月与类型筛选同步到 URL，可直接分享指定月份 / 筛选条件的视图
+  const year = readYear(params.get('y'), now);
+  const month0 = readMonth(params.get('m'), now);
+  const rawType = params.get('type');
+  const typeFilter: TypeFilter =
+    rawType && (NEWS_EVENT_TYPES as readonly string[]).includes(rawType)
+      ? (rawType as TypeFilter)
+      : 'all';
 
   const grid = useMemo(() => monthGrid(year, month0), [year, month0]);
   const eventsByDate = useEventsByDate(events, typeFilter);
@@ -101,16 +122,35 @@ export function NewsPage() {
     [events, typeFilter, year, month0],
   );
 
+  const setParamsFor = (mutate: (next: URLSearchParams) => void) =>
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        mutate(next);
+        return next;
+      },
+      { replace: true },
+    );
+
   const shiftMonth = (delta: number) => {
     const next = new Date(year, month0 + delta, 1);
-    setYear(next.getFullYear());
-    setMonth0(next.getMonth());
+    setParamsFor((n) => {
+      n.set('y', String(next.getFullYear()));
+      n.set('m', String(next.getMonth() + 1));
+    });
   };
 
-  const backToToday = () => {
-    setYear(now.getFullYear());
-    setMonth0(now.getMonth());
-  };
+  const backToToday = () =>
+    setParamsFor((n) => {
+      n.delete('y');
+      n.delete('m');
+    });
+
+  const setTypeFilter = (type: TypeFilter) =>
+    setParamsFor((n) => {
+      if (type === 'all') n.delete('type');
+      else n.set('type', type);
+    });
 
   const isCurrentMonth =
     year === now.getFullYear() && month0 === now.getMonth();

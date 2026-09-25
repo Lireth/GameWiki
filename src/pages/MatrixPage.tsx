@@ -1,14 +1,35 @@
 import { Fragment, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { EmptyState } from '../components/ui/EmptyState';
+import { FacetChip, FilterRow } from '../components/ui/FilterPanel';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import type { Character } from '../db/types';
-import { ELEMENT_IDS, PATH_IDS } from '../db/types';
-import { useCharacters } from '../hooks/useWikiData';
+import { ELEMENT_IDS, GENDERS, PATH_IDS, RARITIES } from '../db/types';
+import { useCharacters, useFacetFilter } from '../hooks/useWikiData';
 import { ELEMENT_META, PATH_META, RARITY_META } from '../lib/meta';
 
 const CELL_KEY_SEPARATOR = '|';
+
+type FacetKey = 'rarity' | 'gender' | 'version';
+
+const FACET_KEYS: FacetKey[] = ['rarity', 'gender', 'version'];
+
+function facetValue(character: Character, key: FacetKey): string {
+  switch (key) {
+    case 'rarity':
+      return String(character.rarity);
+    case 'gender':
+      return character.gender;
+    case 'version':
+      return character.releaseVersion;
+  }
+}
+
+/** 矩阵页无搜索框，关键词始终命中 */
+function matchesKeyword(): boolean {
+  return true;
+}
 
 /** 按「属性 | 命途」分桶，桶内按实装日期从新到旧排列 */
 function useMatrixCells(characters: Character[]) {
@@ -63,20 +84,96 @@ function Legend() {
 
 export function MatrixPage() {
   const characters = useCharacters();
-  const cells = useMatrixCells(characters);
+  const {
+    facets,
+    toggleFacet,
+    clearFilters,
+    countOf,
+    allCount,
+    matched,
+    hasAnyFilter,
+  } = useFacetFilter(characters, FACET_KEYS, facetValue, matchesKeyword);
+  const cells = useMatrixCells(matched);
   const hasData = characters.length > 0;
+
+  /** 各命途 / 属性下的筛选后角色数（表头统计） */
+  const pathCounts = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const character of matched) {
+      map.set(character.path, (map.get(character.path) ?? 0) + 1);
+    }
+    return map;
+  }, [matched]);
+  const elementCounts = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const character of matched) {
+      map.set(character.element, (map.get(character.element) ?? 0) + 1);
+    }
+    return map;
+  }, [matched]);
 
   return (
     <div>
       <PageHeader
         en="Path × Type Matrix"
         title="命途 × 战斗属性矩阵"
-        description="每个单元格展示对应「战斗属性 × 命途」组合下的角色，点击角色名可查看详情。"
+        description="每个单元格展示对应「战斗属性 × 命途」组合下的角色，点击角色名可查看详情。支持按稀有度、性别与实装版本筛选。"
       />
 
-      {/* 桌面端：完整二维矩阵 */}
       {hasData ? (
         <>
+          {/* 筛选面板：稀有度 / 性别 / 实装版本（多选） */}
+          <Panel className="mb-6 p-0">
+            <FilterRow label="查看全部">
+              <FacetChip
+                active={!hasAnyFilter}
+                count={allCount}
+                onClick={clearFilters}
+              >
+                查看全部
+              </FacetChip>
+            </FilterRow>
+            <FilterRow label="稀有度">
+              {RARITIES.map((r) => (
+                <FacetChip
+                  key={r}
+                  active={facets.rarity.includes(String(r))}
+                  count={countOf('rarity', String(r))}
+                  color={RARITY_META[r].color}
+                  ariaLabel={`${r}星`}
+                  onClick={() => toggleFacet('rarity', String(r))}
+                >
+                  {r}★
+                </FacetChip>
+              ))}
+            </FilterRow>
+            <FilterRow label="性别">
+              {GENDERS.map((gender) => (
+                <FacetChip
+                  key={gender}
+                  active={facets.gender.includes(gender)}
+                  count={countOf('gender', gender)}
+                  onClick={() => toggleFacet('gender', gender)}
+                >
+                  {gender === 'female' ? '女' : '男'}
+                </FacetChip>
+              ))}
+            </FilterRow>
+            <FilterRow label="实装版本">
+              {buildVersionList(characters).map((version) => (
+                <FacetChip
+                  key={version}
+                  active={facets.version.includes(version)}
+                  count={countOf('version', version)}
+                  onClick={() => toggleFacet('version', version)}
+                >
+                  <span className="font-display">{version}</span>
+                </FacetChip>
+              ))}
+            </FilterRow>
+          </Panel>
+
+          {/* 桌面端：完整二维矩阵 */}
           <div className="hidden overflow-x-auto pb-2 md:block">
             <div className="min-w-[1080px]">
               <div
@@ -102,6 +199,9 @@ export function MatrixPage() {
                       <p className="mt-0.5 font-display text-[10px] tracking-widest text-slate-500 uppercase">
                         {path.en}
                       </p>
+                      <p className="mt-0.5 font-display text-[10px] text-slate-500">
+                        {pathCounts.get(pathId) ?? 0}
+                      </p>
                     </div>
                   );
                 })}
@@ -118,6 +218,9 @@ export function MatrixPage() {
                         <p className="text-sm font-semibold">{element.label}</p>
                         <p className="mt-0.5 font-display text-[10px] tracking-widest text-slate-500 uppercase">
                           {element.en}
+                        </p>
+                        <p className="mt-0.5 font-display text-[10px] text-slate-500">
+                          {elementCounts.get(elementId) ?? 0}
                         </p>
                       </div>
                       {PATH_IDS.map((pathId) => {
@@ -174,6 +277,9 @@ export function MatrixPage() {
                     <span className="ml-2 font-display text-[10px] tracking-widest text-slate-500 uppercase">
                       {element.en}
                     </span>
+                    <span className="ml-2 font-display text-[10px] text-slate-500">
+                      {elementCounts.get(elementId) ?? 0}
+                    </span>
                   </h3>
                   <dl className="mt-3 space-y-3">
                     {rows.map(([pathId, bucket]) => (
@@ -201,6 +307,12 @@ export function MatrixPage() {
           </div>
 
           <Legend />
+
+          {matched.length === 0 && (
+            <p className="mt-6 text-center text-sm text-slate-500">
+              当前筛选条件下没有角色，试试放宽筛选。
+            </p>
+          )}
         </>
       ) : (
         <EmptyState
@@ -210,4 +322,11 @@ export function MatrixPage() {
       )}
     </div>
   );
+}
+
+/** 数据中实际出现的版本，按数值序排列 */
+function buildVersionList(characters: Character[]): string[] {
+  return [
+    ...new Set(characters.map((character) => character.releaseVersion)),
+  ].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 }

@@ -98,9 +98,9 @@ export interface FacetFilterApi<T, K extends string> {
   /** 其它 URL 参数的读写（如 sort），与分面参数共用同一条历史记录 */
   getParam: (key: string) => string | null;
   setParam: (key: string, value: string) => void;
-  /** 各分面维度当前选中的值（空字符串 = 未筛选），URL 参数与维度同名 */
-  facets: Record<K, string>;
-  /** 再次点击已选中的值即取消该维度筛选 */
+  /** 各分面维度当前选中的值列表（空数组 = 未筛选；URL 参数为逗号分隔值） */
+  facets: Record<K, string[]>;
+  /** 点击未选中的值加入该维度，再次点击移除（维度内多选 OR，维度间 AND） */
   toggleFacet: (key: K, value: string) => void;
   clearFilters: () => void;
   /** 某维度某选项的计数（排除该维度自身筛选，随其它维度与搜索词联动） */
@@ -114,7 +114,8 @@ export interface FacetFilterApi<T, K extends string> {
 
 /**
  * 分面筛选 hook：筛选状态同步到 URL，命中结果与全部分面计数在一次遍历中算出。
- * facetValue 返回空字符串表示该条目无此属性；matchesKeyword 只负责搜索词匹配。
+ * 每个维度可多选（维度内 OR、维度间 AND）；facetValue 返回条目在该维度上的唯一取值，
+ * 空字符串表示无此属性。matchesKeyword 只负责搜索词匹配。
  * 注意 facetValue / matchesKeyword 需传模块级函数以保持引用稳定。
  */
 export function useFacetFilter<T, K extends string>(
@@ -127,8 +128,10 @@ export function useFacetFilter<T, K extends string>(
 
   const q = params.get('q') ?? '';
   const facets = useMemo(() => {
-    const record = {} as Record<K, string>;
-    for (const key of facetKeys) record[key] = params.get(key) ?? '';
+    const record = {} as Record<K, string[]>;
+    for (const key of facetKeys) {
+      record[key] = (params.get(key) ?? '').split(',').filter(Boolean);
+    }
     return record;
   }, [params, facetKeys]);
 
@@ -151,7 +154,11 @@ export function useFacetFilter<T, K extends string>(
 
   const toggleFacet = useCallback(
     (key: K, value: string) => {
-      setParam(key, facets[key] === value ? '' : value);
+      const current = facets[key];
+      const next = current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value];
+      setParam(key, next.join(','));
     },
     [facets, setParam],
   );
@@ -174,7 +181,8 @@ export function useFacetFilter<T, K extends string>(
       for (const key of facetKeys) {
         const value = facetValue(item, key);
         values[key] = value;
-        if (facets[key] && value !== facets[key]) fails++;
+        const selected = facets[key];
+        if (selected.length > 0 && !selected.includes(value)) fails++;
       }
       if (fails === 0) {
         // 全部维度通过：计入命中结果，并计入每个维度的所有选项
@@ -188,7 +196,8 @@ export function useFacetFilter<T, K extends string>(
       if (fails === 1) {
         // 仅一个维度未通过：该条目仍计入其它维度的选项计数（分面联动）
         for (const key of facetKeys) {
-          if (!facets[key] || values[key] === facets[key]) continue;
+          const selected = facets[key];
+          if (selected.length === 0 || selected.includes(values[key])) continue;
           const bucket = counts.get(key)!;
           bucket.set(values[key], (bucket.get(values[key]) ?? 0) + 1);
         }
@@ -202,7 +211,7 @@ export function useFacetFilter<T, K extends string>(
     [facetCounts],
   );
 
-  const hasAnyFilter = Boolean(q) || facetKeys.some((key) => facets[key]);
+  const hasAnyFilter = Boolean(q) || facetKeys.some((key) => facets[key].length > 0);
 
   return {
     q,

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { db } from '../../db/db';
 import type { Character, LightCone, NewsEvent } from '../../db/types';
 
@@ -83,7 +84,13 @@ export function Footer() {
           无关，游戏相关内容版权归原厂商所有
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          {/* 数据备份：导出为 JSON，或从备份文件按 id 合并导入 */}
+          {/* 数据维护：应用内增删改 + JSON 备份导出 / 按 id 合并导入 */}
+          <Link
+            to="/admin"
+            className="border border-space-600/60 px-2.5 py-1 text-slate-400 transition hover:border-gold-500/50 hover:text-gold-300"
+          >
+            数据管理
+          </Link>
           <button
             type="button"
             onClick={() => void exportData()}

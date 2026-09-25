@@ -114,7 +114,7 @@ export function LightConesPage() {
               {LIGHT_CONE_RARITIES.map((r) => (
                 <FacetChip
                   key={r}
-                  active={facets.rarity === String(r)}
+                  active={facets.rarity.includes(String(r))}
                   count={countOf('rarity', String(r))}
                   color={RARITY_META[r].color}
                   ariaLabel={`${r}星`}
@@ -133,7 +133,7 @@ export function LightConesPage() {
               {Object.entries(PATH_META).map(([value, meta]) => (
                 <FacetChip
                   key={value}
-                  active={facets.path === value}
+                  active={facets.path.includes(value)}
                   count={countOf('path', value)}
                   color={meta.color}
                   onClick={() => toggleFacet('path', value)}
@@ -148,7 +148,7 @@ export function LightConesPage() {
               {Object.entries(ACQUISITION_LABEL).map(([value, label]) => (
                 <FacetChip
                   key={value}
-                  active={facets.acquisition === value}
+                  active={facets.acquisition.includes(value)}
                   count={countOf('acquisition', value)}
                   onClick={() => toggleFacet('acquisition', value)}
                 >
@@ -165,7 +165,7 @@ export function LightConesPage() {
                   {group.values.map((value) => (
                     <FacetChip
                       key={value}
-                      active={facets.version === value}
+                      active={facets.version.includes(value)}
                       count={countOf('version', value)}
                       onClick={() => toggleFacet('version', value)}
                     >
