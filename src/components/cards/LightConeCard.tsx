@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { LightCone } from '../../db/types';
 import { PATH_META } from '../../lib/meta';
@@ -6,6 +7,7 @@ import { CornerTicks } from '../ui/Panel';
 
 export function LightConeCard({ lightCone }: { lightCone: LightCone }) {
   const path = PATH_META[lightCone.path];
+  const [failedImage, setFailedImage] = useState(false);
 
   return (
     <Link
@@ -21,10 +23,13 @@ export function LightConeCard({ lightCone }: { lightCone: LightCone }) {
           background: `linear-gradient(135deg, ${path.color}22, transparent 65%)`,
         }}
       >
-        {lightCone.image ? (
+        {lightCone.image && !failedImage ? (
           <img
             src={lightCone.image}
             alt={lightCone.name}
+            loading="lazy"
+            decoding="async"
+            onError={() => setFailedImage(true)}
             className="h-full w-full object-cover"
           />
         ) : (

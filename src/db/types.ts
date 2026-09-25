@@ -24,8 +24,8 @@ export const ELEMENT_IDS = [
 ] as const;
 export type ElementId = (typeof ELEMENT_IDS)[number];
 
-/** 稀有度（角色） */
-export const RARITIES = [4, 5] as const;
+/** 稀有度（角色，从高到低，供筛选面板直接遍历） */
+export const RARITIES = [5, 4] as const;
 export type Rarity = (typeof RARITIES)[number];
 
 /** 稀有度（光锥，含 3★） */

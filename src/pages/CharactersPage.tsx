@@ -11,6 +11,7 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import type { Character } from '../db/types';
+import { RARITIES } from '../db/types';
 import { useCharacters } from '../hooks/useWikiData';
 import {
   BODY_TYPE_GROUPS,
@@ -186,7 +187,7 @@ export function CharactersPage() {
   const filtered = useMemo(() => {
     const matched = characters.filter((c) => matchesFilters(c, filters));
     return sortCharacters(matched, sort);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // filters 每次渲染都是新对象，这里只能展开字段作为依赖
   }, [
     characters,
     filters.q,
@@ -232,7 +233,7 @@ export function CharactersPage() {
             </FilterRow>
 
             <FilterRow label="稀有度">
-              {([5, 4] as const).map((r) => (
+              {RARITIES.map((r) => (
                 <FacetChip
                   key={r}
                   active={filters.rarity === String(r)}

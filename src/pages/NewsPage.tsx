@@ -14,6 +14,7 @@ import { NEWS_EVENT_TYPES } from '../db/types';
 import { useNewsEvents } from '../hooks/useWikiData';
 import {
   eventTouchesMonth,
+  eachISODate,
   formatDateShort,
   monthGrid,
   weekdayCN,
@@ -26,15 +27,24 @@ const MAX_CHIPS_PER_DAY = 3;
 
 type TypeFilter = NewsEventType | 'all';
 
-/** 按类型筛选并按日期分桶 */
+/** 事件关联的角色 / 光锥详情页链接（无关联时为 null） */
+function eventLink(event: NewsEvent): string | null {
+  if (event.relatedCharacterId) return `/characters/${event.relatedCharacterId}`;
+  if (event.relatedLightConeId) return `/light-cones/${event.relatedLightConeId}`;
+  return null;
+}
+
+/** 按类型筛选并按日期分桶（跨天事件在起止区间内的每一天都展示） */
 function useEventsByDate(events: NewsEvent[], typeFilter: TypeFilter) {
   return useMemo(() => {
     const map = new Map<string, NewsEvent[]>();
     for (const event of events) {
       if (typeFilter !== 'all' && event.type !== typeFilter) continue;
-      const bucket = map.get(event.date);
-      if (bucket) bucket.push(event);
-      else map.set(event.date, [event]);
+      for (const iso of eachISODate(event.date, event.endDate ?? event.date)) {
+        const bucket = map.get(iso);
+        if (bucket) bucket.push(event);
+        else map.set(iso, [event]);
+      }
     }
     return map;
   }, [events, typeFilter]);
@@ -55,13 +65,10 @@ function EventChip({ event }: { event: NewsEvent }) {
   const className =
     'flex items-center gap-1 px-1 py-0.5 text-[11px] leading-4 transition hover:brightness-125';
 
-  return event.relatedCharacterId ? (
-    <Link
-      to={`/characters/${event.relatedCharacterId}`}
-      className={className}
-      style={style}
-      title={event.title}
-    >
+  const link = eventLink(event);
+
+  return link ? (
+    <Link to={link} className={className} style={style} title={event.title}>
       {inner}
     </Link>
   ) : (
@@ -73,7 +80,8 @@ function EventChip({ event }: { event: NewsEvent }) {
 
 export function NewsPage() {
   const events = useNewsEvents();
-  const now = new Date();
+  // 「今天」在会话期内固定，避免跨午夜渲染不一致
+  const now = useMemo(() => new Date(), []);
   const [year, setYear] = useState(now.getFullYear());
   const [month0, setMonth0] = useState(now.getMonth());
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
@@ -257,42 +265,45 @@ export function NewsPage() {
           </p>
         ) : (
           <ul className="mt-2">
-            {monthEvents.map((event) => (
-              <li
-                key={event.id}
-                className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-space-700/50 py-3 last:border-b-0"
-              >
-                <span className="w-24 shrink-0 font-display text-sm text-gold-300">
-                  {formatDateShort(event.date)}
-                  <span className="ml-1.5 text-[11px] text-slate-500">
-                    {weekdayCN(event.date)}
+            {monthEvents.map((event) => {
+              const link = eventLink(event);
+              return (
+                <li
+                  key={event.id}
+                  className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-space-700/50 py-3 last:border-b-0"
+                >
+                  <span className="w-24 shrink-0 font-display text-sm text-gold-300">
+                    {formatDateShort(event.date)}
+                    <span className="ml-1.5 text-[11px] text-slate-500">
+                      {weekdayCN(event.date)}
+                    </span>
                   </span>
-                </span>
-                <TypeBadge type={event.type} />
-                {event.relatedCharacterId ? (
-                  <Link
-                    to={`/characters/${event.relatedCharacterId}`}
-                    className="min-w-0 flex-1 truncate text-sm text-slate-200 hover:text-gold-300"
-                  >
-                    {event.title}
-                  </Link>
-                ) : (
-                  <span className="min-w-0 flex-1 truncate text-sm text-slate-200">
-                    {event.title}
-                  </span>
-                )}
-                {event.endDate && (
-                  <span className="text-xs text-slate-500">
-                    至 {formatDateShort(event.endDate)}
-                  </span>
-                )}
-                {event.version && (
-                  <span className="font-display text-xs tracking-wider text-slate-500">
-                    v{event.version}
-                  </span>
-                )}
-              </li>
-            ))}
+                  <TypeBadge type={event.type} />
+                  {link ? (
+                    <Link
+                      to={link}
+                      className="min-w-0 flex-1 truncate text-sm text-slate-200 hover:text-gold-300"
+                    >
+                      {event.title}
+                    </Link>
+                  ) : (
+                    <span className="min-w-0 flex-1 truncate text-sm text-slate-200">
+                      {event.title}
+                    </span>
+                  )}
+                  {event.endDate && (
+                    <span className="text-xs text-slate-500">
+                      至 {formatDateShort(event.endDate)}
+                    </span>
+                  )}
+                  {event.version && (
+                    <span className="font-display text-xs tracking-wider text-slate-500">
+                      v{event.version}
+                    </span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
       </Panel>

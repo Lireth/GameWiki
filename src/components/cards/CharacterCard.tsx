@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Character } from '../../db/types';
 import { ELEMENT_META, RARITY_META } from '../../lib/meta';
@@ -7,6 +8,7 @@ import { CornerTicks } from '../ui/Panel';
 export function CharacterCard({ character }: { character: Character }) {
   const element = ELEMENT_META[character.element];
   const rarityColor = RARITY_META[character.rarity].color;
+  const [failedAvatar, setFailedAvatar] = useState(false);
 
   return (
     <Link
@@ -22,10 +24,13 @@ export function CharacterCard({ character }: { character: Character }) {
           background: `linear-gradient(135deg, ${element.color}2b, transparent 65%)`,
         }}
       >
-        {character.avatar ? (
+        {character.avatar && !failedAvatar ? (
           <img
             src={character.avatar}
             alt={character.name}
+            loading="lazy"
+            decoding="async"
+            onError={() => setFailedAvatar(true)}
             className="h-full w-full object-cover"
           />
         ) : (

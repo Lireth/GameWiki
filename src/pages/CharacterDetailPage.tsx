@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeftIcon } from '../components/icons';
 import {
@@ -5,24 +6,32 @@ import {
   GenderBadge,
   PathBadge,
   RarityStars,
+  TypeBadge,
 } from '../components/ui/Badges';
 import { EmptyState } from '../components/ui/EmptyState';
 import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
-import { useCharacters } from '../hooks/useWikiData';
-import { formatDateCN } from '../lib/format';
+import {
+  useCharacterById,
+  useCharacterCount,
+  useNewsEvents,
+} from '../hooks/useWikiData';
+import { formatDateCN, formatDateShort } from '../lib/format';
 import { BODY_TYPE_LABEL, ELEMENT_META, PATH_META } from '../lib/meta';
 
 export function CharacterDetailPage() {
   const { id } = useParams();
-  const characters = useCharacters();
-  const character = characters.find((c) => c.id === id);
+  const character = useCharacterById(id);
+  const characterCount = useCharacterCount();
+  const newsEvents = useNewsEvents();
+  /** 头像加载失败的头像地址（切换角色时重置判断） */
+  const [failedAvatar, setFailedAvatar] = useState<string | null>(null);
 
   if (!character) {
     return (
       <div>
         <PageHeader en="Character" title="角色详情" />
-        {characters.length === 0 ? (
+        {characterCount === 0 ? (
           <EmptyState
             title="暂无角色数据"
             hint="角色数据尚未收录，可在 src/data/seed.ts 中录入。"
@@ -48,6 +57,11 @@ export function CharacterDetailPage() {
 
   const element = ELEMENT_META[character.element];
   const path = PATH_META[character.path];
+  /** 该角色的实装 / 卡池 / 活动时间线（按日期从早到晚） */
+  const relatedEvents = newsEvents
+    .filter((event) => event.relatedCharacterId === character.id)
+    .sort((a, b) => a.date.localeCompare(b.date));
+  const showAvatar = character.avatar && failedAvatar !== character.avatar;
 
   return (
     <div>
@@ -68,10 +82,13 @@ export function CharacterDetailPage() {
               background: `linear-gradient(150deg, ${element.color}30, transparent 70%)`,
             }}
           >
-            {character.avatar ? (
+            {showAvatar ? (
               <img
                 src={character.avatar}
                 alt={character.name}
+                loading="lazy"
+                decoding="async"
+                onError={() => setFailedAvatar(character.avatar ?? null)}
                 className="h-full w-full object-cover"
               />
             ) : (
@@ -145,6 +162,33 @@ export function CharacterDetailPage() {
               <p className="mt-3 leading-loose whitespace-pre-line text-slate-400">
                 {character.description}
               </p>
+            </Panel>
+          )}
+
+          {relatedEvents.length > 0 && (
+            <Panel className="mt-6 p-5 md:p-7" ticks>
+              <h2 className="text-lg font-semibold text-slate-100">相关动态</h2>
+              <ul className="mt-2">
+                {relatedEvents.map((event) => (
+                  <li
+                    key={event.id}
+                    className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-space-700/50 py-3 last:border-b-0"
+                  >
+                    <span className="w-24 shrink-0 font-display text-sm text-gold-300">
+                      {formatDateShort(event.date)}
+                    </span>
+                    <TypeBadge type={event.type} />
+                    <span className="min-w-0 flex-1 truncate text-sm text-slate-200">
+                      {event.title}
+                    </span>
+                    {event.endDate && (
+                      <span className="text-xs text-slate-500">
+                        至 {formatDateShort(event.endDate)}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </Panel>
           )}
         </div>

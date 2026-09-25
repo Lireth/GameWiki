@@ -33,6 +33,22 @@ export function weekdayCN(iso: string): string {
   return `星期${WEEKDAYS[parseISODate(iso).getDay()]}`;
 }
 
+/** 枚举 [start, end] 区间内（含两端）的 YYYY-MM-DD；end 早于 start 时视为单日，上限 62 天防脏数据 */
+export function eachISODate(start: string, end: string): string[] {
+  const last = parseISODate(start >= end ? start : end);
+  const result: string[] = [];
+  let cursor = parseISODate(start);
+  while (cursor <= last && result.length < 62) {
+    result.push(toISODate(cursor));
+    cursor = new Date(
+      cursor.getFullYear(),
+      cursor.getMonth(),
+      cursor.getDate() + 1,
+    );
+  }
+  return result;
+}
+
 export interface CalendarCell {
   /** YYYY-MM-DD */
   iso: string;

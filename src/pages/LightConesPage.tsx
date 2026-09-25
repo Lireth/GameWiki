@@ -11,6 +11,7 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import type { LightCone } from '../db/types';
+import { LIGHT_CONE_RARITIES } from '../db/types';
 import { useLightCones } from '../hooks/useWikiData';
 import {
   ACQUISITION_LABEL,
@@ -176,7 +177,7 @@ export function LightConesPage() {
   const filtered = useMemo(() => {
     const matched = lightCones.filter((lc) => matchesFilters(lc, filters));
     return sortLightCones(matched, sort);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // filters 每次渲染都是新对象，这里只能展开字段作为依赖
   }, [
     lightCones,
     filters.q,
@@ -221,7 +222,7 @@ export function LightConesPage() {
             </FilterRow>
 
             <FilterRow label="稀有度">
-              {([5, 4, 3] as const).map((r) => (
+              {LIGHT_CONE_RARITIES.map((r) => (
                 <FacetChip
                   key={r}
                   active={filters.rarity === String(r)}

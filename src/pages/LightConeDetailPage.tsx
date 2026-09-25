@@ -1,23 +1,30 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeftIcon } from '../components/icons';
-import { PathBadge, RarityStars } from '../components/ui/Badges';
+import { PathBadge, RarityStars, TypeBadge } from '../components/ui/Badges';
 import { EmptyState } from '../components/ui/EmptyState';
 import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
-import { useLightCones } from '../hooks/useWikiData';
-import { formatDateCN } from '../lib/format';
+import {
+  useLightConeById,
+  useLightConeCount,
+  useNewsEvents,
+} from '../hooks/useWikiData';
+import { formatDateCN, formatDateShort } from '../lib/format';
 import { ACQUISITION_LABEL, PATH_META } from '../lib/meta';
 
 export function LightConeDetailPage() {
   const { id } = useParams();
-  const lightCones = useLightCones();
-  const lightCone = lightCones.find((lc) => lc.id === id);
+  const lightCone = useLightConeById(id);
+  const lightConeCount = useLightConeCount();
+  const newsEvents = useNewsEvents();
+  const [failedImage, setFailedImage] = useState<string | null>(null);
 
   if (!lightCone) {
     return (
       <div>
         <PageHeader en="Light Cone" title="光锥详情" />
-        {lightCones.length === 0 ? (
+        {lightConeCount === 0 ? (
           <EmptyState
             title="暂无光锥数据"
             hint="光锥数据尚未收录，可在 src/data/seed.ts 中录入。"
@@ -42,6 +49,11 @@ export function LightConeDetailPage() {
   }
 
   const path = PATH_META[lightCone.path];
+  /** 该光锥的实装 / 卡池 / 活动时间线（按日期从早到晚） */
+  const relatedEvents = newsEvents
+    .filter((event) => event.relatedLightConeId === lightCone.id)
+    .sort((a, b) => a.date.localeCompare(b.date));
+  const showImage = lightCone.image && failedImage !== lightCone.image;
 
   return (
     <div>
@@ -61,10 +73,13 @@ export function LightConeDetailPage() {
               background: `linear-gradient(150deg, ${path.color}26, transparent 70%)`,
             }}
           >
-            {lightCone.image ? (
+            {showImage ? (
               <img
                 src={lightCone.image}
                 alt={lightCone.name}
+                loading="lazy"
+                decoding="async"
+                onError={() => setFailedImage(lightCone.image ?? null)}
                 className="h-full w-full object-cover"
               />
             ) : (
@@ -122,6 +137,33 @@ export function LightConeDetailPage() {
               <p className="mt-3 leading-loose whitespace-pre-line text-slate-400">
                 {lightCone.description}
               </p>
+            </Panel>
+          )}
+
+          {relatedEvents.length > 0 && (
+            <Panel className="mt-6 p-5 md:p-7" ticks>
+              <h2 className="text-lg font-semibold text-slate-100">相关动态</h2>
+              <ul className="mt-2">
+                {relatedEvents.map((event) => (
+                  <li
+                    key={event.id}
+                    className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-space-700/50 py-3 last:border-b-0"
+                  >
+                    <span className="w-24 shrink-0 font-display text-sm text-gold-300">
+                      {formatDateShort(event.date)}
+                    </span>
+                    <TypeBadge type={event.type} />
+                    <span className="min-w-0 flex-1 truncate text-sm text-slate-200">
+                      {event.title}
+                    </span>
+                    {event.endDate && (
+                      <span className="text-xs text-slate-500">
+                        至 {formatDateShort(event.endDate)}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </Panel>
           )}
         </div>
