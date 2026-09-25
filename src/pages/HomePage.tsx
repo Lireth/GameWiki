@@ -17,7 +17,8 @@ import {
   useNewsEvents,
 } from '../hooks/useWikiData';
 import type { Character, LightCone } from '../db/types';
-import { formatDateShort, newsMonthLink } from '../lib/format';
+import { formatDateShort } from '../lib/format';
+import { newsMonthLink, versionLink } from '../lib/links';
 
 const FEATURES = [
   {
@@ -264,7 +265,7 @@ export function HomePage() {
                   </span>
                   {event.version && (
                     <Link
-                      to={`/versions/${event.version}`}
+                      to={versionLink(event.version)}
                       title="查看该版本全部内容"
                       className="font-display text-xs tracking-wider text-slate-500 transition hover:text-gold-300"
                     >

@@ -12,6 +12,7 @@ import {
   useNewsEvents,
 } from '../hooks/useWikiData';
 import { formatDateCN } from '../lib/format';
+import { versionLink } from '../lib/links';
 import { ACQUISITION_LABEL, PATH_META } from '../lib/meta';
 
 export function LightConeDetailPage() {
@@ -125,7 +126,7 @@ export function LightConeDetailPage() {
               <FieldRow label="实装版本">
                 {lightCone.releaseVersion ? (
                   <Link
-                    to={`/versions/${lightCone.releaseVersion}`}
+                    to={versionLink(lightCone.releaseVersion)}
                     title="查看该版本全部内容"
                     className="font-display transition hover:text-gold-300"
                   >

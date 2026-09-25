@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Character } from '../../db/types';
+import { characterLink } from '../../lib/links';
 import { ELEMENT_META, RARITY_META } from '../../lib/meta';
 import { ElementBadge, PathBadge, RarityStars } from '../ui/Badges';
 import { CornerTicks } from '../ui/Panel';
@@ -11,10 +12,7 @@ export function CharacterCard({ character }: { character: Character }) {
   const [failedAvatar, setFailedAvatar] = useState(false);
 
   return (
-    <Link
-      to={`/characters/${character.id}`}
-      className="group relative block border border-space-600/50 bg-space-850/70 transition duration-200 hover:-translate-y-0.5 hover:border-gold-500/50 hover:bg-space-800/80 hover:shadow-[0_8px_28px_-12px_rgba(233,180,95,0.35)]"
-    >
+    <Link to={characterLink(character.id)} className="group relative block border border-space-600/50 bg-space-850/70 transition duration-200 hover:-translate-y-0.5 hover:border-gold-500/50 hover:bg-space-800/80 hover:shadow-[0_8px_28px_-12px_rgba(233,180,95,0.35)]">
       <CornerTicks className="opacity-0 transition group-hover:opacity-100" />
 
       {/* 头图：无图片数据时以属性色渐变 + 名称首字占位 */}

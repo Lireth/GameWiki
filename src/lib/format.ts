@@ -33,13 +33,6 @@ export function weekdayCN(iso: string): string {
   return `星期${WEEKDAYS[parseISODate(iso).getDay()]}`;
 }
 
-/** 生成跳转到资讯日历对应月份视图的链接（配合 NewsPage 的 y / m URL 参数） */
-export function newsMonthLink(iso: string): string {
-  const year = Number(iso.slice(0, 4));
-  const month = Number(iso.slice(5, 7));
-  return `/news?y=${year}&m=${month}`;
-}
-
 /** 枚举 [start, end] 区间内（含两端）的 YYYY-MM-DD；end 早于 start 时视为单日，上限 62 天防脏数据 */
 export function eachISODate(start: string, end: string): string[] {
   const last = parseISODate(start >= end ? start : end);

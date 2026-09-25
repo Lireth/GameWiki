@@ -44,4 +44,11 @@ describe('buildVersionGroups', () => {
     expect(g2.values.filter((v) => v === '2.7')).toHaveLength(1);
     expect(groups.map((g) => g.major)).toEqual(['1', '2', '3', '4']);
   });
+
+  it('extraVersions（URL 残留的已选版本）同样参与合并', () => {
+    const groups = buildVersionGroups([], ['4.7', '9.9']);
+    expect(groups.map((g) => g.major)).toEqual(['1', '2', '3', '4', '9']);
+    expect(groups.find((g) => g.major === '4')!.values).toContain('4.7');
+    expect(groups.find((g) => g.major === '9')!.values).toEqual(['9.9']);
+  });
 });

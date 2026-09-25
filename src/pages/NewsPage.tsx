@@ -21,6 +21,7 @@ import {
   monthGrid,
   weekdayCN,
 } from '../lib/format';
+import { eventLink, versionLink } from '../lib/links';
 import { NEWS_TYPE_META } from '../lib/meta';
 
 const WEEKDAY_HEADERS = ['一', '二', '三', '四', '五', '六', '日'];
@@ -28,13 +29,6 @@ const WEEKDAY_HEADERS = ['一', '二', '三', '四', '五', '六', '日'];
 const MAX_CHIPS_PER_DAY = 3;
 
 type TypeFilter = NewsEventType | 'all';
-
-/** 事件关联的角色 / 光锥详情页链接（无关联时为 null） */
-function eventLink(event: NewsEvent): string | null {
-  if (event.relatedCharacterId) return `/characters/${event.relatedCharacterId}`;
-  if (event.relatedLightConeId) return `/light-cones/${event.relatedLightConeId}`;
-  return null;
-}
 
 /** 按类型筛选并按日期分桶（跨天事件在起止区间内的每一天都展示） */
 function useEventsByDate(events: NewsEvent[], typeFilter: TypeFilter) {
@@ -393,7 +387,7 @@ export function NewsPage() {
                   )}
                   {event.version && (
                     <Link
-                      to={`/versions/${event.version}`}
+                      to={versionLink(event.version)}
                       title="查看该版本全部内容"
                       className="font-display text-xs tracking-wider text-slate-500 transition hover:text-gold-300"
                     >

@@ -5,7 +5,6 @@ import {
   formatDateCN,
   formatDateShort,
   monthGrid,
-  newsMonthLink,
   parseISODate,
   toISODate,
   weekdayCN,
@@ -95,12 +94,5 @@ describe('eventTouchesMonth', () => {
     expect(eventTouchesMonth(event, 2026, 8)).toBe(true);
     expect(eventTouchesMonth(event, 2026, 9)).toBe(true);
     expect(eventTouchesMonth(event, 2026, 10)).toBe(false);
-  });
-});
-
-describe('newsMonthLink', () => {
-  it('生成跳转到日历对应月份的链接', () => {
-    expect(newsMonthLink('2026-09-25')).toBe('/news?y=2026&m=9');
-    expect(newsMonthLink('2026-01-05')).toBe('/news?y=2026&m=1');
   });
 });

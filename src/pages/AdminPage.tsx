@@ -20,6 +20,11 @@ import {
   type NewsEvent,
 } from '../db/types';
 import {
+  validateDateRange,
+  validateEntryFields,
+  validateRelatedIds,
+} from '../lib/entryValidation';
+import {
   ACQUISITION_LABEL,
   BODY_TYPE_LABEL,
   ELEMENT_META,
@@ -278,50 +283,20 @@ export function AdminPage() {
   };
 
   const save = async () => {
-    const missing = fields.find((field) => field.required && !form[field.name]?.trim());
-    if (missing) {
-      alert(`请填写「${missing.label}」`);
+    // 字段级 / 跨字段 / 关联存在性校验（纯逻辑见 lib/entryValidation.ts）
+    const error =
+      validateEntryFields(fields, form) ??
+      (entryType === 'newsEvent'
+        ? validateDateRange(form.date, form.endDate) ??
+          validateRelatedIds(
+            form,
+            new Set(characters.map((c) => c.id)),
+            new Set(lightCones.map((lc) => lc.id)),
+          )
+        : null);
+    if (error) {
+      alert(error);
       return;
-    }
-    // 枚举字段白名单校验，防止脏值入库后渲染时查表失败
-    for (const field of fields) {
-      if (field.kind !== 'choice' || !field.values) continue;
-      const value = form[field.name]?.trim() ?? '';
-      if (value && !field.values.includes(value)) {
-        alert(`「${field.label}」的取值无效，请重新选择`);
-        return;
-      }
-    }
-    // 日期格式与区间校验
-    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
-    for (const field of fields) {
-      if (field.kind !== 'date') continue;
-      const value = form[field.name]?.trim() ?? '';
-      if (value && !datePattern.test(value)) {
-        alert(`「${field.label}」格式应为 YYYY-MM-DD`);
-        return;
-      }
-    }
-    if (
-      entryType === 'newsEvent' &&
-      form.endDate?.trim() &&
-      form.date?.trim() &&
-      form.endDate.trim() < form.date.trim()
-    ) {
-      alert('「结束日期」不能早于「开始日期」');
-      return;
-    }
-    if (entryType === 'newsEvent') {
-      const relChar = form.relatedCharacterId?.trim();
-      if (relChar && !characters.some((c) => c.id === relChar)) {
-        alert('关联角色的 ID 不存在，请重新选择');
-        return;
-      }
-      const relCone = form.relatedLightConeId?.trim();
-      if (relCone && !lightCones.some((lc) => lc.id === relCone)) {
-        alert('关联光锥的 ID 不存在，请重新选择');
-        return;
-      }
     }
     const entry = buildEntry(entryType, form);
     try {

@@ -8,6 +8,7 @@ import type { Character } from '../db/types';
 import { ELEMENT_IDS, GENDERS, PATH_IDS, RARITIES } from '../db/types';
 import { useCharacters, useFacetFilter } from '../hooks/useWikiData';
 import { ELEMENT_META, PATH_META, RARITY_META } from '../lib/meta';
+import { characterLink } from '../lib/links';
 
 const CELL_KEY_SEPARATOR = '|';
 
@@ -52,7 +53,7 @@ function MatrixChip({ character }: { character: Character }) {
   const color = RARITY_META[character.rarity].color;
   return (
     <Link
-      to={`/characters/${character.id}`}
+      to={characterLink(character.id)}
       title={`${character.name} · v${character.releaseVersion} · ${character.releaseDate}`}
       className="block truncate border px-1.5 py-1 text-xs leading-4 transition hover:brightness-125"
       style={{
@@ -163,7 +164,7 @@ export function MatrixPage() {
               ))}
             </FilterRow>
             <FilterRow label="实装版本">
-              {buildVersionList(characters).map((version) => (
+              {buildVersionList(characters, facets.version).map((version) => (
                 <FacetChip
                   key={version}
                   active={facets.version.includes(version)}
@@ -327,9 +328,15 @@ export function MatrixPage() {
   );
 }
 
-/** 数据中实际出现的版本，按数值序排列 */
-function buildVersionList(characters: Character[]): string[] {
+/** 数据中实际出现的版本 + URL 残留的已选版本，按数值序排列 */
+function buildVersionList(
+  characters: Character[],
+  extraVersions: readonly string[],
+): string[] {
   return [
-    ...new Set(characters.map((character) => character.releaseVersion)),
+    ...new Set([
+      ...characters.map((character) => character.releaseVersion),
+      ...extraVersions,
+    ]),
   ].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 }

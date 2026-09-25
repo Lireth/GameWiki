@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { db } from '../../db/db';
 import type { Character, LightCone, NewsEvent } from '../../db/types';
+import { MAX_IMAGE_DATA_URL_LENGTH } from '../../lib/entryValidation';
 
 /** 导出三张表为 JSON 备份文件 */
 async function exportData() {
@@ -38,11 +39,11 @@ async function importData(file: File) {
       Array.isArray(value) ? value.filter((item): item is T => isRecord(item) && guard(item)) : [];
 
     // 逐类型校验必填字段，避免脏数据混入数据库
-    const characters = pick<Character>(data.characters, (item) =>
+    const allCharacters = pick<Character>(data.characters, (item) =>
       isStr(item.id) && isStr(item.name) && isStr(item.path) && isStr(item.element) &&
       (item.rarity === 4 || item.rarity === 5) && isStr(item.releaseDate) && isStr(item.releaseVersion),
     );
-    const lightCones = pick<LightCone>(data.lightCones, (item) =>
+    const allLightCones = pick<LightCone>(data.lightCones, (item) =>
       isStr(item.id) && isStr(item.name) && isStr(item.path) &&
       (item.rarity === 3 || item.rarity === 4 || item.rarity === 5),
     );
@@ -50,13 +51,25 @@ async function importData(file: File) {
       isStr(item.id) && isStr(item.type) && isStr(item.title) && isStr(item.date),
     );
 
+    // 图片 data URL 超限的条目跳过（与管理页上传的 1MB 上限一致）
+    const oversized = (value: unknown) =>
+      typeof value === 'string' &&
+      value.startsWith('data:') &&
+      value.length > MAX_IMAGE_DATA_URL_LENGTH;
+    const characters = allCharacters.filter((c) => !oversized(c.avatar));
+    const lightCones = allLightCones.filter((c) => !oversized(c.image));
+    const skipped =
+      allCharacters.length - characters.length +
+      (allLightCones.length - lightCones.length);
+
     if (characters.length + lightCones.length + newsEvents.length === 0) {
       alert('文件中未找到可导入的数据（需要 characters / lightCones / newsEvents 数组）。');
       return;
     }
     const confirmed = window.confirm(
-      `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、资讯 ${newsEvents.length} 条。\n` +
-        '与现有数据 id 相同的条目会被覆盖，其余保留。是否继续？',
+      `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、资讯 ${newsEvents.length} 条。` +
+        (skipped > 0 ? `\n另有 ${skipped} 条图片超过 1MB 的条目将被跳过。` : '') +
+        '\n与现有数据 id 相同的条目会被覆盖，其余保留。是否继续？',
     );
     if (!confirmed) return;
 

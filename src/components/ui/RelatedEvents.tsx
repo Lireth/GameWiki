@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { TypeBadge } from './Badges';
 import { Panel } from './Panel';
 import type { NewsEvent } from '../../db/types';
-import { formatDateShort, newsMonthLink } from '../../lib/format';
+import { formatDateShort } from '../../lib/format';
+import { newsMonthLink } from '../../lib/links';
 
 interface RelatedEventsProps {
   /** 已按关联字段过滤好的事件（组件内部按日期从早到晚排序） */

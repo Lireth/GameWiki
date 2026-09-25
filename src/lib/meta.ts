@@ -121,17 +121,21 @@ export const ACQUISITION_LABEL: Record<AcquisitionType, string> = {
 
 /**
  * 实装版本筛选分组：以常显配置（VERSION_GROUPS）为基础，
- * 数据中出现的新版本追加到对应大版本分组（或新建分组）。
+ * 数据中出现的新版本与 extraVersions（如 URL 中残留的已选版本）追加到
+ * 对应大版本分组（或新建分组），保证所有生效的筛选值都有可渲染、可解除的 chip。
  */
 export function buildVersionGroups(
   dataVersions: readonly (string | undefined)[],
+  extraVersions: readonly string[] = [],
 ): { major: string; values: string[] }[] {
   const known = new Set(VERSION_GROUPS.flatMap((group) => group.values));
   const groups = VERSION_GROUPS.map((group) => ({
     major: group.major,
     values: [...group.values],
   }));
-  for (const version of new Set(dataVersions)) {
+  const versions = new Set(dataVersions);
+  for (const extra of extraVersions) versions.add(extra);
+  for (const version of versions) {
     if (!version || known.has(version)) continue;
     const major = version.split('.')[0];
     let group = groups.find((g) => g.major === major);

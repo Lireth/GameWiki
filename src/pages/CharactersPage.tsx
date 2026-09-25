@@ -87,10 +87,10 @@ export function CharactersPage() {
     [matched, sort],
   );
 
-  /** 实装版本分组：以常显配置为基础，数据中的新版本追加到对应大版本（或新建分组） */
+  /** 实装版本分组：常显配置 + 数据中的新版本 + URL 残留的已选版本（计数 0 仍可解除） */
   const versionGroups = useMemo(
-    () => buildVersionGroups(characters.map((c) => c.releaseVersion)),
-    [characters],
+    () => buildVersionGroups(characters.map((c) => c.releaseVersion), facets.version),
+    [characters, facets.version],
   );
 
   return (

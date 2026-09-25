@@ -17,6 +17,7 @@ import {
   useNewsEvents,
 } from '../hooks/useWikiData';
 import { formatDateCN } from '../lib/format';
+import { versionLink } from '../lib/links';
 import { BODY_TYPE_LABEL, ELEMENT_META, PATH_META } from '../lib/meta';
 
 export function CharacterDetailPage() {
@@ -152,7 +153,7 @@ export function CharacterDetailPage() {
               </FieldRow>
               <FieldRow label="实装版本">
                 <Link
-                  to={`/versions/${character.releaseVersion}`}
+                  to={versionLink(character.releaseVersion)}
                   title="查看该版本全部内容"
                   className="font-display transition hover:text-gold-300"
                 >

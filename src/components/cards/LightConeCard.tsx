@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { LightCone } from '../../db/types';
+import { lightConeLink } from '../../lib/links';
 import { PATH_META } from '../../lib/meta';
 import { PathBadge, RarityStars } from '../ui/Badges';
 import { CornerTicks } from '../ui/Panel';
@@ -10,10 +11,7 @@ export function LightConeCard({ lightCone }: { lightCone: LightCone }) {
   const [failedImage, setFailedImage] = useState(false);
 
   return (
-    <Link
-      to={`/light-cones/${lightCone.id}`}
-      className="group relative block border border-space-600/50 bg-space-850/70 transition duration-200 hover:-translate-y-0.5 hover:border-gold-500/50 hover:bg-space-800/80 hover:shadow-[0_8px_28px_-12px_rgba(233,180,95,0.35)]"
-    >
+    <Link to={lightConeLink(lightCone.id)} className="group relative block border border-space-600/50 bg-space-850/70 transition duration-200 hover:-translate-y-0.5 hover:border-gold-500/50 hover:bg-space-800/80 hover:shadow-[0_8px_28px_-12px_rgba(233,180,95,0.35)]">
       <CornerTicks className="opacity-0 transition group-hover:opacity-100" />
 
       {/* 头图：无图片数据时以命途色渐变 + 菱形轮廓占位 */}

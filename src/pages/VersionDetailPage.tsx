@@ -12,15 +12,8 @@ import {
   useLightCones,
   useNewsEvents,
 } from '../hooks/useWikiData';
-import type { NewsEvent } from '../db/types';
-import { formatDateShort, newsMonthLink } from '../lib/format';
-
-/** 事件关联的角色 / 光锥详情页链接（与 NewsPage 的口径一致） */
-function eventLink(event: NewsEvent): string | null {
-  if (event.relatedCharacterId) return `/characters/${event.relatedCharacterId}`;
-  if (event.relatedLightConeId) return `/light-cones/${event.relatedLightConeId}`;
-  return null;
-}
+import { formatDateShort } from '../lib/format';
+import { eventLink, newsMonthLink } from '../lib/links';
 
 export function VersionDetailPage() {
   const { version = '' } = useParams();
