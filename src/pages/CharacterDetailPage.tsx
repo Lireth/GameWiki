@@ -135,6 +135,11 @@ export function CharacterDetailPage() {
               <ElementBadge id={character.element} />
               <GenderBadge gender={character.gender} />
             </div>
+            {character.aliases && character.aliases.length > 0 && (
+              <p className="mt-3 text-xs leading-relaxed text-slate-500">
+                别名：{character.aliases.join(' / ')}
+              </p>
+            )}
           </div>
         </Panel>
 

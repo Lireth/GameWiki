@@ -1,7 +1,12 @@
 import { Fragment, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { EmptyState, LoadingState } from '../components/ui/EmptyState';
-import { FacetChip, CopyLinkButton, FilterRow } from '../components/ui/FilterPanel';
+import {
+  FacetChip,
+  CopyLinkButton,
+  FilterRow,
+  VersionFacetRow,
+} from '../components/ui/FilterPanel';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import type { Character } from '../db/types';
@@ -11,7 +16,7 @@ import {
   useCharacters,
   useFacetFilter,
 } from '../hooks/useWikiData';
-import { ELEMENT_META, PATH_META, RARITY_META } from '../lib/meta';
+import { ELEMENT_META, PATH_META, RARITY_META, buildVersionGroups } from '../lib/meta';
 import { characterLink } from '../lib/links';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
@@ -104,6 +109,12 @@ export function MatrixPage() {
   const cells = useMatrixCells(matched);
   const hasData = characters.length > 0;
 
+  /** 实装版本分组：常显配置 + 数据中的新版本 + URL 残留的已选版本（与图鉴列表页一致） */
+  const versionGroups = useMemo(
+    () => buildVersionGroups(characters.map((c) => c.releaseVersion), facets.version),
+    [characters, facets.version],
+  );
+
   /** 各命途 / 属性下的筛选后角色数（表头统计） */
   const pathCounts = useMemo(() => {
     const map = new Map<string, number>();
@@ -170,18 +181,12 @@ export function MatrixPage() {
                 </FacetChip>
               ))}
             </FilterRow>
-            <FilterRow label="实装版本">
-              {buildVersionList(characters, facets.version).map((version) => (
-                <FacetChip
-                  key={version}
-                  active={facets.version.includes(version)}
-                  count={countOf('version', version)}
-                  onClick={() => toggleFacet('version', version)}
-                >
-                  <span className="font-display">{version}</span>
-                </FacetChip>
-              ))}
-            </FilterRow>
+            <VersionFacetRow
+              groups={versionGroups}
+              selected={facets.version}
+              countOf={(value) => countOf('version', value)}
+              onToggle={(value) => toggleFacet('version', value)}
+            />
           </Panel>
 
           {/* 桌面端：完整二维矩阵 */}
@@ -335,17 +340,4 @@ export function MatrixPage() {
       )}
     </div>
   );
-}
-
-/** 数据中实际出现的版本 + URL 残留的已选版本，按数值序排列 */
-function buildVersionList(
-  characters: Character[],
-  extraVersions: readonly string[],
-): string[] {
-  return [
-    ...new Set([
-      ...characters.map((character) => character.releaseVersion),
-      ...extraVersions,
-    ]),
-  ].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 }

@@ -105,4 +105,16 @@ describe('checkWikiData', () => {
     expect(warnings.some((issue) => issue.message === '名称与其它角色重复')).toBe(true);
     expect(warnings.some((issue) => issue.message === '位面饰品不应有四件套效果')).toBe(true);
   });
+
+  it('idb: 图片引用悬空报 warning，正常引用不报', () => {
+    const issues = checkWikiData({
+      characters: [{ ...baseCharacter, avatar: 'idb:img-ghost' }],
+      lightCones: [{ ...baseLightCone, image: 'idb:img-ok' }],
+      relics: [],
+      newsEvents: [],
+      imageIds: new Set(['img-ok']),
+    });
+    expect(issues.some((issue) => issue.message.includes('头像图片引用指向不存在'))).toBe(true);
+    expect(issues.some((issue) => issue.message.includes('光锥') && issue.message.includes('图片引用'))).toBe(false);
+  });
 });

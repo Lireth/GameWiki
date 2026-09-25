@@ -124,6 +124,11 @@ export function RelicDetailPage() {
                 {category.label}
               </span>
             </div>
+            {relic.aliases && relic.aliases.length > 0 && (
+              <p className="mt-3 text-xs leading-relaxed text-slate-500">
+                别名：{relic.aliases.join(' / ')}
+              </p>
+            )}
           </div>
         </Panel>
 

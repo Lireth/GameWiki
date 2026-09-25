@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { EmptyState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
@@ -36,9 +36,10 @@ import {
   type RelicSet,
 } from '../db/types';
 import {
+  collectEntryFieldErrors,
+  collectRelatedIdErrors,
+  parseAliases,
   validateDateRange,
-  validateEntryFields,
-  validateRelatedIds,
 } from '../lib/entryValidation';
 import {
   ACQUISITION_LABEL,
@@ -198,19 +199,6 @@ function fieldsFor(type: EntryType): FieldDef[] {
 
 type FormState = Record<string, string>;
 
-/** 别名文本（每行一个，兼容逗号 / 顿号分隔）→ 去重后的数组 */
-function parseAliases(raw: string | undefined): string[] | undefined {
-  const list = [
-    ...new Set(
-      (raw ?? '')
-        .split(/[\n,，、]/)
-        .map((item) => item.trim())
-        .filter(Boolean),
-    ),
-  ];
-  return list.length > 0 ? list : undefined;
-}
-
 function emptyForm(type: EntryType): FormState {
   const form: FormState = {};
   for (const field of fieldsFor(type)) {
@@ -329,6 +317,11 @@ function entryLabel(
 function entrySummary(
   type: EntryType,
   entry: Character | LightCone | NewsEvent | RelicSet,
+  relatedNames?: {
+    character: Map<string, string>;
+    lightCone: Map<string, string>;
+    relic: Map<string, string>;
+  },
 ): string {
   if (type === 'character') {
     const c = entry as Character;
@@ -343,7 +336,14 @@ function entrySummary(
     return `${RELIC_CATEGORY_META[r.category].label} · ${r.rarity}★${r.releaseVersion ? ` · v${r.releaseVersion}` : ''}`;
   }
   const event = entry as NewsEvent;
-  return `${NEWS_TYPE_META[event.type].label} · ${event.date}${event.endDate ? ` 至 ${event.endDate}` : ''}`;
+  const related = [
+    event.relatedCharacterId && `角色 ${relatedNames?.character.get(event.relatedCharacterId) ?? event.relatedCharacterId}`,
+    event.relatedLightConeId && `光锥 ${relatedNames?.lightCone.get(event.relatedLightConeId) ?? event.relatedLightConeId}`,
+    event.relatedRelicId && `遗器 ${relatedNames?.relic.get(event.relatedRelicId) ?? event.relatedRelicId}`,
+  ]
+    .filter(Boolean)
+    .join('、');
+  return `${NEWS_TYPE_META[event.type].label} · ${event.date}${event.endDate ? ` 至 ${event.endDate}` : ''}${related ? ` · 关联 ${related}` : ''}`;
 }
 
 const inputClass =
@@ -371,6 +371,10 @@ export function AdminPage() {
 
   const [entryType, setEntryType] = useState<EntryType>('character');
   const [form, setForm] = useState<FormState>(() => emptyForm('character'));
+  /** 表单基线：与 form 不一致即视为有未保存修改 */
+  const [baseline, setBaseline] = useState<FormState>(() => emptyForm('character'));
+  /** 字段级校验错误（保存时收集，修改对应字段后清除） */
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [editingId, setEditingId] = useState<string | null>(null);
   /** 条目列表的关键词过滤 */
   const [listQuery, setListQuery] = useState('');
@@ -379,13 +383,36 @@ export function AdminPage() {
   /** 数据健康检查结果（null = 尚未检查） */
   const [healthIssues, setHealthIssues] = useState<HealthIssue[] | null>(null);
 
+  const isDirty = useMemo(
+    () => JSON.stringify(form) !== JSON.stringify(baseline),
+    [form, baseline],
+  );
+
+  // 有未保存修改时拦截页面关闭 / 刷新
+  useEffect(() => {
+    if (!isDirty) return;
+    const handler = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [isDirty]);
+
+  /** 丢弃未保存修改前的确认；确认无效（用户取消）时返回 false */
+  const confirmDiscard = () =>
+    !isDirty || window.confirm('当前表单有未保存的修改，确定放弃吗？');
+
   const showNotice = (message: string) => {
     setNotice(message);
     window.setTimeout(() => setNotice(null), 4000);
   };
 
-  const runHealthCheck = () =>
-    setHealthIssues(checkWikiData({ characters, lightCones, relics, newsEvents }));
+  const runHealthCheck = async () => {
+    const imageIds = new Set((await db.images.toArray()).map((image) => image.id));
+    setHealthIssues(
+      checkWikiData({ characters, lightCones, relics, newsEvents, imageIds }),
+    );
+  };
 
   const fields = fieldsFor(entryType);
   const entries: (Character | LightCone | NewsEvent | RelicSet)[] =
@@ -403,43 +430,76 @@ export function AdminPage() {
       )
     : entries;
 
-  const setField = (name: string, value: string) =>
+  /** 关联实体 id → 名称（资讯条目摘要展示用，找不到时回退显示 id） */
+  const relatedNames = useMemo(
+    () => ({
+      character: new Map(characters.map((c) => [c.id, c.name])),
+      lightCone: new Map(lightCones.map((lc) => [lc.id, lc.name])),
+      relic: new Map(relics.map((r) => [r.id, r.name])),
+    }),
+    [characters, lightCones, relics],
+  );
+
+  const setField = (name: string, value: string) => {
     setForm((prev) => ({ ...prev, [name]: value }));
+    // 修改字段后清除该字段的内联校验错误
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+  };
 
   const switchType = (type: EntryType) => {
+    if (type !== entryType && !confirmDiscard()) return;
+    const empty = emptyForm(type);
     setEntryType(type);
-    setForm(emptyForm(type));
+    setForm(empty);
+    setBaseline(empty);
     setEditingId(null);
+    setFieldErrors({});
     setListQuery('');
   };
 
   const startEdit = (entry: Character | LightCone | NewsEvent | RelicSet) => {
-    setForm(entryToForm(entryType, entry));
+    if (editingId !== entry.id && !confirmDiscard()) return;
+    const next = entryToForm(entryType, entry);
+    setForm(next);
+    setBaseline(next);
     setEditingId(entry.id);
+    setFieldErrors({});
   };
 
   const cancelEdit = () => {
-    setForm(emptyForm(entryType));
+    const empty = emptyForm(entryType);
+    setForm(empty);
+    setBaseline(empty);
     setEditingId(null);
+    setFieldErrors({});
   };
 
   const save = async () => {
-    // 字段级 / 跨字段 / 关联存在性校验（纯逻辑见 lib/entryValidation.ts）
-    const error =
-      validateEntryFields(fields, form) ??
-      (entryType === 'newsEvent'
-        ? validateDateRange(form.date, form.endDate) ??
-          validateRelatedIds(
-            form,
-            new Set(characters.map((c) => c.id)),
-            new Set(lightCones.map((lc) => lc.id)),
-            new Set(relics.map((r) => r.id)),
-          )
-        : null);
-    if (error) {
-      alert(error);
+    // 字段级 / 跨字段校验：收集为字段级错误内联展示（纯逻辑见 lib/entryValidation.ts）
+    const errors = collectEntryFieldErrors(fields, form);
+    if (entryType === 'newsEvent') {
+      const rangeError = validateDateRange(form.date, form.endDate);
+      if (rangeError) errors.endDate = rangeError;
+      Object.assign(
+        errors,
+        collectRelatedIdErrors(
+          form,
+          new Set(characters.map((c) => c.id)),
+          new Set(lightCones.map((lc) => lc.id)),
+          new Set(relics.map((r) => r.id)),
+        ),
+      );
+    }
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       return;
     }
+    setFieldErrors({});
     const entry = buildEntry(entryType, form);
     try {
       if (!editingId) {
@@ -615,6 +675,11 @@ export function AdminPage() {
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-lg font-semibold text-slate-100">
               {editingId ? '编辑条目' : '新增条目'}
+              {isDirty && (
+                <span className="ml-2 border border-gold-500/50 px-1.5 py-0.5 align-middle text-[10px] font-normal text-gold-300">
+                  未保存
+                </span>
+              )}
             </h2>
             {editingId && (
               <button
@@ -706,6 +771,11 @@ export function AdminPage() {
                       className={`${inputClass} mt-1 disabled:opacity-60`}
                     />
                   )}
+                  {fieldErrors[field.name] && (
+                    <span className="mt-1 block text-xs text-red-400">
+                      {fieldErrors[field.name]}
+                    </span>
+                  )}
                 </label>
               );
             })}
@@ -772,7 +842,7 @@ export function AdminPage() {
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-slate-200">{entryLabel(entry)}</p>
                     <p className="truncate text-xs text-slate-500">
-                      {entry.id} · {entrySummary(entryType, entry)}
+                      {entry.id} · {entrySummary(entryType, entry, relatedNames)}
                     </p>
                   </div>
                   <button
@@ -805,13 +875,13 @@ export function AdminPage() {
               检查悬挂关联、无效枚举值、日期格式与重复名称等问题，建议在批量导入后运行。
             </p>
           </div>
-          <button
-            type="button"
-            onClick={runHealthCheck}
-            className="chamfer-xs border border-gold-500/50 px-3 py-1.5 text-sm text-gold-300 transition hover:bg-gold-500/10"
-          >
-            开始检查
-          </button>
+            <button
+              type="button"
+              onClick={() => void runHealthCheck()}
+              className="chamfer-xs border border-gold-500/50 px-3 py-1.5 text-sm text-gold-300 transition hover:bg-gold-500/10"
+            >
+              开始检查
+            </button>
         </div>
 
         {healthIssues !== null && (

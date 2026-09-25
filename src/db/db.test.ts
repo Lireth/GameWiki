@@ -127,4 +127,19 @@ describe('内联图片迁移（v6）', () => {
     await bootstrapDatabase();
     expect(await db.images.count()).toBe(1);
   });
+
+  it('启动时回收业务表未引用的孤儿图片', async () => {
+    await db.open();
+    // 一条被引用的图片 + 一条孤儿图片（用不在种子中的 id，避免种子重灌干扰）
+    await db.characters.put({ ...SEELE, id: 'extra-img', avatar: 'idb:img-keep' });
+    await db.images.bulkPut([
+      { id: 'img-keep', blob: new Blob(['keep']) },
+      { id: 'img-orphan', blob: new Blob(['orphan']) },
+    ]);
+
+    await bootstrapDatabase();
+
+    expect(await db.images.get('img-keep')).toBeTruthy();
+    expect(await db.images.get('img-orphan')).toBeUndefined();
+  });
 });

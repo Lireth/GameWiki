@@ -117,6 +117,11 @@ export function LightConeDetailPage() {
             <div className="mt-3">
               <PathBadge id={lightCone.path} />
             </div>
+            {lightCone.aliases && lightCone.aliases.length > 0 && (
+              <p className="mt-3 text-xs leading-relaxed text-slate-500">
+                别名：{lightCone.aliases.join(' / ')}
+              </p>
+            )}
           </div>
         </Panel>
 

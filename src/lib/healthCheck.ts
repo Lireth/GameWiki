@@ -13,6 +13,7 @@ import {
   PATH_IDS,
   RELIC_CATEGORIES,
 } from '../db/types';
+import { parseImageRef } from './imageRef';
 
 export type HealthTable = 'characters' | 'lightCones' | 'relics' | 'newsEvents';
 
@@ -48,6 +49,8 @@ export function checkWikiData(data: {
   lightCones: LightCone[];
   relics: RelicSet[];
   newsEvents: NewsEvent[];
+  /** images 表现有主键集合；提供时检查 idb: 图片引用是否悬空 */
+  imageIds?: ReadonlySet<string>;
 }): HealthIssue[] {
   const issues: HealthIssue[] = [];
   const push = (
@@ -58,6 +61,13 @@ export function checkWikiData(data: {
     message: string,
   ) => {
     issues.push({ severity, table, entryId, entryLabel, message });
+  };
+
+  /** idb: 图片引用是否指向存在的本地图片（未提供 imageIds 时跳过） */
+  const imageRefOk = (value: string | undefined): boolean => {
+    const ref = parseImageRef(value);
+    if (!ref) return true;
+    return data.imageIds ? data.imageIds.has(ref) : true;
   };
 
   /* ---------------- 角色 ---------------- */
@@ -81,6 +91,9 @@ export function checkWikiData(data: {
     }
     if (!DATE_PATTERN.test(c.releaseDate)) {
       push('error', 'characters', c.id, c.name || c.id, '实装日期格式应为 YYYY-MM-DD');
+    }
+    if (!imageRefOk(c.avatar)) {
+      push('warning', 'characters', c.id, c.name || c.id, '头像图片引用指向不存在的本地图片');
     }
     if (!c.releaseVersion) {
       push('warning', 'characters', c.id, c.name || c.id, '缺少实装版本，无法在版本页 / 版本筛选中归类');
@@ -106,6 +119,9 @@ export function checkWikiData(data: {
     if (lc.releaseDate !== undefined && !DATE_PATTERN.test(lc.releaseDate)) {
       push('error', 'lightCones', lc.id, lc.name || lc.id, '实装日期格式应为 YYYY-MM-DD');
     }
+    if (!imageRefOk(lc.image)) {
+      push('warning', 'lightCones', lc.id, lc.name || lc.id, '图片引用指向不存在的本地图片');
+    }
     if (duplicateConeNames.has(lc.name)) {
       push('warning', 'lightCones', lc.id, lc.name, '名称与其它光锥重复');
     }
@@ -129,6 +145,9 @@ export function checkWikiData(data: {
     }
     if (relic.releaseDate !== undefined && !DATE_PATTERN.test(relic.releaseDate)) {
       push('error', 'relics', relic.id, relic.name || relic.id, '实装日期格式应为 YYYY-MM-DD');
+    }
+    if (!imageRefOk(relic.image)) {
+      push('warning', 'relics', relic.id, relic.name || relic.id, '图片引用指向不存在的本地图片');
     }
     if (duplicateRelicNames.has(relic.name)) {
       push('warning', 'relics', relic.id, relic.name, '名称与其它遗器重复');

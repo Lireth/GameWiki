@@ -8,7 +8,7 @@ import {
 import Dexie from 'dexie';
 import { db } from './db';
 import { loadFavorites } from '../lib/favorites';
-import { IDB_IMAGE_PREFIX, dataURLToBlob } from '../lib/imageRef';
+import { IDB_IMAGE_PREFIX, dataURLToBlob, parseImageRef } from '../lib/imageRef';
 
 export type BootstrapStatus = 'pending' | 'ok' | 'failed';
 
@@ -65,6 +65,32 @@ async function migrateInlineImages(): Promise<void> {
 }
 
 /**
+ * 回收孤儿图片：删除业务表不再引用的 images 行。
+ * 上传后取消保存、表单中替换 / 清空图片字段都会留下无主 Blob，
+ * 启动时（无未保存表单的安全窗口）统一清理，幂等。
+ */
+async function cleanupOrphanImages(): Promise<void> {
+  try {
+    const referenced = new Set<string>();
+    const collect = (value: string | undefined) => {
+      const ref = parseImageRef(value);
+      if (ref) referenced.add(ref);
+    };
+    for (const record of await db.characters.toArray()) collect(record.avatar);
+    for (const record of await db.lightCones.toArray()) collect(record.image);
+    for (const record of await db.relics.toArray()) collect(record.image);
+
+    const orphans: string[] = [];
+    for (const image of await db.images.toArray()) {
+      if (!referenced.has(image.id)) orphans.push(image.id);
+    }
+    if (orphans.length > 0) await db.images.bulkDelete(orphans);
+  } catch (error) {
+    console.error('[wiki] 孤儿图片回收失败：', error);
+  }
+}
+
+/**
  * 应用启动时调用：
  * - 对应表为空且存在种子数据时全量写入；
  * - 表非空但种子版本落后时按 id 增量更新（bulkPut，不删除表中额外条目）；
@@ -115,6 +141,7 @@ export async function bootstrapDatabase(): Promise<void> {
       await db.meta.put({ key: 'seedVersion', value: String(SEED_VERSION) });
     }
     await migrateInlineImages();
+    await cleanupOrphanImages();
     await loadFavorites();
     setStatus('ok');
   } catch (error) {

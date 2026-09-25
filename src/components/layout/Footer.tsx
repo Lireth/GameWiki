@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { db } from '../../db/db';
+import { db, DB_SCHEMA_VERSION } from '../../db/db';
 import type { Character, LightCone, NewsEvent, RelicSet } from '../../db/types';
 import { MAX_IMAGE_DATA_URL_LENGTH } from '../../lib/entryValidation';
 import { getFavorites, mergeFavorites } from '../../lib/favorites';
@@ -39,6 +39,7 @@ async function exportData() {
     );
     const payload = {
       app: 'hsr-wiki',
+      schemaVersion: DB_SCHEMA_VERSION,
       exportedAt: new Date().toISOString(),
       favorites: [...getFavorites()],
       characters,
@@ -70,6 +71,11 @@ async function importData(file: File) {
     const isStr = (value: unknown) => typeof value === 'string';
     const pick = <T,>(value: unknown, guard: (item: Record<string, unknown>) => boolean): T[] =>
       Array.isArray(value) ? value.filter((item): item is T => isRecord(item) && guard(item)) : [];
+
+    // 备份来自更新版本站点时，未知字段会被宽松导入忽略，提前告知
+    const schemaVersion =
+      typeof data.schemaVersion === 'number' ? data.schemaVersion : 0;
+    const newerThanApp = schemaVersion > DB_SCHEMA_VERSION;
 
     // 逐类型校验必填字段，避免脏数据混入数据库
     const allCharacters = pick<Character>(data.characters, (item) =>
@@ -118,6 +124,7 @@ async function importData(file: File) {
       `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条` +
         (favorites.length ? `、收藏 ${favorites.length} 条` : '') +
         '.' +
+        (newerThanApp ? '\n注意：该备份来自更新版本的站点，新字段将被忽略。' : '') +
         (skipped > 0 ? `\n另有 ${skipped} 条图片超过 1MB 的条目将被跳过。` : '') +
         '\n与现有数据 id 相同的条目会被覆盖，其余保留。是否继续？',
     );
