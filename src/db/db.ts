@@ -1,5 +1,5 @@
 import Dexie, { type Table } from 'dexie';
-import type { Character, LightCone, NewsEvent } from './types';
+import type { Character, LightCone, NewsEvent, RelicSet } from './types';
 
 /**
  * 本地数据库：所有页面数据都存放在浏览器 IndexedDB 中，
@@ -11,6 +11,7 @@ export class WikiDatabase extends Dexie {
   newsEvents!: Table<NewsEvent, string>;
   /** 键值元数据（如种子数据版本号） */
   meta!: Table<{ key: string; value: string }, string>;
+  relics!: Table<RelicSet, string>;
 
   constructor() {
     super('hsr-wiki');
@@ -31,6 +32,10 @@ export class WikiDatabase extends Dexie {
     });
     // v4：新增 meta 表，记录种子数据版本号（支持种子更新后的增量重灌）
     this.version(4).stores({ meta: 'key' });
+    // v5：新增 relics 表（遗器图鉴）
+    this.version(5).stores({
+      relics: 'id, name, category, rarity, releaseVersion, releaseDate',
+    });
   }
 }
 

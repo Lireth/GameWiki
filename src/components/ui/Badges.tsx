@@ -9,7 +9,6 @@ import {
 import type {
   ElementId,
   Gender,
-  LightConeRarity,
   NewsEventType,
   PathId,
 } from '../../db/types';
@@ -24,7 +23,8 @@ export function RarityStars({
   rarity,
   className = '',
 }: {
-  rarity: LightConeRarity;
+  /** 角色 4/5，光锥 3/4/5，遗器 2-5 */
+  rarity: 2 | 3 | 4 | 5;
   className?: string;
 }) {
   return (

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { db } from '../../db/db';
-import type { Character, LightCone, NewsEvent } from '../../db/types';
+import type { Character, LightCone, NewsEvent, RelicSet } from '../../db/types';
 import { MAX_IMAGE_DATA_URL_LENGTH } from '../../lib/entryValidation';
 
-/** 导出三张表为 JSON 备份文件 */
+/** 导出全部数据表为 JSON 备份文件 */
 async function exportData() {
   try {
     const payload = {
@@ -11,6 +11,7 @@ async function exportData() {
       exportedAt: new Date().toISOString(),
       characters: await db.characters.toArray(),
       lightCones: await db.lightCones.toArray(),
+      relics: await db.relics.toArray(),
       newsEvents: await db.newsEvents.toArray(),
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], {
@@ -50,6 +51,11 @@ async function importData(file: File) {
     const newsEvents = pick<NewsEvent>(data.newsEvents, (item) =>
       isStr(item.id) && isStr(item.type) && isStr(item.title) && isStr(item.date),
     );
+    const relics = pick<RelicSet>(data.relics, (item) =>
+      isStr(item.id) && isStr(item.name) && isStr(item.category) &&
+      isStr(item.effect2) &&
+      (item.rarity === 2 || item.rarity === 3 || item.rarity === 4 || item.rarity === 5),
+    );
 
     // 图片 data URL 超限的条目跳过（与管理页上传的 1MB 上限一致）
     const oversized = (value: unknown) =>
@@ -62,12 +68,18 @@ async function importData(file: File) {
       allCharacters.length - characters.length +
       (allLightCones.length - lightCones.length);
 
-    if (characters.length + lightCones.length + newsEvents.length === 0) {
-      alert('文件中未找到可导入的数据（需要 characters / lightCones / newsEvents 数组）。');
+    if (
+      characters.length +
+        lightCones.length +
+        newsEvents.length +
+        relics.length ===
+      0
+    ) {
+      alert('文件中未找到可导入的数据（需要 characters / lightCones / relics / newsEvents 数组）。');
       return;
     }
     const confirmed = window.confirm(
-      `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、资讯 ${newsEvents.length} 条。` +
+      `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条。` +
         (skipped > 0 ? `\n另有 ${skipped} 条图片超过 1MB 的条目将被跳过。` : '') +
         '\n与现有数据 id 相同的条目会被覆盖，其余保留。是否继续？',
     );
@@ -75,11 +87,12 @@ async function importData(file: File) {
 
     await db.transaction(
       'rw',
-      [db.characters, db.lightCones, db.newsEvents],
+      [db.characters, db.lightCones, db.newsEvents, db.relics],
       async () => {
         if (characters.length) await db.characters.bulkPut(characters);
         if (lightCones.length) await db.lightCones.bulkPut(lightCones);
         if (newsEvents.length) await db.newsEvents.bulkPut(newsEvents);
+        if (relics.length) await db.relics.bulkPut(relics);
       },
     );
     alert('导入完成，页面数据已实时更新。');

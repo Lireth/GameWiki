@@ -21,10 +21,12 @@
 | `/characters/:id` | 角色详情 | 全部字段 + 简介 + 相关资讯时间线 |
 | `/light-cones` | 光锥图鉴 | 搜索 + 稀有度(3-5★)/命途/获取方式/实装版本筛选（维度内可多选）+ 排序，状态同步到 URL |
 | `/light-cones/:id` | 光锥详情 | 全部字段 + 描述 + 相关资讯时间线 |
+| `/relics` | 遗器图鉴 | 搜索 + 类别（隧道遗器/位面饰品）/稀有度(2-5★)/实装版本筛选（维度内可多选）+ 排序，状态同步到 URL |
+| `/relics/:id` | 遗器详情 | 类别 / 稀有度 / 二件套与四件套效果 / 套装部件 |
 | `/matrix` | 命途 × 属性矩阵 | 横轴命途、纵轴战斗属性；支持稀有度/性别/版本筛选，表头显示计数；桌面端为完整二维矩阵（可横向滚动），移动端按属性分组堆叠展示；单元格内按实装日期从新到旧排列 |
 | `/news` | 资讯日历 | 年月日历视图，支持月份切换、类型筛选（版本/角色/光锥/活动/卡池/活动结束）、本月事件列表；点击日期（或「+N 项」）可查看当日全部事件；年月、日与类型同步到 URL |
-| `/versions/:version` | 版本详情 | 聚合实装于该版本的角色、光锥与资讯事件（从日历版本标签、详情页实装版本字段进入） |
-| `/admin` | 数据管理 | 应用内增删改角色 / 光锥 / 资讯条目，实时写入 IndexedDB（入口在页脚） |
+| `/versions/:version` | 版本详情 | 聚合实装于该版本的角色、光锥、遗器与资讯事件（从日历版本标签、详情页实装版本字段进入） |
+| `/admin` | 数据管理 | 应用内增删改角色 / 光锥 / 遗器 / 资讯条目，实时写入 IndexedDB（入口在页脚） |
 | `*` | 404 | — |
 
 ## 快速开始
@@ -41,7 +43,7 @@ npm test           # 运行单元测试（Vitest，覆盖日期工具 / 分面�
 
 **页面代码不包含任何游戏数据**，全部数据存放在浏览器 IndexedDB 中，并通过种子文件录入：
 
-1. 打开 [`src/data/seed.ts`](src/data/seed.ts)，往 `characterSeed` / `lightConeSeed` / `newsEventSeed` 数组中添加条目，并把文件末尾的 `SEED_VERSION` 加 1；
+1. 打开 [`src/data/seed.ts`](src/data/seed.ts)，往 `characterSeed` / `lightConeSeed` / `relicSeed` / `newsEventSeed` 数组中添加条目，并把文件末尾的 `SEED_VERSION` 加 1；
 2. 启动应用后，`src/db/bootstrap.ts` 会自动同步：对应表为空时全量写入种子数据；表非空但种子版本落后时按 `id` 增量更新（不会删除表中额外条目）；
 3. 页面通过 `dexie-react-hooks` 的 `useLiveQuery` 实时读取，无需刷新即可看到新数据。
 
@@ -51,9 +53,10 @@ npm test           # 运行单元测试（Vitest，覆盖日期工具 / 分面�
 
 - `Character`：id、name、rarity（4/5）、path（命途）、element（战斗属性）、faction（派系）、camp（阵营）、gender、bodyType（体型：成男/男青年/少年/成女/女青年/少女/幼女）、releaseDate（YYYY-MM-DD）、releaseVersion、avatar?、description?
 - `LightCone`：id、name、rarity（3/4/5，光锥含 3★）、path（命途）、acquisition?（获取方式：跃迁/限定跃迁/活动/任务/探索/无名勋礼/商店兑换/世界商店/模拟宇宙/行动摘要/历战余响/奇珍琳琅/等级奖励/联动跃迁）、releaseDate?、releaseVersion?、image?、description?
+- `RelicSet`：id、name、category（cavern 隧道遗器 / planar 位面饰品）、rarity（2-5★）、effect2（二件套效果，必填）、effect4?（四件套效果，位面饰品无）、releaseDate?、releaseVersion?、pieces?（部件列表：slot 为 head/hands/body/feet/sphere/rope）、image?、description?
 - `NewsEvent`：id、type（version/character/lightcone/event/banner/eventEnd）、title、date、endDate?、version?、description?、relatedCharacterId?、relatedLightConeId?
 
-命途 / 属性 / 事件类型的展示名与主题色、实装版本列表等「分类元数据」在 [`src/lib/meta.ts`](src/lib/meta.ts) 中维护，与具体数据条目分离。
+命途 / 属性 / 事件类型 / 遗器类别与部位的展示名与主题色、实装版本列表等「分类元数据」在 [`src/lib/meta.ts`](src/lib/meta.ts) 中维护，与具体数据条目分离。
 
 ### 注意事项
 
@@ -80,5 +83,5 @@ src/
 ## 后续可扩展
 
 - 将 `useLiveQuery` 查询替换为远程 API（数据层已与页面解耦，只需改 `src/hooks/useWikiData.ts`）
-- 增加角色/光锥技能、遗器、关卡等更多图鉴模块
+- 增加角色/光锥技能、关卡等更多图鉴模块
 - 日历事件与卡池详情页联动

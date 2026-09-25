@@ -30,6 +30,11 @@ export function lightConeLink(id: string): string {
   return `/light-cones/${id}`;
 }
 
+/** 遗器详情页链接 */
+export function relicLink(id: string): string {
+  return `/relics/${id}`;
+}
+
 /** 跳转到资讯日历对应月份视图的链接（配合 NewsPage 的 y / m URL 参数） */
 export function newsMonthLink(iso: string): string {
   const year = Number(iso.slice(0, 4));

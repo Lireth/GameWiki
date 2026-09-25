@@ -10,6 +10,8 @@ import { LightConesPage } from './pages/LightConesPage';
 import { MatrixPage } from './pages/MatrixPage';
 import { NewsPage } from './pages/NewsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { RelicDetailPage } from './pages/RelicDetailPage';
+import { RelicsPage } from './pages/RelicsPage';
 
 // 低频页面按路由分割，减小主包体积；Suspense 边界在 AppLayout 的内容区，
 // 避免加载 chunk 时导航壳一起被占位替换。
@@ -31,8 +33,10 @@ export default function App() {
           <Route index element={<HomePage />} />
           <Route path="characters" element={<CharactersPage />} />
           <Route path="characters/:id" element={<CharacterDetailPage />} />
-          <Route path="light-cones" element={<LightConesPage />} />
-          <Route path="light-cones/:id" element={<LightConeDetailPage />} />
+            <Route path="light-cones" element={<LightConesPage />} />
+            <Route path="light-cones/:id" element={<LightConeDetailPage />} />
+            <Route path="relics" element={<RelicsPage />} />
+            <Route path="relics/:id" element={<RelicDetailPage />} />
           <Route path="matrix" element={<MatrixPage />} />
           <Route path="news" element={<NewsPage />} />
           <Route path="versions/:version" element={<VersionDetailPage />} />

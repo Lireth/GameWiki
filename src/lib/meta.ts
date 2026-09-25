@@ -6,6 +6,8 @@ import type {
   LightConeRarity,
   NewsEventType,
   PathId,
+  RelicCategory,
+  RelicSlot,
 } from '../db/types';
 
 export interface TaxonomyMeta {
@@ -38,11 +40,28 @@ export const ELEMENT_META: Record<ElementId, TaxonomyMeta> = {
   imaginary: { label: '虚数', en: 'Imaginary', color: '#f0d354' },
 };
 
-/** 稀有度元数据（光锥含 3★） */
-export const RARITY_META: Record<LightConeRarity, { color: string }> = {
+/** 稀有度元数据（光锥含 3★；2★ 供遗器复用） */
+export const RARITY_META: Record<LightConeRarity | 2, { color: string }> = {
+  2: { color: '#8a93a6' },
   3: { color: '#6cb2f5' },
   4: { color: '#c79bf5' },
   5: { color: '#ffce6b' },
+};
+
+/** 遗器类别元数据 */
+export const RELIC_CATEGORY_META: Record<RelicCategory, TaxonomyMeta> = {
+  cavern: { label: '隧道遗器', en: 'Cavern Relic', color: '#93b9ff' },
+  planar: { label: '位面饰品', en: 'Planar Ornament', color: '#f2c66d' },
+};
+
+/** 遗器部位展示名 */
+export const RELIC_SLOT_LABEL: Record<RelicSlot, string> = {
+  head: '头部',
+  hands: '手部',
+  body: '身体',
+  feet: '脚部',
+  sphere: '位面球',
+  rope: '连结绳',
 };
 
 /** 性别展示名 */

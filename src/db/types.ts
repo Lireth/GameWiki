@@ -78,6 +78,49 @@ export const NEWS_EVENT_TYPES = [
 ] as const;
 export type NewsEventType = (typeof NEWS_EVENT_TYPES)[number];
 
+/** 遗器类别：隧道遗器（4 件套）/ 位面饰品（2 件套） */
+export const RELIC_CATEGORIES = ['cavern', 'planar'] as const;
+export type RelicCategory = (typeof RELIC_CATEGORIES)[number];
+
+/** 遗器部位（隧道遗器占前 4 个，位面饰品占后 2 个） */
+export const RELIC_SLOTS = [
+  'head',
+  'hands',
+  'body',
+  'feet',
+  'sphere',
+  'rope',
+] as const;
+export type RelicSlot = (typeof RELIC_SLOTS)[number];
+
+/** 遗器稀有度（含早期 2★ / 3★ 套装） */
+export const RELIC_RARITIES = [5, 4, 3, 2] as const;
+export type RelicRarity = (typeof RELIC_RARITIES)[number];
+
+export interface RelicPiece {
+  slot: RelicSlot;
+  /** 部件名称，如「雪崩时没有一片雪花是无辜的」（头部） */
+  name: string;
+  description?: string;
+}
+
+export interface RelicSet {
+  id: string;
+  name: string;
+  category: RelicCategory;
+  rarity: RelicRarity;
+  /** 二件套效果 */
+  effect2: string;
+  /** 四件套效果（位面饰品无） */
+  effect4?: string;
+  releaseDate?: string;
+  releaseVersion?: string;
+  /** 部件列表（可选，管理页或导入时维护） */
+  pieces?: RelicPiece[];
+  image?: string;
+  description?: string;
+}
+
 export interface Character {
   /** 唯一 ID（建议英文或拼音短横线，如 seele-volleymyth） */
   id: string;

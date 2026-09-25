@@ -5,18 +5,21 @@ import {
   CalendarIcon,
   ConeIcon,
   GridIcon,
+  ShieldIcon,
   UsersIcon,
 } from '../components/icons';
 import { CharacterCard } from '../components/cards/CharacterCard';
 import { LightConeCard } from '../components/cards/LightConeCard';
+import { RelicCard } from '../components/cards/RelicCard';
 import { TypeBadge } from '../components/ui/Badges';
 import { Panel } from '../components/ui/Panel';
 import {
   useCharacters,
   useLightCones,
   useNewsEvents,
+  useRelics,
 } from '../hooks/useWikiData';
-import type { Character, LightCone } from '../db/types';
+import type { Character, LightCone, RelicSet } from '../db/types';
 import { formatDateShort } from '../lib/format';
 import { newsMonthLink, versionLink } from '../lib/links';
 
@@ -34,6 +37,13 @@ const FEATURES = [
     title: '光锥图鉴',
     en: 'LIGHT CONES',
     desc: '浏览各命途的光锥，查看稀有度与实装信息。',
+  },
+  {
+    to: '/relics',
+    icon: ShieldIcon,
+    title: '遗器图鉴',
+    en: 'RELICS',
+    desc: '浏览隧道遗器与位面饰品套装，查看部件与套装效果。',
   },
   {
     to: '/matrix',
@@ -122,13 +132,14 @@ export function HomePage() {
   const characters = useCharacters();
   const lightCones = useLightCones();
   const newsEvents = useNewsEvents();
+  const relics = useRelics();
 
-  /** 最新实装：角色与光锥按实装日期合并取前 6 个 */
+  /** 最新实装：角色 / 光锥 / 遗器按实装日期合并取前 6 个 */
   const latest = useMemo(() => {
     const items: {
-      kind: 'character' | 'lightCone';
+      kind: 'character' | 'lightCone' | 'relic';
       date: string;
-      data: Character | LightCone;
+      data: Character | LightCone | RelicSet;
     }[] = [
       ...characters.map((c) => ({ kind: 'character' as const, date: c.releaseDate, data: c })),
       ...lightCones.map((lc) => ({
@@ -136,11 +147,16 @@ export function HomePage() {
         date: lc.releaseDate ?? '',
         data: lc,
       })),
+      ...relics.map((r) => ({
+        kind: 'relic' as const,
+        date: r.releaseDate ?? '',
+        data: r,
+      })),
     ];
     return items
       .sort((a, b) => b.date.localeCompare(a.date))
       .slice(0, 6);
-  }, [characters, lightCones]);
+  }, [characters, lightCones, relics]);
 
   /** 近期资讯：按日期从新到旧取前 6 条 */
   const recentEvents = useMemo(
@@ -186,9 +202,10 @@ export function HomePage() {
 
       {/* 数据概览 */}
       <section>
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatTile label="角色" en="CHARACTERS" value={characters.length} />
           <StatTile label="光锥" en="LIGHT CONES" value={lightCones.length} />
+          <StatTile label="遗器" en="RELICS" value={relics.length} />
           <StatTile label="资讯事件" en="NEWS EVENTS" value={newsEvents.length} />
         </div>
       </section>
@@ -217,11 +234,13 @@ export function HomePage() {
                   key={item.data.id}
                   character={item.data as Character}
                 />
-              ) : (
+              ) : item.kind === 'lightCone' ? (
                 <LightConeCard
                   key={item.data.id}
                   lightCone={item.data as LightCone}
                 />
+              ) : (
+                <RelicCard key={item.data.id} relic={item.data as RelicSet} />
               ),
             )}
           </div>

@@ -95,6 +95,15 @@ export function ConeIcon(props: IconProps) {
   );
 }
 
+export function ShieldIcon(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...props}>
+      <path d="M12 2.5 20 5.5v6.2c0 4.9-3.4 8.6-8 10.3-4.6-1.7-8-5.4-8-10.3V5.5z" />
+      <path d="M12 7.5v7" opacity="0.5" />
+    </svg>
+  );
+}
+
 export function GridIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...props}>

@@ -1,4 +1,4 @@
-import type { Character, LightCone, NewsEvent } from '../db/types';
+import type { Character, LightCone, NewsEvent, RelicSet } from '../db/types';
 
 /**
  * ============================================================
@@ -50,6 +50,25 @@ export const characterSeed: Character[] = [];
  * ];
  */
 export const lightConeSeed: LightCone[] = [];
+
+/**
+ * 遗器套装种子数据 —— category 为 cavern(隧道遗器) | planar(位面饰品)，
+ * effect2 为二件套效果（必填），位面饰品无 effect4；pieces 为部位列表（可选）。
+ *
+ * 示例：
+ * export const relicSeed: RelicSet[] = [
+ *   {
+ *     id: 'example-relic',
+ *     name: '示例遗器',
+ *     category: 'cavern',
+ *     rarity: 5,
+ *     effect2: '二件套效果描述。',
+ *     effect4: '四件套效果描述。',
+ *     pieces: [{ slot: 'head', name: '示例头部' }],
+ *   },
+ * ];
+ */
+export const relicSeed: RelicSet[] = [];
 
 /** 资讯 / 日历事件种子数据 */
 export const newsEventSeed: NewsEvent[] = [];

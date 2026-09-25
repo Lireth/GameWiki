@@ -1,4 +1,10 @@
-import { characterSeed, lightConeSeed, newsEventSeed, SEED_VERSION } from '../data/seed';
+import {
+  characterSeed,
+  lightConeSeed,
+  newsEventSeed,
+  relicSeed,
+  SEED_VERSION,
+} from '../data/seed';
 import { db } from './db';
 
 export type BootstrapStatus = 'pending' | 'ok' | 'failed';
@@ -59,6 +65,14 @@ export async function bootstrapDatabase(): Promise<void> {
         }
         if (count > 0 && seedChanged) {
           return db.newsEvents.bulkPut(newsEventSeed);
+        }
+      }),
+      db.relics.count().then((count) => {
+        if (count === 0 && relicSeed.length > 0) {
+          return db.relics.bulkAdd(relicSeed);
+        }
+        if (count > 0 && seedChanged) {
+          return db.relics.bulkPut(relicSeed);
         }
       }),
     ]);

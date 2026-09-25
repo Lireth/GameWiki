@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeftIcon } from '../components/icons';
 import { CharacterCard } from '../components/cards/CharacterCard';
 import { LightConeCard } from '../components/cards/LightConeCard';
+import { RelicCard } from '../components/cards/RelicCard';
 import { TypeBadge } from '../components/ui/Badges';
 import { EmptyState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
@@ -11,6 +12,7 @@ import {
   useCharacters,
   useLightCones,
   useNewsEvents,
+  useRelics,
 } from '../hooks/useWikiData';
 import { formatDateShort } from '../lib/format';
 import { eventLink, newsMonthLink, versionLink } from '../lib/links';
@@ -20,6 +22,7 @@ export function VersionDetailPage() {
   const characters = useCharacters();
   const lightCones = useLightCones();
   const newsEvents = useNewsEvents();
+  const relics = useRelics();
 
   const versionChars = useMemo(
     () =>
@@ -44,9 +47,22 @@ export function VersionDetailPage() {
         .sort((a, b) => a.date.localeCompare(b.date)),
     [newsEvents, version],
   );
+  const versionRelics = useMemo(
+    () =>
+      relics
+        .filter((r) => r.releaseVersion === version)
+        .sort((a, b) =>
+          (b.releaseDate ?? '').localeCompare(a.releaseDate ?? ''),
+        ),
+    [relics, version],
+  );
 
   const hasContent =
-    versionChars.length + versionCones.length + versionEvents.length > 0;
+    versionChars.length +
+      versionCones.length +
+      versionEvents.length +
+      versionRelics.length >
+    0;
 
   /** 数据中出现的全部版本（数值序），用于上一版本 / 下一版本导航 */
   const allVersions = useMemo(
@@ -56,11 +72,12 @@ export function VersionDetailPage() {
           ...characters.map((c) => c.releaseVersion),
           ...lightCones.map((lc) => lc.releaseVersion ?? ''),
           ...newsEvents.map((event) => event.version ?? ''),
+          ...relics.map((r) => r.releaseVersion ?? ''),
         ]),
       ]
         .filter(Boolean)
         .sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
-    [characters, lightCones, newsEvents],
+    [characters, lightCones, newsEvents, relics],
   );
   const versionIndex = allVersions.indexOf(version);
   const prevVersion = versionIndex > 0 ? allVersions[versionIndex - 1] : null;
@@ -75,13 +92,14 @@ export function VersionDetailPage() {
       ...versionChars.map((c) => c.releaseDate),
       ...versionCones.map((lc) => lc.releaseDate ?? ''),
       ...versionEvents.map((event) => event.date),
+      ...versionRelics.map((r) => r.releaseDate ?? ''),
     ].filter(Boolean);
     if (dates.length === 0) return null;
     return {
       start: dates.reduce((a, b) => (a < b ? a : b)),
       end: dates.reduce((a, b) => (a > b ? a : b)),
     };
-  }, [versionChars, versionCones, versionEvents]);
+  }, [versionChars, versionCones, versionEvents, versionRelics]);
 
   if (!hasContent) {
     return (
@@ -171,6 +189,22 @@ export function VersionDetailPage() {
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {versionCones.map((lightCone) => (
                 <LightConeCard key={lightCone.id} lightCone={lightCone} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {versionRelics.length > 0 && (
+          <section>
+            <h2 className="mb-4 text-xl font-semibold text-slate-100">
+              实装遗器
+              <span className="ml-2 font-display text-sm text-slate-500">
+                {versionRelics.length} 套
+              </span>
+            </h2>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {versionRelics.map((relic) => (
+                <RelicCard key={relic.id} relic={relic} />
               ))}
             </div>
           </section>

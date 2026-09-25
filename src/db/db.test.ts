@@ -21,6 +21,7 @@ vi.mock('../data/seed', () => ({
   lightConeSeed: [
     { id: 'lc-cruel', name: '残酷的夜', rarity: 5, path: 'hunt' },
   ],
+  relicSeed: [],
   newsEventSeed: [
     {
       id: 'ev-seele',

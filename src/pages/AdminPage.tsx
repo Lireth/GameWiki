@@ -6,6 +6,7 @@ import {
   useCharacters,
   useLightCones,
   useNewsEvents,
+  useRelics,
 } from '../hooks/useWikiData';
 import { db } from '../db/db';
 import {
@@ -15,9 +16,12 @@ import {
   GENDERS,
   NEWS_EVENT_TYPES,
   PATH_IDS,
+  RELIC_CATEGORIES,
+  RELIC_SLOTS,
   type Character,
   type LightCone,
   type NewsEvent,
+  type RelicSet,
 } from '../db/types';
 import {
   validateDateRange,
@@ -31,13 +35,16 @@ import {
   GENDER_LABEL,
   NEWS_TYPE_META,
   PATH_META,
+  RELIC_CATEGORY_META,
+  RELIC_SLOT_LABEL,
 } from '../lib/meta';
 
-type EntryType = 'character' | 'lightCone' | 'newsEvent';
+type EntryType = 'character' | 'lightCone' | 'newsEvent' | 'relic';
 
 const ENTRY_TYPES: { value: EntryType; label: string }[] = [
   { value: 'character', label: '角色' },
   { value: 'lightCone', label: '光锥' },
+  { value: 'relic', label: '遗器' },
   { value: 'newsEvent', label: '资讯事件' },
 ];
 
@@ -130,12 +137,44 @@ const NEWS_EVENT_FIELDS: FieldDef[] = [
   { name: 'relatedLightConeId', label: '关联光锥（可选）', kind: 'choice', optional: true, options: [] },
 ];
 
+const RELIC_FIELDS: FieldDef[] = [
+  { name: 'id', label: 'ID', kind: 'text', required: true, lockOnEdit: true },
+  { name: 'name', label: '套装名称', kind: 'text', required: true },
+  { name: 'category', label: '类别', kind: 'choice', required: true, options: choice(RELIC_CATEGORY_META), values: RELIC_CATEGORIES },
+  {
+    name: 'rarity',
+    label: '稀有度',
+    kind: 'choice',
+    required: true,
+    options: [
+      { value: '5', label: '5★' },
+      { value: '4', label: '4★' },
+      { value: '3', label: '3★' },
+      { value: '2', label: '2★' },
+    ],
+    values: ['5', '4', '3', '2'],
+  },
+  { name: 'effect2', label: '二件套效果', kind: 'textarea', required: true },
+  { name: 'effect4', label: '四件套效果（位面饰品无）', kind: 'textarea', optional: true },
+  { name: 'releaseDate', label: '实装日期（可选）', kind: 'date', optional: true },
+  { name: 'releaseVersion', label: '实装版本（如 3.7，可选）', kind: 'text', optional: true },
+  { name: 'image', label: '套装图片（URL 或上传本地图片）', kind: 'image', optional: true },
+  { name: 'description', label: '套装说明（可选）', kind: 'textarea', optional: true },
+  // 六个部位的名称与描述：名称非空的部位才会写入 pieces
+  ...RELIC_SLOTS.flatMap((slot) => [
+    { name: `piece_${slot}_name`, label: `${RELIC_SLOT_LABEL[slot]}部件名称（可选）`, kind: 'text' as const },
+    { name: `piece_${slot}_desc`, label: `${RELIC_SLOT_LABEL[slot]}部件描述（可选）`, kind: 'textarea' as const },
+  ]),
+];
+
 function fieldsFor(type: EntryType): FieldDef[] {
   switch (type) {
     case 'character':
       return CHARACTER_FIELDS;
     case 'lightCone':
       return LIGHT_CONE_FIELDS;
+    case 'relic':
+      return RELIC_FIELDS;
     case 'newsEvent':
       return NEWS_EVENT_FIELDS;
   }
@@ -154,7 +193,10 @@ function emptyForm(type: EntryType): FormState {
   return form;
 }
 
-function buildEntry(type: EntryType, form: FormState): Character | LightCone | NewsEvent {
+function buildEntry(
+  type: EntryType,
+  form: FormState,
+): Character | LightCone | NewsEvent | RelicSet {
   const trim = (name: string) => form[name]?.trim() ?? '';
   switch (type) {
     case 'character':
@@ -197,24 +239,59 @@ function buildEntry(type: EntryType, form: FormState): Character | LightCone | N
         relatedCharacterId: trim('relatedCharacterId') || undefined,
         relatedLightConeId: trim('relatedLightConeId') || undefined,
       };
+    case 'relic': {
+      const pieces = RELIC_SLOTS.map((slot) => ({
+        slot,
+        name: trim(`piece_${slot}_name`),
+        description: trim(`piece_${slot}_desc`) || undefined,
+      })).filter((piece) => piece.name);
+      return {
+        id: trim('id'),
+        name: trim('name'),
+        category: form.category as RelicSet['category'],
+        rarity: Number(form.rarity) as RelicSet['rarity'],
+        effect2: trim('effect2'),
+        effect4: trim('effect4') || undefined,
+        releaseDate: trim('releaseDate') || undefined,
+        releaseVersion: trim('releaseVersion') || undefined,
+        pieces: pieces.length > 0 ? pieces : undefined,
+        image: trim('image') || undefined,
+        description: trim('description') || undefined,
+      };
+    }
   }
 }
 
-function entryToForm(type: EntryType, entry: Character | LightCone | NewsEvent): FormState {
+function entryToForm(
+  type: EntryType,
+  entry: Character | LightCone | NewsEvent | RelicSet,
+): FormState {
   const data = entry as unknown as Record<string, unknown>;
   const form = emptyForm(type);
   for (const field of fieldsFor(type)) {
     const value = data[field.name];
     form[field.name] = value === undefined || value === null ? '' : String(value);
   }
+  // 遗器部位列表拆回表单字段
+  if (type === 'relic' && Array.isArray(data.pieces)) {
+    for (const piece of data.pieces as { slot: string; name: string; description?: string }[]) {
+      form[`piece_${piece.slot}_name`] = piece.name;
+      form[`piece_${piece.slot}_desc`] = piece.description ?? '';
+    }
+  }
   return form;
 }
 
-function entryLabel(entry: Character | LightCone | NewsEvent): string {
+function entryLabel(
+  entry: Character | LightCone | NewsEvent | RelicSet,
+): string {
   return 'name' in entry ? entry.name : (entry as NewsEvent).title;
 }
 
-function entrySummary(type: EntryType, entry: Character | LightCone | NewsEvent): string {
+function entrySummary(
+  type: EntryType,
+  entry: Character | LightCone | NewsEvent | RelicSet,
+): string {
   if (type === 'character') {
     const c = entry as Character;
     return `${c.rarity}★ · ${PATH_META[c.path].label} · ${ELEMENT_META[c.element].label} · v${c.releaseVersion} · ${c.releaseDate}`;
@@ -222,6 +299,10 @@ function entrySummary(type: EntryType, entry: Character | LightCone | NewsEvent)
   if (type === 'lightCone') {
     const lc = entry as LightCone;
     return `${lc.rarity}★ · ${PATH_META[lc.path].label}${lc.acquisition ? ` · ${ACQUISITION_LABEL[lc.acquisition]}` : ''}${lc.releaseVersion ? ` · v${lc.releaseVersion}` : ''}`;
+  }
+  if (type === 'relic') {
+    const r = entry as RelicSet;
+    return `${RELIC_CATEGORY_META[r.category].label} · ${r.rarity}★${r.releaseVersion ? ` · v${r.releaseVersion}` : ''}`;
   }
   const event = entry as NewsEvent;
   return `${NEWS_TYPE_META[event.type].label} · ${event.date}${event.endDate ? ` 至 ${event.endDate}` : ''}`;
@@ -234,6 +315,7 @@ export function AdminPage() {
   const characters = useCharacters();
   const lightCones = useLightCones();
   const newsEvents = useNewsEvents();
+  const relics = useRelics();
 
   const [entryType, setEntryType] = useState<EntryType>('character');
   const [form, setForm] = useState<FormState>(() => emptyForm('character'));
@@ -249,12 +331,14 @@ export function AdminPage() {
   };
 
   const fields = fieldsFor(entryType);
-  const entries: (Character | LightCone | NewsEvent)[] =
+  const entries: (Character | LightCone | NewsEvent | RelicSet)[] =
     entryType === 'character'
       ? characters
       : entryType === 'lightCone'
         ? lightCones
-        : newsEvents;
+        : entryType === 'relic'
+          ? relics
+          : newsEvents;
   const listKeyword = listQuery.trim().toLowerCase();
   const visibleEntries = listKeyword
     ? entries.filter((entry) =>
@@ -272,7 +356,7 @@ export function AdminPage() {
     setListQuery('');
   };
 
-  const startEdit = (entry: Character | LightCone | NewsEvent) => {
+  const startEdit = (entry: Character | LightCone | NewsEvent | RelicSet) => {
     setForm(entryToForm(entryType, entry));
     setEditingId(entry.id);
   };
@@ -307,7 +391,9 @@ export function AdminPage() {
             ? db.characters
             : entryType === 'lightCone'
               ? db.lightCones
-              : db.newsEvents;
+              : entryType === 'relic'
+                ? db.relics
+                : db.newsEvents;
         if (await table.get(entry.id)) {
           if (!window.confirm(`ID「${entry.id}」已存在，保存将覆盖现有条目，是否继续？`)) {
             return;
@@ -316,6 +402,7 @@ export function AdminPage() {
       }
       if (entryType === 'character') await db.characters.put(entry as Character);
       else if (entryType === 'lightCone') await db.lightCones.put(entry as LightCone);
+      else if (entryType === 'relic') await db.relics.put(entry as RelicSet);
       else await db.newsEvents.put(entry as NewsEvent);
       cancelEdit();
       showNotice(`已保存「${entryLabel(entry)}」`);
@@ -329,7 +416,7 @@ export function AdminPage() {
     try {
       await db.transaction(
         'rw',
-        [db.characters, db.lightCones, db.newsEvents],
+        [db.characters, db.lightCones, db.newsEvents, db.relics],
         async () => {
           if (entryType === 'character') {
             await db.characters.delete(id);
@@ -352,6 +439,9 @@ export function AdminPage() {
                 linked.map(({ relatedLightConeId: _removed, ...rest }) => rest as NewsEvent),
               );
             }
+          } else if (entryType === 'relic') {
+            // 遗器无跨表关联，直接删除
+            await db.relics.delete(id);
           } else {
             await db.newsEvents.delete(id);
           }
@@ -408,7 +498,9 @@ export function AdminPage() {
               ? characters.length
               : type.value === 'lightCone'
                 ? lightCones.length
-                : newsEvents.length;
+                : type.value === 'relic'
+                  ? relics.length
+                  : newsEvents.length;
           return (
             <button
               key={type.value}

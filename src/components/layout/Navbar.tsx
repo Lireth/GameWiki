@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { to: '/', label: '首页', end: true },
   { to: '/characters', label: '角色图鉴', end: false },
   { to: '/light-cones', label: '光锥图鉴', end: false },
+  { to: '/relics', label: '遗器图鉴', end: false },
   { to: '/matrix', label: '命途矩阵', end: false },
   { to: '/news', label: '资讯日历', end: false },
 ];

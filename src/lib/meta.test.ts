@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { PATH_IDS } from '../db/types';
-import { buildVersionGroups, PATH_META } from './meta';
+import { PATH_IDS, RELIC_CATEGORIES, RELIC_SLOTS } from '../db/types';
+import {
+  buildVersionGroups,
+  PATH_META,
+  RELIC_CATEGORY_META,
+  RELIC_SLOT_LABEL,
+} from './meta';
 
 describe('PATH_META', () => {
   it('每个命途 ID 都有元数据（查表渲染依赖此完整性）', () => {
@@ -8,6 +13,21 @@ describe('PATH_META', () => {
       expect(PATH_META[id]).toBeDefined();
       expect(PATH_META[id].label).toBeTruthy();
       expect(PATH_META[id].color).toMatch(/^#[0-9a-f]{6}$/i);
+    }
+  });
+});
+
+describe('遗器元数据', () => {
+  it('每个类别都有元数据（查表渲染依赖此完整性）', () => {
+    for (const category of RELIC_CATEGORIES) {
+      expect(RELIC_CATEGORY_META[category]).toBeDefined();
+      expect(RELIC_CATEGORY_META[category].label).toBeTruthy();
+    }
+  });
+
+  it('每个部位都有展示名', () => {
+    for (const slot of RELIC_SLOTS) {
+      expect(RELIC_SLOT_LABEL[slot]).toBeTruthy();
     }
   });
 });

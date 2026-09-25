@@ -8,7 +8,12 @@ import {
   subscribeBootstrap,
   type BootstrapStatus,
 } from '../db/bootstrap';
-import type { Character, LightCone, NewsEvent } from '../db/types';
+import type {
+  Character,
+  LightCone,
+  NewsEvent,
+  RelicSet,
+} from '../db/types';
 
 /** 全部角色（实时响应数据库变化） */
 export function useCharacters(): Character[] {
@@ -21,6 +26,21 @@ export function useLightCones(): LightCone[] {
 
 export function useNewsEvents(): NewsEvent[] {
   return useLiveQuery(() => db.newsEvents.toArray(), [], []) ?? [];
+}
+
+/** 全部遗器套装（实时响应数据库变化） */
+export function useRelics(): RelicSet[] {
+  return useLiveQuery(() => db.relics.toArray(), [], []) ?? [];
+}
+
+/** 按主键查询单个遗器套装 */
+export function useRelicById(id: string | undefined): RelicSet | undefined {
+  return useLiveQuery(async () => (id ? await db.relics.get(id) : undefined), [id]);
+}
+
+/** 遗器表内条目总数 */
+export function useRelicCount(): number {
+  return useLiveQuery(() => db.relics.count(), [], 0) ?? 0;
 }
 
 /** 按主键查询单个角色（详情页无需加载整表） */
@@ -87,10 +107,11 @@ export function useDebouncedSearch(
 
 const FAVORITES_KEY = 'hsr-wiki-favorites';
 
-/** 收藏 id 带表前缀，避免角色与光锥的 id 冲突 */
+/** 收藏 id 带表前缀，避免角色 / 光锥 / 遗器的 id 冲突 */
 export const FAVORITE_PREFIX = {
   character: 'c:',
   lightCone: 'lc:',
+  relic: 'r:',
 } as const;
 
 function loadFavorites(): ReadonlySet<string> {
