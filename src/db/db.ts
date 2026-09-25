@@ -9,6 +9,8 @@ export class WikiDatabase extends Dexie {
   characters!: Table<Character, string>;
   lightCones!: Table<LightCone, string>;
   newsEvents!: Table<NewsEvent, string>;
+  /** 键值元数据（如种子数据版本号） */
+  meta!: Table<{ key: string; value: string }, string>;
 
   constructor() {
     super('hsr-wiki');
@@ -27,6 +29,8 @@ export class WikiDatabase extends Dexie {
     this.version(3).stores({
       lightCones: 'id, name, rarity, path, acquisition, releaseDate',
     });
+    // v4：新增 meta 表，记录种子数据版本号（支持种子更新后的增量重灌）
+    this.version(4).stores({ meta: 'key' });
   }
 }
 

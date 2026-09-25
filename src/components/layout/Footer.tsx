@@ -1,14 +1,113 @@
+import { db } from '../../db/db';
+import type { Character, LightCone, NewsEvent } from '../../db/types';
+
+/** 导出三张表为 JSON 备份文件 */
+async function exportData() {
+  try {
+    const payload = {
+      app: 'hsr-wiki',
+      exportedAt: new Date().toISOString(),
+      characters: await db.characters.toArray(),
+      lightCones: await db.lightCones.toArray(),
+      newsEvents: await db.newsEvents.toArray(),
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {
+      type: 'application/json',
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `hsr-wiki-backup-${payload.exportedAt.slice(0, 10)}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    alert(`导出失败：${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
+/** 读取备份 JSON 并按主键合并写入（同 id 条目覆盖，其余保留） */
+async function importData(file: File) {
+  try {
+    const parsed: unknown = JSON.parse(await file.text());
+    const data = (parsed ?? {}) as Record<string, unknown>;
+    const isRecord = (item: unknown): item is Record<string, unknown> =>
+      typeof item === 'object' && item !== null;
+    const isStr = (value: unknown) => typeof value === 'string';
+    const pick = <T,>(value: unknown, guard: (item: Record<string, unknown>) => boolean): T[] =>
+      Array.isArray(value) ? value.filter((item): item is T => isRecord(item) && guard(item)) : [];
+
+    // 逐类型校验必填字段，避免脏数据混入数据库
+    const characters = pick<Character>(data.characters, (item) =>
+      isStr(item.id) && isStr(item.name) && isStr(item.path) && isStr(item.element) &&
+      (item.rarity === 4 || item.rarity === 5) && isStr(item.releaseDate) && isStr(item.releaseVersion),
+    );
+    const lightCones = pick<LightCone>(data.lightCones, (item) =>
+      isStr(item.id) && isStr(item.name) && isStr(item.path) &&
+      (item.rarity === 3 || item.rarity === 4 || item.rarity === 5),
+    );
+    const newsEvents = pick<NewsEvent>(data.newsEvents, (item) =>
+      isStr(item.id) && isStr(item.type) && isStr(item.title) && isStr(item.date),
+    );
+
+    if (characters.length + lightCones.length + newsEvents.length === 0) {
+      alert('文件中未找到可导入的数据（需要 characters / lightCones / newsEvents 数组）。');
+      return;
+    }
+    const confirmed = window.confirm(
+      `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、资讯 ${newsEvents.length} 条。\n` +
+        '与现有数据 id 相同的条目会被覆盖，其余保留。是否继续？',
+    );
+    if (!confirmed) return;
+
+    await db.transaction(
+      'rw',
+      [db.characters, db.lightCones, db.newsEvents],
+      async () => {
+        if (characters.length) await db.characters.bulkPut(characters);
+        if (lightCones.length) await db.lightCones.bulkPut(lightCones);
+        if (newsEvents.length) await db.newsEvents.bulkPut(newsEvents);
+      },
+    );
+    alert('导入完成，页面数据已实时更新。');
+  } catch {
+    alert('导入失败：文件不是有效的备份 JSON。');
+  }
+}
+
 export function Footer() {
   return (
     <footer className="border-t border-space-600/40 bg-space-900/40">
-      <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-slate-500 md:flex-row md:items-center md:justify-between md:px-6">
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-6 text-xs text-slate-500 md:flex-row md:items-center md:justify-between md:px-6">
         <p>
           星穹铁道资料站 · 粉丝学习项目，与 miHoYo / HoYoverse
           无关，游戏相关内容版权归原厂商所有
         </p>
-        <p className="font-display tracking-[0.25em]">
-          REACT · TAILWIND · DEXIE / INDEXEDDB
-        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          {/* 数据备份：导出为 JSON，或从备份文件按 id 合并导入 */}
+          <button
+            type="button"
+            onClick={() => void exportData()}
+            className="border border-space-600/60 px-2.5 py-1 text-slate-400 transition hover:border-gold-500/50 hover:text-gold-300"
+          >
+            导出数据
+          </button>
+          <label className="cursor-pointer border border-space-600/60 px-2.5 py-1 text-slate-400 transition hover:border-gold-500/50 hover:text-gold-300">
+            导入数据
+            <input
+              type="file"
+              accept="application/json,.json"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) void importData(file);
+                e.target.value = '';
+              }}
+            />
+          </label>
+          <p className="font-display tracking-[0.25em]">
+            REACT · TAILWIND · DEXIE / INDEXEDDB
+          </p>
+        </div>
       </div>
     </footer>
   );

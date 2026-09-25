@@ -1,5 +1,9 @@
 import type { ReactNode } from 'react';
 
+/** 列表页排序下拉框的共用样式 */
+export const sortSelectClass =
+  'border border-space-600/60 bg-space-850/80 px-2.5 py-1.5 text-xs text-slate-200 focus:border-gold-500/60 focus:outline-none';
+
 interface FilterRowProps {
   label: string;
   children: ReactNode;

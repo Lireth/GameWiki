@@ -53,3 +53,9 @@ export const lightConeSeed: LightCone[] = [];
 
 /** 资讯 / 日历事件种子数据 */
 export const newsEventSeed: NewsEvent[] = [];
+
+/**
+ * 种子数据版本：修改上方任一种子数组的内容后请 +1，
+ * 应用启动时会检测到版本落后并按 id 增量更新已录入的数据（不会删除额外条目）。
+ */
+export const SEED_VERSION = 1;

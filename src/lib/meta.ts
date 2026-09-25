@@ -118,3 +118,29 @@ export const ACQUISITION_LABEL: Record<AcquisitionType, string> = {
   levelReward: '等级奖励',
   collabWarp: '联动跃迁',
 };
+
+/**
+ * 实装版本筛选分组：以常显配置（VERSION_GROUPS）为基础，
+ * 数据中出现的新版本追加到对应大版本分组（或新建分组）。
+ */
+export function buildVersionGroups(
+  dataVersions: readonly (string | undefined)[],
+): { major: string; values: string[] }[] {
+  const known = new Set(VERSION_GROUPS.flatMap((group) => group.values));
+  const groups = VERSION_GROUPS.map((group) => ({
+    major: group.major,
+    values: [...group.values],
+  }));
+  for (const version of new Set(dataVersions)) {
+    if (!version || known.has(version)) continue;
+    const major = version.split('.')[0];
+    let group = groups.find((g) => g.major === major);
+    if (!group) {
+      group = { major, values: [] };
+      groups.push(group);
+    }
+    group.values.push(version);
+    group.values.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  }
+  return groups;
+}

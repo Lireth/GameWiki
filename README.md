@@ -36,9 +36,11 @@ npm run preview  # 预览生产构建
 
 **页面代码不包含任何游戏数据**，全部数据存放在浏览器 IndexedDB 中，并通过种子文件录入：
 
-1. 打开 [`src/data/seed.ts`](src/data/seed.ts)，往 `characterSeed` / `lightConeSeed` / `newsEventSeed` 数组中添加条目（文件内有带注释的示例）；
-2. 启动应用后，`src/db/bootstrap.ts` 会在对应表为空时自动写入种子数据；
+1. 打开 [`src/data/seed.ts`](src/data/seed.ts)，往 `characterSeed` / `lightConeSeed` / `newsEventSeed` 数组中添加条目，并把文件末尾的 `SEED_VERSION` 加 1；
+2. 启动应用后，`src/db/bootstrap.ts` 会自动同步：对应表为空时全量写入种子数据；表非空但种子版本落后时按 `id` 增量更新（不会删除表中额外条目）；
 3. 页面通过 `dexie-react-hooks` 的 `useLiveQuery` 实时读取，无需刷新即可看到新数据。
+
+手工录入的数据可通过页脚的「导出数据 / 导入数据」按钮备份与恢复（JSON 文件，按 `id` 合并导入）。
 
 字段与类型定义见 [`src/db/types.ts`](src/db/types.ts)：
 
@@ -52,7 +54,7 @@ npm run preview  # 预览生产构建
 
 - `id` 必须唯一（建议英文短横线命名，如 `seele`）；
 - 日期一律使用 `YYYY-MM-DD` 格式；
-- 需要清空本地数据时，可在浏览器 DevTools → Application → IndexedDB 中删除 `hsr-wiki` 数据库后刷新。
+- 需要清空本地数据时，可在浏览器 DevTools → Application → IndexedDB 中删除 `hsr-wiki` 数据库后刷新（应用会按种子重新初始化）。
 
 ## 目录结构
 
