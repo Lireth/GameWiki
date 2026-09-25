@@ -16,7 +16,7 @@ import {
   useCharacterCount,
   useNewsEvents,
 } from '../hooks/useWikiData';
-import { formatDateCN, formatDateShort } from '../lib/format';
+import { formatDateCN, formatDateShort, newsMonthLink } from '../lib/format';
 import { BODY_TYPE_LABEL, ELEMENT_META, PATH_META } from '../lib/meta';
 
 export function CharacterDetailPage() {
@@ -174,9 +174,13 @@ export function CharacterDetailPage() {
                     key={event.id}
                     className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-space-700/50 py-3 last:border-b-0"
                   >
-                    <span className="w-24 shrink-0 font-display text-sm text-gold-300">
+                    <Link
+                      to={newsMonthLink(event.date)}
+                      title="在资讯日历中查看该月"
+                      className="w-24 shrink-0 font-display text-sm text-gold-300 transition hover:text-gold-400"
+                    >
                       {formatDateShort(event.date)}
-                    </span>
+                    </Link>
                     <TypeBadge type={event.type} />
                     <span className="min-w-0 flex-1 truncate text-sm text-slate-200">
                       {event.title}

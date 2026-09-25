@@ -8,7 +8,17 @@ import {
   useNewsEvents,
 } from '../hooks/useWikiData';
 import { db } from '../db/db';
-import type { Character, LightCone, NewsEvent } from '../db/types';
+import {
+  ACQUISITION_TYPES,
+  BODY_TYPES,
+  ELEMENT_IDS,
+  GENDERS,
+  NEWS_EVENT_TYPES,
+  PATH_IDS,
+  type Character,
+  type LightCone,
+  type NewsEvent,
+} from '../db/types';
 import {
   ACQUISITION_LABEL,
   BODY_TYPE_LABEL,
@@ -29,8 +39,10 @@ const ENTRY_TYPES: { value: EntryType; label: string }[] = [
 interface FieldDef {
   name: string;
   label: string;
-  kind: 'text' | 'textarea' | 'choice';
+  kind: 'text' | 'date' | 'textarea' | 'choice';
   options?: { value: string; label: string }[];
+  /** choice 字段的合法取值白名单（保存前校验） */
+  values?: readonly string[];
   required?: boolean;
   /** 空值保存为 undefined（可选字段） */
   optional?: boolean;
@@ -57,14 +69,15 @@ const CHARACTER_FIELDS: FieldDef[] = [
       { value: '5', label: '5★' },
       { value: '4', label: '4★' },
     ],
+    values: ['5', '4'],
   },
-  { name: 'path', label: '命途', kind: 'choice', required: true, options: choice(PATH_META) },
-  { name: 'element', label: '战斗属性', kind: 'choice', required: true, options: choice(ELEMENT_META) },
+  { name: 'path', label: '命途', kind: 'choice', required: true, options: choice(PATH_META), values: PATH_IDS },
+  { name: 'element', label: '战斗属性', kind: 'choice', required: true, options: choice(ELEMENT_META), values: ELEMENT_IDS },
   { name: 'faction', label: '派系', kind: 'text' },
   { name: 'camp', label: '阵营', kind: 'text' },
-  { name: 'gender', label: '性别', kind: 'choice', required: true, options: choice(GENDER_LABEL) },
-  { name: 'bodyType', label: '体型', kind: 'choice', required: true, options: choice(BODY_TYPE_LABEL) },
-  { name: 'releaseDate', label: '实装日期（YYYY-MM-DD）', kind: 'text', required: true },
+  { name: 'gender', label: '性别', kind: 'choice', required: true, options: choice(GENDER_LABEL), values: GENDERS },
+  { name: 'bodyType', label: '体型', kind: 'choice', required: true, options: choice(BODY_TYPE_LABEL), values: BODY_TYPES },
+  { name: 'releaseDate', label: '实装日期', kind: 'date', required: true },
   { name: 'releaseVersion', label: '实装版本（如 3.7）', kind: 'text', required: true },
   { name: 'avatar', label: '头像图片 URL', kind: 'text', optional: true },
   { name: 'description', label: '角色简介', kind: 'textarea', optional: true },
@@ -83,16 +96,18 @@ const LIGHT_CONE_FIELDS: FieldDef[] = [
       { value: '4', label: '4★' },
       { value: '3', label: '3★' },
     ],
+    values: ['5', '4', '3'],
   },
-  { name: 'path', label: '命途', kind: 'choice', required: true, options: choice(PATH_META) },
+  { name: 'path', label: '命途', kind: 'choice', required: true, options: choice(PATH_META), values: PATH_IDS },
   {
     name: 'acquisition',
     label: '获取方式',
     kind: 'choice',
     optional: true,
     options: choice(ACQUISITION_LABEL),
+    values: ACQUISITION_TYPES,
   },
-  { name: 'releaseDate', label: '实装日期（YYYY-MM-DD）', kind: 'text', optional: true },
+  { name: 'releaseDate', label: '实装日期（可选）', kind: 'date', optional: true },
   { name: 'releaseVersion', label: '实装版本（如 3.7）', kind: 'text', optional: true },
   { name: 'image', label: '光锥图片 URL', kind: 'text', optional: true },
   { name: 'description', label: '光锥描述', kind: 'textarea', optional: true },
@@ -100,10 +115,10 @@ const LIGHT_CONE_FIELDS: FieldDef[] = [
 
 const NEWS_EVENT_FIELDS: FieldDef[] = [
   { name: 'id', label: 'ID', kind: 'text', required: true, lockOnEdit: true },
-  { name: 'type', label: '事件类型', kind: 'choice', required: true, options: choice(NEWS_TYPE_META) },
+  { name: 'type', label: '事件类型', kind: 'choice', required: true, options: choice(NEWS_TYPE_META), values: NEWS_EVENT_TYPES },
   { name: 'title', label: '标题', kind: 'text', required: true },
-  { name: 'date', label: '开始日期（YYYY-MM-DD）', kind: 'text', required: true },
-  { name: 'endDate', label: '结束日期（可选）', kind: 'text', optional: true },
+  { name: 'date', label: '开始日期', kind: 'date', required: true },
+  { name: 'endDate', label: '结束日期（可选）', kind: 'date', optional: true },
   { name: 'version', label: '版本（如 3.7，可选）', kind: 'text', optional: true },
   { name: 'description', label: '说明（可选）', kind: 'textarea', optional: true },
   { name: 'relatedCharacterId', label: '关联角色（可选）', kind: 'choice', optional: true, options: [] },
@@ -190,6 +205,10 @@ function entryToForm(type: EntryType, entry: Character | LightCone | NewsEvent):
   return form;
 }
 
+function entryLabel(entry: Character | LightCone | NewsEvent): string {
+  return 'name' in entry ? entry.name : (entry as NewsEvent).title;
+}
+
 function entrySummary(type: EntryType, entry: Character | LightCone | NewsEvent): string {
   if (type === 'character') {
     const c = entry as Character;
@@ -214,6 +233,15 @@ export function AdminPage() {
   const [entryType, setEntryType] = useState<EntryType>('character');
   const [form, setForm] = useState<FormState>(() => emptyForm('character'));
   const [editingId, setEditingId] = useState<string | null>(null);
+  /** 条目列表的关键词过滤 */
+  const [listQuery, setListQuery] = useState('');
+  /** 最近一次保存 / 删除的成功提示（数秒后自动消失） */
+  const [notice, setNotice] = useState<string | null>(null);
+
+  const showNotice = (message: string) => {
+    setNotice(message);
+    window.setTimeout(() => setNotice(null), 4000);
+  };
 
   const fields = fieldsFor(entryType);
   const entries: (Character | LightCone | NewsEvent)[] =
@@ -222,6 +250,12 @@ export function AdminPage() {
       : entryType === 'lightCone'
         ? lightCones
         : newsEvents;
+  const listKeyword = listQuery.trim().toLowerCase();
+  const visibleEntries = listKeyword
+    ? entries.filter((entry) =>
+        `${entryLabel(entry)} ${entry.id}`.toLowerCase().includes(listKeyword),
+      )
+    : entries;
 
   const setField = (name: string, value: string) =>
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -230,6 +264,7 @@ export function AdminPage() {
     setEntryType(type);
     setForm(emptyForm(type));
     setEditingId(null);
+    setListQuery('');
   };
 
   const startEdit = (entry: Character | LightCone | NewsEvent) => {
@@ -247,6 +282,46 @@ export function AdminPage() {
     if (missing) {
       alert(`请填写「${missing.label}」`);
       return;
+    }
+    // 枚举字段白名单校验，防止脏值入库后渲染时查表失败
+    for (const field of fields) {
+      if (field.kind !== 'choice' || !field.values) continue;
+      const value = form[field.name]?.trim() ?? '';
+      if (value && !field.values.includes(value)) {
+        alert(`「${field.label}」的取值无效，请重新选择`);
+        return;
+      }
+    }
+    // 日期格式与区间校验
+    const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+    for (const field of fields) {
+      if (field.kind !== 'date') continue;
+      const value = form[field.name]?.trim() ?? '';
+      if (value && !datePattern.test(value)) {
+        alert(`「${field.label}」格式应为 YYYY-MM-DD`);
+        return;
+      }
+    }
+    if (
+      entryType === 'newsEvent' &&
+      form.endDate?.trim() &&
+      form.date?.trim() &&
+      form.endDate.trim() < form.date.trim()
+    ) {
+      alert('「结束日期」不能早于「开始日期」');
+      return;
+    }
+    if (entryType === 'newsEvent') {
+      const relChar = form.relatedCharacterId?.trim();
+      if (relChar && !characters.some((c) => c.id === relChar)) {
+        alert('关联角色的 ID 不存在，请重新选择');
+        return;
+      }
+      const relCone = form.relatedLightConeId?.trim();
+      if (relCone && !lightCones.some((lc) => lc.id === relCone)) {
+        alert('关联光锥的 ID 不存在，请重新选择');
+        return;
+      }
     }
     const entry = buildEntry(entryType, form);
     try {
@@ -268,6 +343,7 @@ export function AdminPage() {
       else if (entryType === 'lightCone') await db.lightCones.put(entry as LightCone);
       else await db.newsEvents.put(entry as NewsEvent);
       cancelEdit();
+      showNotice(`已保存「${entryLabel(entry)}」`);
     } catch (error) {
       alert(`保存失败：${error instanceof Error ? error.message : String(error)}`);
     }
@@ -275,10 +351,46 @@ export function AdminPage() {
 
   const remove = async (id: string, label: string) => {
     if (!window.confirm(`确认删除「${label}」（${id}）？此操作不可撤销。`)) return;
-    if (entryType === 'character') await db.characters.delete(id);
-    else if (entryType === 'lightCone') await db.lightCones.delete(id);
-    else await db.newsEvents.delete(id);
-    if (editingId === id) cancelEdit();
+    try {
+      await db.transaction(
+        'rw',
+        [db.characters, db.lightCones, db.newsEvents],
+        async () => {
+          if (entryType === 'character') {
+            await db.characters.delete(id);
+            // 同步清除资讯事件中的悬挂关联，避免日历条目跳转到不存在的详情页
+            const linked = await db.newsEvents
+              .filter((event) => event.relatedCharacterId === id)
+              .toArray();
+            if (linked.length) {
+              await db.newsEvents.bulkPut(
+                linked.map(({ relatedCharacterId: _removed, ...rest }) => rest as NewsEvent),
+              );
+            }
+          } else if (entryType === 'lightCone') {
+            await db.lightCones.delete(id);
+            const linked = await db.newsEvents
+              .filter((event) => event.relatedLightConeId === id)
+              .toArray();
+            if (linked.length) {
+              await db.newsEvents.bulkPut(
+                linked.map(({ relatedLightConeId: _removed, ...rest }) => rest as NewsEvent),
+              );
+            }
+          } else {
+            await db.newsEvents.delete(id);
+          }
+        },
+      );
+      showNotice(
+        `已删除「${label}」${
+          entryType !== 'newsEvent' ? '，相关资讯事件的关联已同步清除' : ''
+        }`,
+      );
+      if (editingId === id) cancelEdit();
+    } catch (error) {
+      alert(`删除失败：${error instanceof Error ? error.message : String(error)}`);
+    }
   };
 
   const optionsFor = (field: FieldDef): { value: string; label: string }[] => {
@@ -345,6 +457,14 @@ export function AdminPage() {
           </div>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {notice && (
+              <p
+                role="status"
+                className="border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-300 sm:col-span-2"
+              >
+                {notice}
+              </p>
+            )}
             {fields.map((field) => {
               const isWide = field.kind === 'textarea';
               return (
@@ -370,6 +490,13 @@ export function AdminPage() {
                         </option>
                       ))}
                     </select>
+                  ) : field.kind === 'date' ? (
+                    <input
+                      type="date"
+                      value={form[field.name] ?? ''}
+                      onChange={(e) => setField(field.name, e.target.value)}
+                      className={`${inputClass} mt-1`}
+                    />
                   ) : field.kind === 'textarea' ? (
                     <textarea
                       value={form[field.name] ?? ''}
@@ -413,9 +540,19 @@ export function AdminPage() {
           <h2 className="text-lg font-semibold text-slate-100">
             {ENTRY_TYPES.find((type) => type.value === entryType)?.label}列表
             <span className="ml-2 font-display text-xs text-slate-500">
-              {entries.length} 项
+              {listQuery.trim()
+                ? `${visibleEntries.length}/${entries.length} 项`
+                : `${entries.length} 项`}
             </span>
           </h2>
+
+          <input
+            value={listQuery}
+            onChange={(e) => setListQuery(e.target.value)}
+            placeholder="搜索 ID / 名称…"
+            aria-label="搜索条目"
+            className={`${inputClass} mt-3`}
+          />
 
           {entries.length === 0 ? (
             <EmptyState
@@ -423,9 +560,13 @@ export function AdminPage() {
               title="暂无数据"
               hint="通过左侧表单新增条目，或在 src/data/seed.ts 录入种子数据。"
             />
+          ) : visibleEntries.length === 0 ? (
+            <p className="py-10 text-center text-sm text-slate-500">
+              没有匹配的条目，试试其它关键词。
+            </p>
           ) : (
-            <ul className="mt-3 max-h-[520px] space-y-2 overflow-y-auto pr-1">
-              {entries.map((entry) => (
+            <ul className="mt-3 max-h-[440px] space-y-2 overflow-y-auto pr-1">
+              {visibleEntries.map((entry) => (
                 <li
                   key={entry.id}
                   className={`flex items-center gap-3 border px-3 py-2 text-sm transition ${
@@ -435,9 +576,7 @@ export function AdminPage() {
                   }`}
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-slate-200">
-                      {'name' in entry ? entry.name : (entry as NewsEvent).title}
-                    </p>
+                    <p className="truncate text-slate-200">{entryLabel(entry)}</p>
                     <p className="truncate text-xs text-slate-500">
                       {entry.id} · {entrySummary(entryType, entry)}
                     </p>
@@ -451,12 +590,7 @@ export function AdminPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() =>
-                      void remove(
-                        entry.id,
-                        'name' in entry ? entry.name : (entry as NewsEvent).title,
-                      )
-                    }
+                    onClick={() => void remove(entry.id, entryLabel(entry))}
                     className="shrink-0 text-xs text-slate-500 transition hover:text-red-400"
                   >
                     删除
