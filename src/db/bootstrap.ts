@@ -6,6 +6,7 @@ import {
   SEED_VERSION,
 } from '../data/seed';
 import { db } from './db';
+import { loadFavorites } from '../lib/favorites';
 
 export type BootstrapStatus = 'pending' | 'ok' | 'failed';
 
@@ -38,6 +39,8 @@ export function getBootstrapStatus(): BootstrapStatus {
 export async function bootstrapDatabase(): Promise<void> {
   try {
     await db.open();
+    // 收藏与种子数据同源加载（含旧 localStorage 数据的一次性迁移）
+    await loadFavorites();
     const stored = await db.meta.get('seedVersion');
     const storedVersion = stored ? Number(stored.value) : 0;
     const seedChanged = storedVersion < SEED_VERSION;

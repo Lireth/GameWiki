@@ -8,6 +8,10 @@ import {
   subscribeBootstrap,
   type BootstrapStatus,
 } from '../db/bootstrap';
+import {
+  getFavorites,
+  subscribeFavorites,
+} from '../lib/favorites';
 import type {
   Character,
   LightCone,
@@ -102,62 +106,15 @@ export function useDebouncedSearch(
 }
 
 /* ------------------------------------------------------------------ */
-/* 收藏 / 心愿单（localStorage，跨会话保留）                            */
+/* 收藏 / 心愿单（IndexedDB meta 表，随导出备份保留）                    */
 /* ------------------------------------------------------------------ */
 
-const FAVORITES_KEY = 'hsr-wiki-favorites';
-
-/** 收藏 id 带表前缀，避免角色 / 光锥 / 遗器的 id 冲突 */
-export const FAVORITE_PREFIX = {
-  character: 'c:',
-  lightCone: 'lc:',
-  relic: 'r:',
-} as const;
-
-function loadFavorites(): ReadonlySet<string> {
-  try {
-    const raw = window.localStorage.getItem(FAVORITES_KEY);
-    const list: unknown = raw ? JSON.parse(raw) : [];
-    return new Set(
-      Array.isArray(list)
-        ? list.filter((item): item is string => typeof item === 'string')
-        : [],
-    );
-  } catch {
-    return new Set();
-  }
-}
-
-let favoriteState: ReadonlySet<string> = loadFavorites();
-const favoriteListeners = new Set<() => void>();
-
-function persistFavorites(next: ReadonlySet<string>) {
-  favoriteState = next;
-  try {
-    window.localStorage.setItem(FAVORITES_KEY, JSON.stringify([...next]));
-  } catch {
-    /* 隐私模式等场景写入失败时仅保留内存态 */
-  }
-  for (const listener of favoriteListeners) listener();
-}
-
-export function getFavorites(): ReadonlySet<string> {
-  return favoriteState;
-}
-
-export function subscribeFavorites(listener: () => void): () => void {
-  favoriteListeners.add(listener);
-  return () => {
-    favoriteListeners.delete(listener);
-  };
-}
-
-export function toggleFavorite(key: string) {
-  const next = new Set(favoriteState);
-  if (next.has(key)) next.delete(key);
-  else next.add(key);
-  persistFavorites(next);
-}
+// 存储与迁移逻辑见 lib/favorites.ts，这里保持原导出位置兼容
+export {
+  FAVORITE_PREFIX,
+  getFavorites,
+  toggleFavorite,
+} from '../lib/favorites';
 
 /** 收藏集合（实时响应变更） */
 export function useFavorites(): ReadonlySet<string> {
@@ -171,6 +128,61 @@ export function useFavorites(): ReadonlySet<string> {
 
 // 排序选项与分面计数的纯逻辑实现见 lib/facets.ts，这里保持原导出位置兼容
 export { SORT_OPTIONS, sortList } from '../lib/facets';
+
+/** 「只看收藏」前置过滤的返回值 */
+export interface FavoriteFilterApi<T> {
+  /** URL 参数 fav=1 是否生效 */
+  favOnly: boolean;
+  /** 当前表内已收藏条目数 */
+  favCount: number;
+  /** favOnly 生效时仅保留已收藏条目，否则原样返回 */
+  visibleItems: T[];
+  toggleFavOnly: () => void;
+}
+
+/**
+ * 「只看收藏」：URL 参数 fav=1 作为前置过滤接入分面筛选（计数随其联动）。
+ * items 条目需带唯一 id；prefix 见 FAVORITE_PREFIX。
+ */
+export function useFavoriteFilter<T extends { id: string }>(
+  items: T[],
+  prefix: string,
+): FavoriteFilterApi<T> {
+  const favorites = useFavorites();
+  const [params, setParams] = useSearchParams();
+
+  const favOnly = params.get('fav') === '1';
+  const favoriteIds = useMemo(
+    () =>
+      new Set(
+        [...favorites]
+          .filter((key) => key.startsWith(prefix))
+          .map((key) => key.slice(prefix.length)),
+      ),
+    [favorites, prefix],
+  );
+  const favCount = useMemo(
+    () => items.filter((item) => favoriteIds.has(item.id)).length,
+    [items, favoriteIds],
+  );
+  const visibleItems = useMemo(
+    () => (favOnly ? items.filter((item) => favoriteIds.has(item.id)) : items),
+    [items, favOnly, favoriteIds],
+  );
+  const toggleFavOnly = useCallback(() => {
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (favOnly) next.delete('fav');
+        else next.set('fav', '1');
+        return next;
+      },
+      { replace: true },
+    );
+  }, [favOnly, setParams]);
+
+  return { favOnly, favCount, visibleItems, toggleFavOnly };
+}
 
 export interface FacetFilterApi<T, K extends string> {
   /** 搜索关键词（URL 参数 q） */

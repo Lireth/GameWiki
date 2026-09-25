@@ -1,33 +1,31 @@
-import { Fragment, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useMemo } from 'react';
 import { LightConeCard } from '../components/cards/LightConeCard';
-import { SearchIcon, StarIcon } from '../components/icons';
 import {
-  CopyLinkButton,
   FacetChip,
   FilterRow,
-  FilterRowLines,
-  sortSelectClass,
+  ListSearchBox,
+  ListToolbar,
+  RarityFacetRow,
+  VersionFacetRow,
+  ViewAllRow,
 } from '../components/ui/FilterPanel';
-import { EmptyState } from '../components/ui/EmptyState';
+import { EmptyState, LoadingState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import type { LightCone } from '../db/types';
 import { LIGHT_CONE_RARITIES } from '../db/types';
 import {
-  SORT_OPTIONS,
-  sortList,
   FAVORITE_PREFIX,
-  useDebouncedSearch,
+  sortList,
+  useBootstrapStatus,
   useFacetFilter,
-  useFavorites,
+  useFavoriteFilter,
   useLightCones,
 } from '../hooks/useWikiData';
 import {
   ACQUISITION_LABEL,
   buildVersionGroups,
   PATH_META,
-  RARITY_META,
 } from '../lib/meta';
 
 type FacetKey = 'rarity' | 'path' | 'acquisition' | 'version';
@@ -59,30 +57,9 @@ const SORT_ACCESSORS = {
 
 export function LightConesPage() {
   const lightCones = useLightCones();
-  const favorites = useFavorites();
-  const [searchParams] = useSearchParams();
-  /** 「只看收藏」：URL 参数 fav=1，作为前置过滤接入分面筛选（计数随其联动） */
-  const favOnly = searchParams.get('fav') === '1';
-  const favoriteItems = useMemo(
-    () =>
-      new Set(
-        [...favorites]
-          .filter((key) => key.startsWith(FAVORITE_PREFIX.lightCone))
-          .map((key) => key.slice(FAVORITE_PREFIX.lightCone.length)),
-      ),
-    [favorites],
-  );
-  const favCount = useMemo(
-    () => lightCones.filter((lc) => favoriteItems.has(lc.id)).length,
-    [lightCones, favoriteItems],
-  );
-  const visibleItems = useMemo(
-    () =>
-      favOnly
-        ? lightCones.filter((lc) => favoriteItems.has(lc.id))
-        : lightCones,
-    [lightCones, favOnly, favoriteItems],
-  );
+  const dataReady = useBootstrapStatus() === 'ok';
+  const { favOnly, favCount, visibleItems, toggleFavOnly } =
+    useFavoriteFilter(lightCones, FAVORITE_PREFIX.lightCone);
   const {
     q,
     setQ,
@@ -96,7 +73,6 @@ export function LightConesPage() {
     matched,
     hasAnyFilter,
   } = useFacetFilter(visibleItems, FACET_KEYS, facetValue, matchesKeyword);
-  const { text: searchText, onChange: onSearchChange } = useDebouncedSearch(q, setQ);
   const sort = getParam('sort') ?? 'date-desc';
 
   const filtered = useMemo(
@@ -118,53 +94,25 @@ export function LightConesPage() {
         description="按名称、稀有度、命途、获取方式与实装版本搜索和筛选光锥。"
       >
         <div className="mt-6 space-y-3">
-          <div className="relative">
-            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
-            <input
-              value={searchText}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="搜索光锥名称…"
-              className="w-full border border-space-600/60 bg-space-850/80 py-2.5 pl-9 pr-3 text-sm text-slate-200 placeholder:text-slate-600 focus:border-gold-500/60 focus:outline-none"
-            />
-          </div>
+          <ListSearchBox q={q} setQ={setQ} placeholder="搜索光锥名称…" />
 
           {/* 分面筛选面板 */}
           <Panel className="p-0">
-            <FilterRow label="查看全部">
-              <FacetChip
-                active={!hasAnyFilter}
-                count={allCount}
-                onClick={clearFilters}
-              >
-                查看全部
-              </FacetChip>
-              <FacetChip
-                active={favOnly}
-                count={favCount}
-                onClick={() => setParam('fav', favOnly ? '' : '1')}
-              >
-                只看收藏
-              </FacetChip>
-            </FilterRow>
+            <ViewAllRow
+              allCount={allCount}
+              hasAnyFilter={hasAnyFilter}
+              clearFilters={clearFilters}
+              favOnly={favOnly}
+              favCount={favCount}
+              onToggleFav={toggleFavOnly}
+            />
 
-            <FilterRow label="稀有度">
-              {LIGHT_CONE_RARITIES.map((r) => (
-                <FacetChip
-                  key={r}
-                  active={facets.rarity.includes(String(r))}
-                  count={countOf('rarity', String(r))}
-                  color={RARITY_META[r].color}
-                  ariaLabel={`${r}星`}
-                  onClick={() => toggleFacet('rarity', String(r))}
-                >
-                  <span className="inline-flex items-center gap-0.5">
-                    {Array.from({ length: r }).map((_, i) => (
-                      <StarIcon key={i} className="size-3" />
-                    ))}
-                  </span>
-                </FacetChip>
-              ))}
-            </FilterRow>
+            <RarityFacetRow
+              rarities={LIGHT_CONE_RARITIES}
+              selected={facets.rarity}
+              countOf={(value) => countOf('rarity', value)}
+              onToggle={(value) => toggleFacet('rarity', value)}
+            />
 
             <FilterRow label="命途">
               {Object.entries(PATH_META).map(([value, meta]) => (
@@ -194,61 +142,32 @@ export function LightConesPage() {
               ))}
             </FilterRow>
 
-            {/* 实装版本：按大版本号分行，常显 */}
-            <FilterRowLines
-              label="实装版本"
-              lines={versionGroups.map((group) => (
-                <Fragment key={group.major}>
-                  {group.values.map((value) => (
-                    <FacetChip
-                      key={value}
-                      active={facets.version.includes(value)}
-                      count={countOf('version', value)}
-                      onClick={() => toggleFacet('version', value)}
-                    >
-                      <span className="font-display">{value}</span>
-                    </FacetChip>
-                  ))}
-                </Fragment>
-              ))}
+            <VersionFacetRow
+              groups={versionGroups}
+              selected={facets.version}
+              countOf={(value) => countOf('version', value)}
+              onToggle={(value) => toggleFacet('version', value)}
             />
           </Panel>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
-            <p>
-              共{' '}
-              <span className="font-display text-sm text-gold-300">
-                {filtered.length}
-              </span>{' '}
-              件光锥
-            </p>
-            <div className="flex items-center gap-3">
-              <CopyLinkButton />
-              <label className="flex items-center gap-2">
-                <span>排序</span>
-                <select
-                  aria-label="排序"
-                  value={sort}
-                  onChange={(e) => setParam('sort', e.target.value)}
-                  className={sortSelectClass}
-                >
-                  {SORT_OPTIONS.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-          </div>
+          <ListToolbar
+            count={filtered.length}
+            unit="件光锥"
+            sort={sort}
+            onSortChange={(value) => setParam('sort', value)}
+          />
         </div>
       </PageHeader>
 
       {lightCones.length === 0 ? (
-        <EmptyState
-          title="暂无光锥数据"
-          hint="光锥数据尚未收录，可在 src/data/seed.ts 中录入，页面会自动展示。"
-        />
+        dataReady ? (
+          <EmptyState
+            title="暂无光锥数据"
+            hint="可通过页脚「数据管理」录入，或导入备份数据，页面会自动展示。"
+          />
+        ) : (
+          <LoadingState />
+        )
       ) : filtered.length === 0 ? (
         <EmptyState
           title="没有符合条件的光锥"

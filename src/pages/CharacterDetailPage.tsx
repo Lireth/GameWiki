@@ -9,11 +9,12 @@ import {
 } from '../components/ui/Badges';
 import { RelatedEvents } from '../components/ui/RelatedEvents';
 import { FavoriteButton } from '../components/ui/FavoriteButton';
-import { EmptyState } from '../components/ui/EmptyState';
+import { EmptyState, LoadingState } from '../components/ui/EmptyState';
 import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import {
   FAVORITE_PREFIX,
+  useBootstrapStatus,
   useCharacterById,
   useCharacterCount,
   useNewsEvents,
@@ -27,6 +28,7 @@ export function CharacterDetailPage() {
   const character = useCharacterById(id);
   const characterCount = useCharacterCount();
   const newsEvents = useNewsEvents();
+  const dataReady = useBootstrapStatus() === 'ok';
   /** 头像加载失败的头像地址（切换角色时重置判断） */
   const [failedAvatar, setFailedAvatar] = useState<string | null>(null);
 
@@ -35,10 +37,14 @@ export function CharacterDetailPage() {
       <div>
         <PageHeader en="Character" title="角色详情" />
         {characterCount === 0 ? (
-          <EmptyState
-            title="暂无角色数据"
-            hint="角色数据尚未收录，可在 src/data/seed.ts 中录入。"
-          />
+          dataReady ? (
+            <EmptyState
+              title="暂无角色数据"
+              hint="角色数据尚未收录，可通过页脚「数据管理」录入，或导入备份数据。"
+            />
+          ) : (
+            <LoadingState />
+          )
         ) : (
           <EmptyState
             title="未找到该角色"

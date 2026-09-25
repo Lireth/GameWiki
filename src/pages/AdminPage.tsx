@@ -668,7 +668,7 @@ export function AdminPage() {
             <EmptyState
               className="mt-4"
               title="暂无数据"
-              hint="通过左侧表单新增条目，或在 src/data/seed.ts 录入种子数据。"
+              hint="通过左侧表单新增条目，或使用页脚「导入数据」恢复备份。"
             />
           ) : visibleEntries.length === 0 ? (
             <p className="py-10 text-center text-sm text-slate-500">

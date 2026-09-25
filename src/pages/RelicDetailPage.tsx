@@ -1,10 +1,15 @@
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeftIcon } from '../components/icons';
 import { RarityStars } from '../components/ui/Badges';
-import { EmptyState } from '../components/ui/EmptyState';
+import { EmptyState, LoadingState } from '../components/ui/EmptyState';
 import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
-import { FAVORITE_PREFIX, useRelicById, useRelicCount } from '../hooks/useWikiData';
+import {
+  FAVORITE_PREFIX,
+  useBootstrapStatus,
+  useRelicById,
+  useRelicCount,
+} from '../hooks/useWikiData';
 import { FavoriteButton } from '../components/ui/FavoriteButton';
 import { formatDateCN } from '../lib/format';
 import { versionLink } from '../lib/links';
@@ -14,16 +19,21 @@ export function RelicDetailPage() {
   const { id } = useParams();
   const relic = useRelicById(id);
   const relicCount = useRelicCount();
+  const dataReady = useBootstrapStatus() === 'ok';
 
   if (!relic) {
     return (
       <div>
         <PageHeader en="Relic" title="遗器详情" />
         {relicCount === 0 ? (
-          <EmptyState
-            title="暂无遗器数据"
-            hint="遗器数据尚未收录，可在 src/data/seed.ts 中录入。"
-          />
+          dataReady ? (
+            <EmptyState
+              title="暂无遗器数据"
+              hint="遗器数据尚未收录，可通过页脚「数据管理」录入，或导入备份数据。"
+            />
+          ) : (
+            <LoadingState />
+          )
         ) : (
           <EmptyState
             title="未找到该遗器"

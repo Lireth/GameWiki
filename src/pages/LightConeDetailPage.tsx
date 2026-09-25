@@ -4,11 +4,12 @@ import { ArrowLeftIcon } from '../components/icons';
 import { PathBadge, RarityStars } from '../components/ui/Badges';
 import { RelatedEvents } from '../components/ui/RelatedEvents';
 import { FavoriteButton } from '../components/ui/FavoriteButton';
-import { EmptyState } from '../components/ui/EmptyState';
+import { EmptyState, LoadingState } from '../components/ui/EmptyState';
 import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import {
   FAVORITE_PREFIX,
+  useBootstrapStatus,
   useLightConeById,
   useLightConeCount,
   useNewsEvents,
@@ -22,6 +23,7 @@ export function LightConeDetailPage() {
   const lightCone = useLightConeById(id);
   const lightConeCount = useLightConeCount();
   const newsEvents = useNewsEvents();
+  const dataReady = useBootstrapStatus() === 'ok';
   const [failedImage, setFailedImage] = useState<string | null>(null);
 
   if (!lightCone) {
@@ -29,10 +31,14 @@ export function LightConeDetailPage() {
       <div>
         <PageHeader en="Light Cone" title="光锥详情" />
         {lightConeCount === 0 ? (
-          <EmptyState
-            title="暂无光锥数据"
-            hint="光锥数据尚未收录，可在 src/data/seed.ts 中录入。"
-          />
+          dataReady ? (
+            <EmptyState
+              title="暂无光锥数据"
+              hint="光锥数据尚未收录，可通过页脚「数据管理」录入，或导入备份数据。"
+            />
+          ) : (
+            <LoadingState />
+          )
         ) : (
           <EmptyState
             title="未找到该光锥"

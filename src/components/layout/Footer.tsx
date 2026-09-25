@@ -2,13 +2,15 @@ import { Link } from 'react-router-dom';
 import { db } from '../../db/db';
 import type { Character, LightCone, NewsEvent, RelicSet } from '../../db/types';
 import { MAX_IMAGE_DATA_URL_LENGTH } from '../../lib/entryValidation';
+import { getFavorites, mergeFavorites } from '../../lib/favorites';
 
-/** 导出全部数据表为 JSON 备份文件 */
+/** 导出全部数据表与收藏为 JSON 备份文件 */
 async function exportData() {
   try {
     const payload = {
       app: 'hsr-wiki',
       exportedAt: new Date().toISOString(),
+      favorites: [...getFavorites()],
       characters: await db.characters.toArray(),
       lightCones: await db.lightCones.toArray(),
       relics: await db.relics.toArray(),
@@ -56,6 +58,9 @@ async function importData(file: File) {
       isStr(item.effect2) &&
       (item.rarity === 2 || item.rarity === 3 || item.rarity === 4 || item.rarity === 5),
     );
+    const favorites = Array.isArray(data.favorites)
+      ? data.favorites.filter((item): item is string => isStr(item))
+      : [];
 
     // 图片 data URL 超限的条目跳过（与管理页上传的 1MB 上限一致）
     const oversized = (value: unknown) =>
@@ -72,14 +77,17 @@ async function importData(file: File) {
       characters.length +
         lightCones.length +
         newsEvents.length +
-        relics.length ===
+        relics.length +
+        favorites.length ===
       0
     ) {
-      alert('文件中未找到可导入的数据（需要 characters / lightCones / relics / newsEvents 数组）。');
+      alert('文件中未找到可导入的数据（需要 characters / lightCones / relics / newsEvents / favorites 字段）。');
       return;
     }
     const confirmed = window.confirm(
-      `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条。` +
+      `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条` +
+        (favorites.length ? `、收藏 ${favorites.length} 条` : '') +
+        '.' +
         (skipped > 0 ? `\n另有 ${skipped} 条图片超过 1MB 的条目将被跳过。` : '') +
         '\n与现有数据 id 相同的条目会被覆盖，其余保留。是否继续？',
     );
@@ -95,6 +103,8 @@ async function importData(file: File) {
         if (relics.length) await db.relics.bulkPut(relics);
       },
     );
+    // 收藏与现有收藏集合并（并集），不覆盖丢失
+    if (favorites.length) await mergeFavorites(favorites);
     alert('导入完成，页面数据已实时更新。');
   } catch {
     alert('导入失败：文件不是有效的备份 JSON。');

@@ -5,14 +5,14 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from '../components/icons';
-import { EmptyState } from '../components/ui/EmptyState';
+import { EmptyState, LoadingState } from '../components/ui/EmptyState';
 import { CopyLinkButton } from '../components/ui/FilterPanel';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import { TypeBadge } from '../components/ui/Badges';
 import type { NewsEvent, NewsEventType } from '../db/types';
 import { NEWS_EVENT_TYPES } from '../db/types';
-import { useNewsEvents } from '../hooks/useWikiData';
+import { useBootstrapStatus, useNewsEvents } from '../hooks/useWikiData';
 import {
   eventTouchesMonth,
   eachISODate,
@@ -91,6 +91,7 @@ function readMonth(raw: string | null, now: Date): number {
 
 export function NewsPage() {
   const events = useNewsEvents();
+  const dataReady = useBootstrapStatus() === 'ok';
   const [params, setParams] = useSearchParams();
   // 「今天」在会话期内固定，避免跨午夜渲染不一致
   const now = useMemo(() => new Date(), []);
@@ -342,11 +343,15 @@ export function NewsPage() {
         </div>
 
         {events.length === 0 ? (
-          <EmptyState
-            className="mt-4"
-            title="暂无资讯数据"
-            hint="资讯事件尚未收录，可在 src/data/seed.ts 中录入；支持版本、角色、光锥、活动、卡池、活动结束六类事件。"
-          />
+          dataReady ? (
+            <EmptyState
+              className="mt-4"
+              title="暂无资讯数据"
+              hint="资讯事件尚未收录，可通过页脚「数据管理」录入；支持版本、角色、光锥、活动、卡池、活动结束六类事件。"
+            />
+          ) : (
+            <LoadingState className="mt-4" />
+          )
         ) : listEvents.length === 0 ? (
           <p className="py-10 text-center text-sm text-slate-500">
             {selectedDate ? '当日暂无资讯' : '本月暂无资讯'}

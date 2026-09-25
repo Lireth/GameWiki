@@ -1,12 +1,16 @@
 import { Fragment, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { EmptyState } from '../components/ui/EmptyState';
+import { EmptyState, LoadingState } from '../components/ui/EmptyState';
 import { FacetChip, CopyLinkButton, FilterRow } from '../components/ui/FilterPanel';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import type { Character } from '../db/types';
 import { ELEMENT_IDS, GENDERS, PATH_IDS, RARITIES } from '../db/types';
-import { useCharacters, useFacetFilter } from '../hooks/useWikiData';
+import {
+  useBootstrapStatus,
+  useCharacters,
+  useFacetFilter,
+} from '../hooks/useWikiData';
 import { ELEMENT_META, PATH_META, RARITY_META } from '../lib/meta';
 import { characterLink } from '../lib/links';
 
@@ -85,6 +89,7 @@ function Legend() {
 
 export function MatrixPage() {
   const characters = useCharacters();
+  const dataReady = useBootstrapStatus() === 'ok';
   const {
     facets,
     toggleFacet,
@@ -318,11 +323,13 @@ export function MatrixPage() {
             </p>
           )}
         </>
-      ) : (
+      ) : dataReady ? (
         <EmptyState
           title="暂无角色数据"
-          hint="角色数据尚未收录，可在 src/data/seed.ts 中录入；有数据后矩阵会自动生成。"
+          hint="角色数据尚未收录，可通过页脚「数据管理」录入，或导入备份数据；有数据后矩阵会自动生成。"
         />
+      ) : (
+        <LoadingState />
       )}
     </div>
   );

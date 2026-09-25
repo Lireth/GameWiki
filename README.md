@@ -9,7 +9,8 @@
 - **React Router 7**：路由
 - **Dexie 4（IndexedDB）**：本地数据存储，配合 `dexie-react-hooks` 实时响应数据变化
 - **@fontsource/rajdhani**：本地打包的英文/数字展示字体（中文回退系统字体）
-- **Vitest + fake-indexeddb**：单元与数据层集成测试（`npm test`）
+- **Vitest + fake-indexeddb**：单元 / 数据层集成 / 组件与 hooks 测试（`npm test`）
+- **ESLint（typescript-eslint + react-hooks 规则）**：静态检查（`npm lint`），GitHub Actions CI 上随测试与构建一并执行
 - **PWA**：manifest + Service Worker（`public/sw.js`，同源资源 stale-while-revalidate），支持安装与离线访问
 
 ## 页面结构
@@ -36,7 +37,8 @@ npm install
 npm run dev        # 开发：http://localhost:5173
 npm run build      # 类型检查 + 生产构建（输出 dist/）
 npm run preview    # 预览生产构建
-npm test           # 运行单元测试（Vitest，覆盖日期工具 / 分面计数 / 版本分组等纯逻辑）
+npm test           # 运行单元测试（Vitest，覆盖日期工具 / 分面计数 / 版本分组等纯逻辑与组件、hooks、收藏存储）
+npm run lint       # ESLint 静态检查
 ```
 
 ## 如何录入数据
@@ -47,7 +49,7 @@ npm test           # 运行单元测试（Vitest，覆盖日期工具 / 分面�
 2. 启动应用后，`src/db/bootstrap.ts` 会自动同步：对应表为空时全量写入种子数据；表非空但种子版本落后时按 `id` 增量更新（不会删除表中额外条目）；
 3. 页面通过 `dexie-react-hooks` 的 `useLiveQuery` 实时读取，无需刷新即可看到新数据。
 
-手工录入的数据可通过页脚的「导出数据 / 导入数据」按钮备份与恢复（JSON 文件，按 `id` 合并导入）。
+手工录入的数据与收藏可通过页脚的「导出数据 / 导入数据」按钮备份与恢复（JSON 文件，数据按 `id` 合并导入，收藏取并集）。收藏保存在 IndexedDB（meta 表）中，旧版本存于 localStorage 的收藏会在启动时自动迁移。
 
 字段与类型定义见 [`src/db/types.ts`](src/db/types.ts)：
 
