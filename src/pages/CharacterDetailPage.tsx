@@ -8,10 +8,12 @@ import {
   RarityStars,
 } from '../components/ui/Badges';
 import { RelatedEvents } from '../components/ui/RelatedEvents';
+import { FavoriteButton } from '../components/ui/FavoriteButton';
 import { EmptyState } from '../components/ui/EmptyState';
 import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import {
+  FAVORITE_PREFIX,
   useCharacterById,
   useCharacterCount,
   useNewsEvents,
@@ -110,9 +112,14 @@ export function CharacterDetailPage() {
           </div>
           <div className="p-5">
             <RarityStars rarity={character.rarity} />
-            <h1 className="mt-2 font-display text-3xl font-bold text-slate-50">
-              {character.name}
-            </h1>
+            <div className="mt-2 flex items-center gap-2">
+              <h1 className="min-w-0 flex-1 font-display text-3xl font-bold text-slate-50">
+                {character.name}
+              </h1>
+              <FavoriteButton
+                favoriteKey={`${FAVORITE_PREFIX.character}${character.id}`}
+              />
+            </div>
             <div className="mt-3 flex flex-wrap gap-2">
               <PathBadge id={character.path} />
               <ElementBadge id={character.element} />

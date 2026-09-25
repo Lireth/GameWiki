@@ -1,4 +1,5 @@
 import { Fragment, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { LightConeCard } from '../components/cards/LightConeCard';
 import { SearchIcon, StarIcon } from '../components/icons';
 import {
@@ -16,8 +17,10 @@ import { LIGHT_CONE_RARITIES } from '../db/types';
 import {
   SORT_OPTIONS,
   sortList,
+  FAVORITE_PREFIX,
   useDebouncedSearch,
   useFacetFilter,
+  useFavorites,
   useLightCones,
 } from '../hooks/useWikiData';
 import {
@@ -56,6 +59,30 @@ const SORT_ACCESSORS = {
 
 export function LightConesPage() {
   const lightCones = useLightCones();
+  const favorites = useFavorites();
+  const [searchParams] = useSearchParams();
+  /** 「只看收藏」：URL 参数 fav=1，作为前置过滤接入分面筛选（计数随其联动） */
+  const favOnly = searchParams.get('fav') === '1';
+  const favoriteItems = useMemo(
+    () =>
+      new Set(
+        [...favorites]
+          .filter((key) => key.startsWith(FAVORITE_PREFIX.lightCone))
+          .map((key) => key.slice(FAVORITE_PREFIX.lightCone.length)),
+      ),
+    [favorites],
+  );
+  const favCount = useMemo(
+    () => lightCones.filter((lc) => favoriteItems.has(lc.id)).length,
+    [lightCones, favoriteItems],
+  );
+  const visibleItems = useMemo(
+    () =>
+      favOnly
+        ? lightCones.filter((lc) => favoriteItems.has(lc.id))
+        : lightCones,
+    [lightCones, favOnly, favoriteItems],
+  );
   const {
     q,
     setQ,
@@ -68,7 +95,7 @@ export function LightConesPage() {
     allCount,
     matched,
     hasAnyFilter,
-  } = useFacetFilter(lightCones, FACET_KEYS, facetValue, matchesKeyword);
+  } = useFacetFilter(visibleItems, FACET_KEYS, facetValue, matchesKeyword);
   const { text: searchText, onChange: onSearchChange } = useDebouncedSearch(q, setQ);
   const sort = getParam('sort') ?? 'date-desc';
 
@@ -110,6 +137,13 @@ export function LightConesPage() {
                 onClick={clearFilters}
               >
                 查看全部
+              </FacetChip>
+              <FacetChip
+                active={favOnly}
+                count={favCount}
+                onClick={() => setParam('fav', favOnly ? '' : '1')}
+              >
+                只看收藏
               </FacetChip>
             </FilterRow>
 

@@ -82,6 +82,69 @@ export function useDebouncedSearch(
 }
 
 /* ------------------------------------------------------------------ */
+/* 收藏 / 心愿单（localStorage，跨会话保留）                            */
+/* ------------------------------------------------------------------ */
+
+const FAVORITES_KEY = 'hsr-wiki-favorites';
+
+/** 收藏 id 带表前缀，避免角色与光锥的 id 冲突 */
+export const FAVORITE_PREFIX = {
+  character: 'c:',
+  lightCone: 'lc:',
+} as const;
+
+function loadFavorites(): ReadonlySet<string> {
+  try {
+    const raw = window.localStorage.getItem(FAVORITES_KEY);
+    const list: unknown = raw ? JSON.parse(raw) : [];
+    return new Set(
+      Array.isArray(list)
+        ? list.filter((item): item is string => typeof item === 'string')
+        : [],
+    );
+  } catch {
+    return new Set();
+  }
+}
+
+let favoriteState: ReadonlySet<string> = loadFavorites();
+const favoriteListeners = new Set<() => void>();
+
+function persistFavorites(next: ReadonlySet<string>) {
+  favoriteState = next;
+  try {
+    window.localStorage.setItem(FAVORITES_KEY, JSON.stringify([...next]));
+  } catch {
+    /* 隐私模式等场景写入失败时仅保留内存态 */
+  }
+  for (const listener of favoriteListeners) listener();
+}
+
+export function getFavorites(): ReadonlySet<string> {
+  return favoriteState;
+}
+
+export function subscribeFavorites(listener: () => void): () => void {
+  favoriteListeners.add(listener);
+  return () => {
+    favoriteListeners.delete(listener);
+  };
+}
+
+export function toggleFavorite(key: string) {
+  const next = new Set(favoriteState);
+  if (next.has(key)) next.delete(key);
+  else next.add(key);
+  persistFavorites(next);
+}
+
+/** 收藏集合（实时响应变更） */
+export function useFavorites(): ReadonlySet<string> {
+  return useSyncExternalStore(subscribeFavorites, getFavorites);
+}
+
+
+/* ------------------------------------------------------------------ */
 /* 分面筛选（角色 / 光锥图鉴列表页共享）                                */
 /* ------------------------------------------------------------------ */
 

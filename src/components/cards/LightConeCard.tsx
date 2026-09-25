@@ -4,7 +4,9 @@ import type { LightCone } from '../../db/types';
 import { lightConeLink } from '../../lib/links';
 import { PATH_META } from '../../lib/meta';
 import { PathBadge, RarityStars } from '../ui/Badges';
+import { FavoriteButton } from '../ui/FavoriteButton';
 import { CornerTicks } from '../ui/Panel';
+import { FAVORITE_PREFIX } from '../../hooks/useWikiData';
 
 export function LightConeCard({ lightCone }: { lightCone: LightCone }) {
   const path = PATH_META[lightCone.path];
@@ -46,9 +48,14 @@ export function LightConeCard({ lightCone }: { lightCone: LightCone }) {
       </div>
 
       <div className="p-3">
-        <h3 className="truncate font-semibold text-slate-100 transition group-hover:text-gold-300">
-          {lightCone.name}
-        </h3>
+        <div className="flex items-center gap-1.5">
+          <h3 className="min-w-0 flex-1 truncate font-semibold text-slate-100 transition group-hover:text-gold-300">
+            {lightCone.name}
+          </h3>
+          <FavoriteButton
+            favoriteKey={`${FAVORITE_PREFIX.lightCone}${lightCone.id}`}
+          />
+        </div>
         <div className="mt-2">
           <PathBadge id={lightCone.path} />
         </div>

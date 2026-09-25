@@ -42,6 +42,15 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
 
 void bootstrapDatabase();
 
+// PWA：生产环境注册 Service Worker（同源静态资源缓存，支持离线访问；失败不影响正常使用）
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      /* 注册失败时站点仍按普通 SPA 运行 */
+    });
+  });
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>

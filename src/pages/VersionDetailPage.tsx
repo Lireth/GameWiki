@@ -13,7 +13,7 @@ import {
   useNewsEvents,
 } from '../hooks/useWikiData';
 import { formatDateShort } from '../lib/format';
-import { eventLink, newsMonthLink } from '../lib/links';
+import { eventLink, newsMonthLink, versionLink } from '../lib/links';
 
 export function VersionDetailPage() {
   const { version = '' } = useParams();
@@ -48,6 +48,41 @@ export function VersionDetailPage() {
   const hasContent =
     versionChars.length + versionCones.length + versionEvents.length > 0;
 
+  /** 数据中出现的全部版本（数值序），用于上一版本 / 下一版本导航 */
+  const allVersions = useMemo(
+    () =>
+      [
+        ...new Set([
+          ...characters.map((c) => c.releaseVersion),
+          ...lightCones.map((lc) => lc.releaseVersion ?? ''),
+          ...newsEvents.map((event) => event.version ?? ''),
+        ]),
+      ]
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
+    [characters, lightCones, newsEvents],
+  );
+  const versionIndex = allVersions.indexOf(version);
+  const prevVersion = versionIndex > 0 ? allVersions[versionIndex - 1] : null;
+  const nextVersion =
+    versionIndex >= 0 && versionIndex < allVersions.length - 1
+      ? allVersions[versionIndex + 1]
+      : null;
+
+  /** 该版本内容的时间跨度（首末日期） */
+  const timeSpan = useMemo(() => {
+    const dates = [
+      ...versionChars.map((c) => c.releaseDate),
+      ...versionCones.map((lc) => lc.releaseDate ?? ''),
+      ...versionEvents.map((event) => event.date),
+    ].filter(Boolean);
+    if (dates.length === 0) return null;
+    return {
+      start: dates.reduce((a, b) => (a < b ? a : b)),
+      end: dates.reduce((a, b) => (a > b ? a : b)),
+    };
+  }, [versionChars, versionCones, versionEvents]);
+
   if (!hasContent) {
     return (
       <div>
@@ -76,13 +111,36 @@ export function VersionDetailPage() {
         title={`v${version} 版本内容`}
         description="聚合实装于该版本的全部角色、光锥与资讯事件。"
       >
-        <Link
-          to="/news"
-          className="mt-4 inline-flex items-center gap-1.5 text-xs text-gold-300 transition hover:text-gold-400"
-        >
-          <ArrowLeftIcon className="size-3.5" />
-          返回资讯日历
-        </Link>
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+          {prevVersion && (
+            <Link
+              to={versionLink(prevVersion)}
+              className="chamfer-xs border border-space-600/60 px-2.5 py-1 text-slate-300 transition hover:border-gold-500/50 hover:text-gold-300"
+            >
+              ← v{prevVersion}
+            </Link>
+          )}
+          {nextVersion && (
+            <Link
+              to={versionLink(nextVersion)}
+              className="chamfer-xs border border-space-600/60 px-2.5 py-1 text-slate-300 transition hover:border-gold-500/50 hover:text-gold-300"
+            >
+              v{nextVersion} →
+            </Link>
+          )}
+          {timeSpan && (
+            <span className="font-display tracking-wider text-slate-500">
+              {timeSpan.start} ~ {timeSpan.end}
+            </span>
+          )}
+          <Link
+            to="/news"
+            className="ml-auto inline-flex items-center gap-1 text-gold-300 transition hover:text-gold-400"
+          >
+            <ArrowLeftIcon className="size-3.5" />
+            返回资讯日历
+          </Link>
+        </div>
       </PageHeader>
 
       <div className="space-y-10">

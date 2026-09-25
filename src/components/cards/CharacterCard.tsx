@@ -4,7 +4,9 @@ import type { Character } from '../../db/types';
 import { characterLink } from '../../lib/links';
 import { ELEMENT_META, RARITY_META } from '../../lib/meta';
 import { ElementBadge, PathBadge, RarityStars } from '../ui/Badges';
+import { FavoriteButton } from '../ui/FavoriteButton';
 import { CornerTicks } from '../ui/Panel';
+import { FAVORITE_PREFIX } from '../../hooks/useWikiData';
 
 export function CharacterCard({ character }: { character: Character }) {
   const element = ELEMENT_META[character.element];
@@ -49,12 +51,17 @@ export function CharacterCard({ character }: { character: Character }) {
       </div>
 
       <div className="p-3">
-        <h3
-          className="truncate font-semibold text-slate-100 transition group-hover:text-gold-300"
-          style={{ borderLeft: `2px solid ${rarityColor}66`, paddingLeft: 8 }}
-        >
-          {character.name}
-        </h3>
+        <div className="flex items-center gap-1.5">
+          <h3
+            className="min-w-0 flex-1 truncate font-semibold text-slate-100 transition group-hover:text-gold-300"
+            style={{ borderLeft: `2px solid ${rarityColor}66`, paddingLeft: 8 }}
+          >
+            {character.name}
+          </h3>
+          <FavoriteButton
+            favoriteKey={`${FAVORITE_PREFIX.character}${character.id}`}
+          />
+        </div>
         <div className="mt-2 flex flex-wrap gap-1.5">
           <PathBadge id={character.path} />
           <ElementBadge id={character.element} />

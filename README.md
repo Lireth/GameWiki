@@ -9,6 +9,8 @@
 - **React Router 7**：路由
 - **Dexie 4（IndexedDB）**：本地数据存储，配合 `dexie-react-hooks` 实时响应数据变化
 - **@fontsource/rajdhani**：本地打包的英文/数字展示字体（中文回退系统字体）
+- **Vitest + fake-indexeddb**：单元与数据层集成测试（`npm test`）
+- **PWA**：manifest + Service Worker（`public/sw.js`，同源资源 stale-while-revalidate），支持安装与离线访问
 
 ## 页面结构
 

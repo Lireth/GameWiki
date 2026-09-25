@@ -3,10 +3,12 @@ import { Link, useParams } from 'react-router-dom';
 import { ArrowLeftIcon } from '../components/icons';
 import { PathBadge, RarityStars } from '../components/ui/Badges';
 import { RelatedEvents } from '../components/ui/RelatedEvents';
+import { FavoriteButton } from '../components/ui/FavoriteButton';
 import { EmptyState } from '../components/ui/EmptyState';
 import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import {
+  FAVORITE_PREFIX,
   useLightConeById,
   useLightConeCount,
   useNewsEvents,
@@ -94,9 +96,14 @@ export function LightConeDetailPage() {
           </div>
           <div className="p-5">
             <RarityStars rarity={lightCone.rarity} />
-            <h1 className="mt-2 font-display text-3xl font-bold text-slate-50">
-              {lightCone.name}
-            </h1>
+            <div className="mt-2 flex items-center gap-2">
+              <h1 className="min-w-0 flex-1 font-display text-3xl font-bold text-slate-50">
+                {lightCone.name}
+              </h1>
+              <FavoriteButton
+                favoriteKey={`${FAVORITE_PREFIX.lightCone}${lightCone.id}`}
+              />
+            </div>
             <div className="mt-3">
               <PathBadge id={lightCone.path} />
             </div>
