@@ -390,9 +390,13 @@ export function NewsPage() {
                     </span>
                   )}
                   {event.version && (
-                    <span className="font-display text-xs tracking-wider text-slate-500">
+                    <Link
+                      to={`/versions/${event.version}`}
+                      title="查看该版本全部内容"
+                      className="font-display text-xs tracking-wider text-slate-500 transition hover:text-gold-300"
+                    >
                       v{event.version}
-                    </span>
+                    </Link>
                   )}
                 </li>
               );

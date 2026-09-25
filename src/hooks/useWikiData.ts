@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore
 import { useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/db';
+import { computeFacetResult } from '../lib/facets';
 import {
   getBootstrapStatus,
   subscribeBootstrap,
@@ -84,46 +85,8 @@ export function useDebouncedSearch(
 /* 分面筛选（角色 / 光锥图鉴列表页共享）                                */
 /* ------------------------------------------------------------------ */
 
-/** 列表页共用的排序选项与 id */
-export const SORT_OPTIONS = [
-  { value: 'date-desc', label: '实装日期 新→旧' },
-  { value: 'date-asc', label: '实装日期 旧→新' },
-  { value: 'rarity-desc', label: '稀有度 高→低' },
-  { value: 'name', label: '名称排序' },
-] as const;
-
-/**
- * 通用排序：date 取 YYYY-MM-DD（可比字符串），rarity / name 按需提供。
- * 未提供日期的条目按空字符串参与比较，与历史行为一致。
- */
-export function sortList<T>(
-  list: readonly T[],
-  sort: string,
-  accessors: {
-    date: (item: T) => string;
-    rarity: (item: T) => number;
-    name: (item: T) => string;
-  },
-): T[] {
-  const sorted = [...list];
-  switch (sort) {
-    case 'date-asc':
-      return sorted.sort((a, b) => accessors.date(a).localeCompare(accessors.date(b)));
-    case 'rarity-desc':
-      return sorted.sort(
-        (a, b) =>
-          accessors.rarity(b) - accessors.rarity(a) ||
-          accessors.date(b).localeCompare(accessors.date(a)),
-      );
-    case 'name':
-      return sorted.sort((a, b) =>
-        accessors.name(a).localeCompare(accessors.name(b), 'zh-Hans-CN'),
-      );
-    case 'date-desc':
-    default:
-      return sorted.sort((a, b) => accessors.date(b).localeCompare(accessors.date(a)));
-  }
-}
+// 排序选项与分面计数的纯逻辑实现见 lib/facets.ts，这里保持原导出位置兼容
+export { SORT_OPTIONS, sortList } from '../lib/facets';
 
 export interface FacetFilterApi<T, K extends string> {
   /** 搜索关键词（URL 参数 q） */
@@ -199,46 +162,11 @@ export function useFacetFilter<T, K extends string>(
 
   const clearFilters = useCallback(() => setParams({}, { replace: true }), [setParams]);
 
-  const { facetCounts, allCount, matched } = useMemo(() => {
-    const keyword = q.trim().toLowerCase();
-    const counts = new Map<K, Map<string, number>>();
-    for (const key of facetKeys) counts.set(key, new Map());
-    let allCount = 0;
-    const matched: T[] = [];
-
-    for (const item of items) {
-      if (keyword && !matchesKeyword(item, keyword)) continue;
-      allCount++;
-
-      let fails = 0;
-      const values = {} as Record<K, string>;
-      for (const key of facetKeys) {
-        const value = facetValue(item, key);
-        values[key] = value;
-        const selected = facets[key];
-        if (selected.length > 0 && !selected.includes(value)) fails++;
-      }
-      if (fails === 0) {
-        // 全部维度通过：计入命中结果，并计入每个维度的所有选项
-        matched.push(item);
-        for (const key of facetKeys) {
-          const bucket = counts.get(key)!;
-          bucket.set(values[key], (bucket.get(values[key]) ?? 0) + 1);
-        }
-        continue;
-      }
-      if (fails === 1) {
-        // 仅一个维度未通过：该条目仍计入其它维度的选项计数（分面联动）
-        for (const key of facetKeys) {
-          const selected = facets[key];
-          if (selected.length === 0 || selected.includes(values[key])) continue;
-          const bucket = counts.get(key)!;
-          bucket.set(values[key], (bucket.get(values[key]) ?? 0) + 1);
-        }
-      }
-    }
-    return { facetCounts: counts, allCount, matched };
-  }, [items, facetKeys, facets, q, facetValue, matchesKeyword]);
+  const { facetCounts, allCount, matched } = useMemo(
+    () =>
+      computeFacetResult(items, facetKeys, facets, q, facetValue, matchesKeyword),
+    [items, facetKeys, facets, q, facetValue, matchesKeyword],
+  );
 
   const countOf = useCallback(
     (key: K, value: string) => facetCounts.get(key)?.get(value) ?? 0,

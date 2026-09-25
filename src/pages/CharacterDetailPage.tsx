@@ -6,8 +6,8 @@ import {
   GenderBadge,
   PathBadge,
   RarityStars,
-  TypeBadge,
 } from '../components/ui/Badges';
+import { RelatedEvents } from '../components/ui/RelatedEvents';
 import { EmptyState } from '../components/ui/EmptyState';
 import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
@@ -16,7 +16,7 @@ import {
   useCharacterCount,
   useNewsEvents,
 } from '../hooks/useWikiData';
-import { formatDateCN, formatDateShort, newsMonthLink } from '../lib/format';
+import { formatDateCN } from '../lib/format';
 import { BODY_TYPE_LABEL, ELEMENT_META, PATH_META } from '../lib/meta';
 
 export function CharacterDetailPage() {
@@ -57,10 +57,10 @@ export function CharacterDetailPage() {
 
   const element = ELEMENT_META[character.element];
   const path = PATH_META[character.path];
-  /** 该角色的实装 / 卡池 / 活动时间线（按日期从早到晚） */
-  const relatedEvents = newsEvents
-    .filter((event) => event.relatedCharacterId === character.id)
-    .sort((a, b) => a.date.localeCompare(b.date));
+  /** 该角色的实装 / 卡池 / 活动时间线（RelatedEvents 内部按日期排序） */
+  const relatedEvents = newsEvents.filter(
+    (event) => event.relatedCharacterId === character.id,
+  );
   const showAvatar = character.avatar && failedAvatar !== character.avatar;
 
   return (
@@ -151,7 +151,13 @@ export function CharacterDetailPage() {
                 {formatDateCN(character.releaseDate)}
               </FieldRow>
               <FieldRow label="实装版本">
-                <span className="font-display">v{character.releaseVersion}</span>
+                <Link
+                  to={`/versions/${character.releaseVersion}`}
+                  title="查看该版本全部内容"
+                  className="font-display transition hover:text-gold-300"
+                >
+                  v{character.releaseVersion}
+                </Link>
               </FieldRow>
             </dl>
           </Panel>
@@ -165,36 +171,7 @@ export function CharacterDetailPage() {
             </Panel>
           )}
 
-          {relatedEvents.length > 0 && (
-            <Panel className="mt-6 p-5 md:p-7" ticks>
-              <h2 className="text-lg font-semibold text-slate-100">相关动态</h2>
-              <ul className="mt-2">
-                {relatedEvents.map((event) => (
-                  <li
-                    key={event.id}
-                    className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-space-700/50 py-3 last:border-b-0"
-                  >
-                    <Link
-                      to={newsMonthLink(event.date)}
-                      title="在资讯日历中查看该月"
-                      className="w-24 shrink-0 font-display text-sm text-gold-300 transition hover:text-gold-400"
-                    >
-                      {formatDateShort(event.date)}
-                    </Link>
-                    <TypeBadge type={event.type} />
-                    <span className="min-w-0 flex-1 truncate text-sm text-slate-200">
-                      {event.title}
-                    </span>
-                    {event.endDate && (
-                      <span className="text-xs text-slate-500">
-                        至 {formatDateShort(event.endDate)}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </Panel>
-          )}
+          <RelatedEvents events={relatedEvents} />
         </div>
       </div>
     </div>

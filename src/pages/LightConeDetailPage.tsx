@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeftIcon } from '../components/icons';
-import { PathBadge, RarityStars, TypeBadge } from '../components/ui/Badges';
+import { PathBadge, RarityStars } from '../components/ui/Badges';
+import { RelatedEvents } from '../components/ui/RelatedEvents';
 import { EmptyState } from '../components/ui/EmptyState';
 import { FieldRow, PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
@@ -10,7 +11,7 @@ import {
   useLightConeCount,
   useNewsEvents,
 } from '../hooks/useWikiData';
-import { formatDateCN, formatDateShort, newsMonthLink } from '../lib/format';
+import { formatDateCN } from '../lib/format';
 import { ACQUISITION_LABEL, PATH_META } from '../lib/meta';
 
 export function LightConeDetailPage() {
@@ -49,10 +50,10 @@ export function LightConeDetailPage() {
   }
 
   const path = PATH_META[lightCone.path];
-  /** 该光锥的实装 / 卡池 / 活动时间线（按日期从早到晚） */
-  const relatedEvents = newsEvents
-    .filter((event) => event.relatedLightConeId === lightCone.id)
-    .sort((a, b) => a.date.localeCompare(b.date));
+  /** 该光锥的实装 / 卡池 / 活动时间线（RelatedEvents 内部按日期排序） */
+  const relatedEvents = newsEvents.filter(
+    (event) => event.relatedLightConeId === lightCone.id,
+  );
   const showImage = lightCone.image && failedImage !== lightCone.image;
 
   return (
@@ -123,7 +124,13 @@ export function LightConeDetailPage() {
               </FieldRow>
               <FieldRow label="实装版本">
                 {lightCone.releaseVersion ? (
-                  <span className="font-display">v{lightCone.releaseVersion}</span>
+                  <Link
+                    to={`/versions/${lightCone.releaseVersion}`}
+                    title="查看该版本全部内容"
+                    className="font-display transition hover:text-gold-300"
+                  >
+                    v{lightCone.releaseVersion}
+                  </Link>
                 ) : (
                   '—'
                 )}
@@ -140,36 +147,7 @@ export function LightConeDetailPage() {
             </Panel>
           )}
 
-          {relatedEvents.length > 0 && (
-            <Panel className="mt-6 p-5 md:p-7" ticks>
-              <h2 className="text-lg font-semibold text-slate-100">相关动态</h2>
-              <ul className="mt-2">
-                {relatedEvents.map((event) => (
-                  <li
-                    key={event.id}
-                    className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-space-700/50 py-3 last:border-b-0"
-                  >
-                    <Link
-                      to={newsMonthLink(event.date)}
-                      title="在资讯日历中查看该月"
-                      className="w-24 shrink-0 font-display text-sm text-gold-300 transition hover:text-gold-400"
-                    >
-                      {formatDateShort(event.date)}
-                    </Link>
-                    <TypeBadge type={event.type} />
-                    <span className="min-w-0 flex-1 truncate text-sm text-slate-200">
-                      {event.title}
-                    </span>
-                    {event.endDate && (
-                      <span className="text-xs text-slate-500">
-                        至 {formatDateShort(event.endDate)}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </Panel>
-          )}
+          <RelatedEvents events={relatedEvents} />
         </div>
       </div>
     </div>
