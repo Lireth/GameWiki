@@ -16,6 +16,7 @@ import {
   SORT_OPTIONS,
   sortList,
   useCharacters,
+  useDebouncedSearch,
   useFacetFilter,
 } from '../hooks/useWikiData';
 import {
@@ -77,6 +78,7 @@ export function CharactersPage() {
     matched,
     hasAnyFilter,
   } = useFacetFilter(characters, FACET_KEYS, facetValue, matchesKeyword);
+  const { text: searchText, onChange: onSearchChange } = useDebouncedSearch(q, setQ);
   const sort = getParam('sort') ?? 'date-desc';
 
   const filtered = useMemo(
@@ -101,8 +103,8 @@ export function CharactersPage() {
           <div className="relative">
             <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
             <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
+              value={searchText}
+              onChange={(e) => onSearchChange(e.target.value)}
               placeholder="搜索角色名 / 派系 / 阵营…"
               className="w-full border border-space-600/60 bg-space-850/80 py-2.5 pl-9 pr-3 text-sm text-slate-200 placeholder:text-slate-600 focus:border-gold-500/60 focus:outline-none"
             />

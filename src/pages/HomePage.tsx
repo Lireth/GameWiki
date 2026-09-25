@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRightIcon,
@@ -6,8 +7,17 @@ import {
   GridIcon,
   UsersIcon,
 } from '../components/icons';
+import { CharacterCard } from '../components/cards/CharacterCard';
+import { LightConeCard } from '../components/cards/LightConeCard';
+import { TypeBadge } from '../components/ui/Badges';
 import { Panel } from '../components/ui/Panel';
-import { useCharacters, useLightCones, useNewsEvents } from '../hooks/useWikiData';
+import {
+  useCharacters,
+  useLightCones,
+  useNewsEvents,
+} from '../hooks/useWikiData';
+import type { Character, LightCone } from '../db/types';
+import { formatDateShort, newsMonthLink } from '../lib/format';
 
 const FEATURES = [
   {
@@ -112,6 +122,31 @@ export function HomePage() {
   const lightCones = useLightCones();
   const newsEvents = useNewsEvents();
 
+  /** 最新实装：角色与光锥按实装日期合并取前 6 个 */
+  const latest = useMemo(() => {
+    const items: {
+      kind: 'character' | 'lightCone';
+      date: string;
+      data: Character | LightCone;
+    }[] = [
+      ...characters.map((c) => ({ kind: 'character' as const, date: c.releaseDate, data: c })),
+      ...lightCones.map((lc) => ({
+        kind: 'lightCone' as const,
+        date: lc.releaseDate ?? '',
+        data: lc,
+      })),
+    ];
+    return items
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 6);
+  }, [characters, lightCones]);
+
+  /** 近期资讯：按日期从新到旧取前 6 条 */
+  const recentEvents = useMemo(
+    () => [...newsEvents].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 6),
+    [newsEvents],
+  );
+
   return (
     <div className="space-y-10">
       {/* Hero */}
@@ -156,6 +191,88 @@ export function HomePage() {
           <StatTile label="资讯事件" en="NEWS EVENTS" value={newsEvents.length} />
         </div>
       </section>
+
+      {/* 最新实装 */}
+      {latest.length > 0 && (
+        <section>
+          <div className="mb-5 flex items-end justify-between gap-4">
+            <div>
+              <p className="font-display text-xs tracking-[0.35em] text-gold-500/80 uppercase">
+                Latest
+              </p>
+              <h2 className="mt-1 text-2xl font-semibold text-slate-100">最新实装</h2>
+            </div>
+            <Link
+              to="/characters"
+              className="text-xs text-gold-300 transition hover:text-gold-400"
+            >
+              查看角色图鉴 →
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {latest.map((item) =>
+              item.kind === 'character' ? (
+                <CharacterCard
+                  key={item.data.id}
+                  character={item.data as Character}
+                />
+              ) : (
+                <LightConeCard
+                  key={item.data.id}
+                  lightCone={item.data as LightCone}
+                />
+              ),
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* 近期资讯 */}
+      {recentEvents.length > 0 && (
+        <section>
+          <div className="mb-5 flex items-end justify-between gap-4">
+            <div>
+              <p className="font-display text-xs tracking-[0.35em] text-gold-500/80 uppercase">
+                Recent Events
+              </p>
+              <h2 className="mt-1 text-2xl font-semibold text-slate-100">近期资讯</h2>
+            </div>
+            <Link
+              to="/news"
+              className="text-xs text-gold-300 transition hover:text-gold-400"
+            >
+              查看资讯日历 →
+            </Link>
+          </div>
+          <Panel className="p-5 md:p-6" ticks>
+            <ul>
+              {recentEvents.map((event) => (
+                <li
+                  key={event.id}
+                  className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-space-700/50 py-3 last:border-b-0"
+                >
+                  <Link
+                    to={newsMonthLink(event.date)}
+                    title="在资讯日历中查看该月"
+                    className="w-24 shrink-0 font-display text-sm text-gold-300 transition hover:text-gold-400"
+                  >
+                    {formatDateShort(event.date)}
+                  </Link>
+                  <TypeBadge type={event.type} />
+                  <span className="min-w-0 flex-1 truncate text-sm text-slate-200">
+                    {event.title}
+                  </span>
+                  {event.version && (
+                    <span className="font-display text-xs tracking-wider text-slate-500">
+                      v{event.version}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </Panel>
+        </section>
+      )}
 
       {/* 功能入口 */}
       <section>

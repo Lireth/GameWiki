@@ -15,6 +15,7 @@ import { useNewsEvents } from '../hooks/useWikiData';
 import {
   eventTouchesMonth,
   eachISODate,
+  formatDateCN,
   formatDateShort,
   monthGrid,
   weekdayCN,
@@ -106,6 +107,10 @@ export function NewsPage() {
     rawType && (NEWS_EVENT_TYPES as readonly string[]).includes(rawType)
       ? (rawType as TypeFilter)
       : 'all';
+  // 选中日期（d 参数）：点击日历格查看当日全部事件
+  const rawDay = params.get('d');
+  const selectedDate =
+    rawDay && /^\d{4}-\d{2}-\d{2}$/.test(rawDay) ? rawDay : null;
 
   const grid = useMemo(() => monthGrid(year, month0), [year, month0]);
   const eventsByDate = useEventsByDate(events, typeFilter);
@@ -122,6 +127,13 @@ export function NewsPage() {
     [events, typeFilter, year, month0],
   );
 
+  /** 选中日期的事件（含跨天事件的进行中日） */
+  const selectedDayEvents = useMemo(
+    () => (selectedDate ? (eventsByDate.get(selectedDate) ?? []) : []),
+    [eventsByDate, selectedDate],
+  );
+  const listEvents = selectedDate ? selectedDayEvents : monthEvents;
+
   const setParamsFor = (mutate: (next: URLSearchParams) => void) =>
     setParams(
       (prev) => {
@@ -137,6 +149,7 @@ export function NewsPage() {
     setParamsFor((n) => {
       n.set('y', String(next.getFullYear()));
       n.set('m', String(next.getMonth() + 1));
+      n.delete('d');
     });
   };
 
@@ -144,12 +157,20 @@ export function NewsPage() {
     setParamsFor((n) => {
       n.delete('y');
       n.delete('m');
+      n.delete('d');
     });
 
   const setTypeFilter = (type: TypeFilter) =>
     setParamsFor((n) => {
       if (type === 'all') n.delete('type');
       else n.set('type', type);
+    });
+
+  /** 点击日历格 / 「+N 项」：选中该日查看全部事件，再次点击取消 */
+  const toggleDay = (iso: string) =>
+    setParamsFor((n) => {
+      if (n.get('d') === iso) n.delete('d');
+      else n.set('d', iso);
     });
 
   const isCurrentMonth =
@@ -251,9 +272,15 @@ export function NewsPage() {
                 key={cell.iso}
                 className={`min-h-[84px] p-1.5 sm:min-h-[104px] ${
                   cell.inMonth ? 'bg-space-900' : 'bg-space-950/60 opacity-50'
-                }`}
+                } ${cell.iso === selectedDate ? 'ring-1 ring-inset ring-gold-500/70' : ''}`}
               >
-                <div className="flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => toggleDay(cell.iso)}
+                  aria-pressed={cell.iso === selectedDate}
+                  title="查看当日全部事件"
+                  className="flex w-full items-center justify-between text-left"
+                >
                   <span
                     className={`font-display text-xs font-semibold ${
                       cell.isToday ? 'text-gold-300' : 'text-slate-500'
@@ -266,13 +293,20 @@ export function NewsPage() {
                       今天
                     </span>
                   )}
-                </div>
+                </button>
                 <div className="mt-1 space-y-1">
                   {visible.map((event) => (
                     <EventChip key={event.id} event={event} />
                   ))}
                   {hidden > 0 && (
-                    <p className="text-[10px] text-slate-500">+{hidden} 项</p>
+                    <button
+                      type="button"
+                      onClick={() => toggleDay(cell.iso)}
+                      title="查看当日全部事件"
+                      className="text-[10px] text-slate-500 transition hover:text-gold-300"
+                    >
+                      +{hidden} 项
+                    </button>
                   )}
                 </div>
               </div>
@@ -281,15 +315,33 @@ export function NewsPage() {
         </div>
       </Panel>
 
-      {/* 本月事件列表 */}
+      {/* 事件列表：选中日期时仅展示当日，否则展示整月 */}
       <Panel className="mt-8 p-5 md:p-6" ticks>
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           <CalendarIcon className="size-5 text-gold-400" />
-          <h3 className="text-lg font-semibold text-slate-100">
-            {year}年{month0 + 1}月事件
-          </h3>
+          {selectedDate ? (
+            <>
+              <h3 className="text-lg font-semibold text-slate-100">
+                {formatDateCN(selectedDate)}
+                <span className="ml-1.5 text-sm text-slate-500">
+                  {weekdayCN(selectedDate)}
+                </span>
+              </h3>
+              <button
+                type="button"
+                onClick={() => toggleDay(selectedDate)}
+                className="ml-auto border border-gold-500/50 px-2 py-1 text-xs text-gold-300 transition hover:bg-gold-500/10"
+              >
+                查看整月
+              </button>
+            </>
+          ) : (
+            <h3 className="text-lg font-semibold text-slate-100">
+              {year}年{month0 + 1}月事件
+            </h3>
+          )}
           <span className="font-display text-xs tracking-widest text-slate-500">
-            {monthEvents.length} 项
+            {listEvents.length} 项
           </span>
         </div>
 
@@ -299,13 +351,14 @@ export function NewsPage() {
             title="暂无资讯数据"
             hint="资讯事件尚未收录，可在 src/data/seed.ts 中录入；支持版本、角色、光锥、活动、卡池、活动结束六类事件。"
           />
-        ) : monthEvents.length === 0 ? (
+        ) : listEvents.length === 0 ? (
           <p className="py-10 text-center text-sm text-slate-500">
-            本月暂无资讯{typeFilter !== 'all' && '（当前筛选条件下）'}
+            {selectedDate ? '当日暂无资讯' : '本月暂无资讯'}
+            {typeFilter !== 'all' && '（当前筛选条件下）'}
           </p>
         ) : (
           <ul className="mt-2">
-            {monthEvents.map((event) => {
+            {listEvents.map((event) => {
               const link = eventLink(event);
               return (
                 <li

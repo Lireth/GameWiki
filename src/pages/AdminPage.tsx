@@ -39,7 +39,7 @@ const ENTRY_TYPES: { value: EntryType; label: string }[] = [
 interface FieldDef {
   name: string;
   label: string;
-  kind: 'text' | 'date' | 'textarea' | 'choice';
+  kind: 'text' | 'date' | 'textarea' | 'choice' | 'image';
   options?: { value: string; label: string }[];
   /** choice 字段的合法取值白名单（保存前校验） */
   values?: readonly string[];
@@ -79,7 +79,7 @@ const CHARACTER_FIELDS: FieldDef[] = [
   { name: 'bodyType', label: '体型', kind: 'choice', required: true, options: choice(BODY_TYPE_LABEL), values: BODY_TYPES },
   { name: 'releaseDate', label: '实装日期', kind: 'date', required: true },
   { name: 'releaseVersion', label: '实装版本（如 3.7）', kind: 'text', required: true },
-  { name: 'avatar', label: '头像图片 URL', kind: 'text', optional: true },
+  { name: 'avatar', label: '头像图片（URL 或上传本地图片）', kind: 'image', optional: true },
   { name: 'description', label: '角色简介', kind: 'textarea', optional: true },
 ];
 
@@ -109,7 +109,7 @@ const LIGHT_CONE_FIELDS: FieldDef[] = [
   },
   { name: 'releaseDate', label: '实装日期（可选）', kind: 'date', optional: true },
   { name: 'releaseVersion', label: '实装版本（如 3.7）', kind: 'text', optional: true },
-  { name: 'image', label: '光锥图片 URL', kind: 'text', optional: true },
+  { name: 'image', label: '光锥图片（URL 或上传本地图片）', kind: 'image', optional: true },
   { name: 'description', label: '光锥描述', kind: 'textarea', optional: true },
 ];
 
@@ -403,6 +403,20 @@ export function AdminPage() {
     return field.options ?? [];
   };
 
+  /** 本地图片读为 data URL 直接存入记录（IndexedDB 无容量瓶颈；限制 1MB 防止数据膨胀） */
+  const readImage = (file: File, fieldName: string) => {
+    if (file.size > 1024 * 1024) {
+      alert('图片超过 1MB，请压缩后再上传（图片会以 data URL 形式存入本地数据库）。');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === 'string') setField(fieldName, reader.result);
+    };
+    reader.onerror = () => alert('图片读取失败，请重试。');
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div>
       <PageHeader
@@ -466,7 +480,7 @@ export function AdminPage() {
               </p>
             )}
             {fields.map((field) => {
-              const isWide = field.kind === 'textarea';
+              const isWide = field.kind === 'textarea' || field.kind === 'image';
               return (
                 <label
                   key={field.name}
@@ -497,6 +511,35 @@ export function AdminPage() {
                       onChange={(e) => setField(field.name, e.target.value)}
                       className={`${inputClass} mt-1`}
                     />
+                  ) : field.kind === 'image' ? (
+                    <div className="mt-1 flex items-center gap-2">
+                      <input
+                        value={form[field.name] ?? ''}
+                        placeholder="图片 URL，或点击右侧上传"
+                        onChange={(e) => setField(field.name, e.target.value)}
+                        className={inputClass}
+                      />
+                      <label className="shrink-0 cursor-pointer border border-space-600/60 px-2.5 py-2 text-xs text-slate-300 transition hover:border-gold-500/50 hover:text-gold-300">
+                        上传
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            e.target.value = '';
+                            if (file) readImage(file, field.name);
+                          }}
+                        />
+                      </label>
+                      {form[field.name] && (
+                        <img
+                          src={form[field.name]}
+                          alt="预览"
+                          className="size-9 shrink-0 border border-space-600/60 object-cover"
+                        />
+                      )}
+                    </div>
                   ) : field.kind === 'textarea' ? (
                     <textarea
                       value={form[field.name] ?? ''}

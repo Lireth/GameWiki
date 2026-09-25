@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/db';
@@ -44,6 +44,40 @@ export function useLightConeCount(): number {
 /** 本地数据库初始化状态（失败时界面显示全局提示） */
 export function useBootstrapStatus(): BootstrapStatus {
   return useSyncExternalStore(subscribeBootstrap, getBootstrapStatus);
+}
+
+/* ------------------------------------------------------------------ */
+/* 搜索输入防抖                                                        */
+/* ------------------------------------------------------------------ */
+
+/**
+ * 搜索输入防抖：输入即时回显到输入框，URL 参数延迟同步（默认 250ms）。
+ * 外部 q 变化（清空筛选、浏览器后退）时立即同步回输入框。
+ */
+export function useDebouncedSearch(
+  q: string,
+  setQ: (value: string) => void,
+  delay = 250,
+) {
+  const [text, setText] = useState(q);
+  const timer = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    setText(q);
+  }, [q]);
+
+  useEffect(() => () => window.clearTimeout(timer.current), []);
+
+  const onChange = useCallback(
+    (value: string) => {
+      setText(value);
+      window.clearTimeout(timer.current);
+      timer.current = window.setTimeout(() => setQ(value), delay);
+    },
+    [setQ, delay],
+  );
+
+  return { text, onChange };
 }
 
 /* ------------------------------------------------------------------ */
