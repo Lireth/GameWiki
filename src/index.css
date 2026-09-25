@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Rajdhani", "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei",
+    "Noto Sans SC", system-ui, sans-serif;
+  --font-display: "Rajdhani", "PingFang SC", "Microsoft YaHei", "Noto Sans SC",
+    system-ui, sans-serif;
+
+  /* 深空底色 */
+  --color-space-950: #04060c;
+  --color-space-900: #080d18;
+  --color-space-850: #0b1220;
+  --color-space-800: #101a2c;
+  --color-space-700: #1a2740;
+  --color-space-600: #26375a;
+
+  /* 星穹金 */
+  --color-gold-300: #ffe3a3;
+  --color-gold-400: #f8d089;
+  --color-gold-500: #e9b45f;
+  --color-gold-600: #c08c3e;
+
+  /* 稀有度 */
+  --color-star-4: #c79bf5;
+  --color-star-5: #ffce6b;
+}
+
+/* HUD 感的切角（用于实心按钮 / 徽标，不打断描边面板） */
+@utility chamfer-xs {
+  clip-path: polygon(
+    6px 0,
+    100% 0,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    0 100%,
+    0 6px
+  );
+}
+@utility chamfer-sm {
+  clip-path: polygon(
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%,
+    0 10px
+  );
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-space-950 font-sans text-slate-200 antialiased;
+  }
+
+  /* 星空背景：两层淡星云 + 平铺星点 */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(1100px 700px at 12% -8%, rgb(233 180 95 / 0.07), transparent 60%),
+      radial-gradient(900px 650px at 92% 108%, rgb(96 148 224 / 0.08), transparent 60%),
+      radial-gradient(1.2px 1.2px at 24px 38px, rgb(255 255 255 / 0.35), transparent 55%),
+      radial-gradient(1px 1px at 130px 92px, rgb(255 255 255 / 0.22), transparent 55%),
+      radial-gradient(1.6px 1.6px at 214px 44px, rgb(255 224 170 / 0.3), transparent 55%),
+      radial-gradient(1px 1px at 66px 168px, rgb(168 204 255 / 0.28), transparent 55%),
+      radial-gradient(1px 1px at 180px 190px, rgb(255 255 255 / 0.16), transparent 55%);
+    background-size:
+      100% 100%,
+      100% 100%,
+      260px 220px,
+      260px 220px,
+      260px 220px,
+      260px 220px,
+      260px 220px;
+    background-repeat: no-repeat, no-repeat, repeat, repeat, repeat, repeat, repeat;
+  }
+
+  ::selection {
+    background: rgb(233 180 95 / 0.35);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(233 180 95 / 0.7);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #04060c;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1a2740;
+    border: 2px solid #04060c;
+    border-radius: 6px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #26375a;
+  }
+}
