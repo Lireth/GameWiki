@@ -54,7 +54,7 @@ npm run lint       # ESLint 静态检查
 数据更新方式：
 
 - **Wiki 抓取**：`node .scrape/scrape_wiki.cjs` 抓取光锥 / 遗器 / 卡池并派生资讯事件，再运行 `node .scrape/gen_seed_ts.cjs` 重新生成 `src/data/seed.ts`（生成文件，勿直接手改）；
-- **头像资产化**：`node .scrape/scrape_avatars.cjs` 把角色头像下载为本地缩略图（`public/avatars/`，宽 320px），`avatar` 字段改写为站内路径 —— 消除对 Wiki 的热链依赖，头像随站点部署并由 Service Worker 缓存，离线可用；
+- **图片资产化**：`node .scrape/scrape_avatars.cjs`（角色头像，宽 320px）与 `node .scrape/scrape_images.cjs`（光锥 / 遗器立绘，宽 400px）把图片下载为本地缩略图（`public/avatars/`、`public/cones/`、`public/relics/`），对应字段改写为站内路径 —— 消除对 Wiki 的热链依赖，图片随站点部署并由 Service Worker 缓存，离线可用；
 - **手工补充**：直接编辑 `.scrape/*.json` 后运行生成脚本，或在应用内「数据管理」页面录入；
 - 种子内容变化由启动时的内容指纹自动检测（无需手动递增版本号），`src/db/bootstrap.ts` 按 `id` 增量更新且不删除表中额外条目；在「数据管理」中删除过的条目有删除墓碑保护，不会被种子更新复活；
 - 页面通过 `dexie-react-hooks` 的 `useLiveQuery` 实时读取，无需刷新即可看到新数据。

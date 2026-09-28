@@ -6,7 +6,8 @@
     "path": "erudition",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/「我」的诞生.png"
   },
   {
     "id": "别让世界静下来",
@@ -15,7 +16,8 @@
     "path": "erudition",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/别让世界静下来.png"
   },
   {
     "id": "蕃息",
@@ -24,7 +26,8 @@
     "path": "abundance",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/蕃息.png"
   },
   {
     "id": "春水初生",
@@ -33,7 +36,8 @@
     "path": "hunt",
     "acquisition": "actionSummary",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/春水初生.png"
   },
   {
     "id": "此时恰好",
@@ -42,7 +46,8 @@
     "path": "abundance",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/此时恰好.png"
   },
   {
     "id": "但战斗还未结束",
@@ -51,7 +56,8 @@
     "path": "harmony",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/但战斗还未结束.png"
   },
   {
     "id": "等价交换",
@@ -60,7 +66,8 @@
     "path": "abundance",
     "acquisition": "levelReward",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/等价交换.png"
   },
   {
     "id": "点个关注吧！",
@@ -69,7 +76,8 @@
     "path": "hunt",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/点个关注吧！.png"
   },
   {
     "id": "调和",
@@ -78,7 +86,8 @@
     "path": "harmony",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/调和.png"
   },
   {
     "id": "锋镝",
@@ -87,7 +96,8 @@
     "path": "hunt",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/锋镝.png"
   },
   {
     "id": "过往未来",
@@ -96,7 +106,8 @@
     "path": "harmony",
     "acquisition": "worldShop",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/过往未来.png"
   },
   {
     "id": "后会有期",
@@ -105,7 +116,8 @@
     "path": "nihility",
     "acquisition": "namelessHonor",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/后会有期.png"
   },
   {
     "id": "琥珀",
@@ -114,7 +126,8 @@
     "path": "preservation",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/琥珀.png"
   },
   {
     "id": "记一位星神的陨落",
@@ -123,7 +136,8 @@
     "path": "destruction",
     "acquisition": "simUniverseShop",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/记一位星神的陨落.png"
   },
   {
     "id": "记忆的质料",
@@ -132,7 +146,8 @@
     "path": "preservation",
     "acquisition": "simUniverseShop",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/记忆的质料.png"
   },
   {
     "id": "记忆中的模样",
@@ -141,7 +156,8 @@
     "path": "harmony",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/记忆中的模样.png"
   },
   {
     "id": "嘉果",
@@ -150,7 +166,8 @@
     "path": "abundance",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/嘉果.png"
   },
   {
     "id": "今日亦是和平的一日",
@@ -159,7 +176,8 @@
     "path": "erudition",
     "acquisition": "namelessHonor",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/今日亦是和平的一日.png"
   },
   {
     "id": "俱殁",
@@ -168,7 +186,8 @@
     "path": "destruction",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/俱殁.png"
   },
   {
     "id": "决心如汗珠般闪耀",
@@ -177,7 +196,8 @@
     "path": "nihility",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/决心如汗珠般闪耀.png"
   },
   {
     "id": "开疆",
@@ -186,7 +206,8 @@
     "path": "preservation",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/开疆.png"
   },
   {
     "id": "朗道的选择",
@@ -195,7 +216,8 @@
     "path": "preservation",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/朗道的选择.png"
   },
   {
     "id": "乐圮",
@@ -204,7 +226,8 @@
     "path": "destruction",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/乐圮.png"
   },
   {
     "id": "离弦",
@@ -213,7 +236,8 @@
     "path": "hunt",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/离弦.png"
   },
   {
     "id": "猎物的视线",
@@ -222,7 +246,8 @@
     "path": "nihility",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/猎物的视线.png"
   },
   {
     "id": "灵钥",
@@ -231,7 +256,8 @@
     "path": "erudition",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/灵钥.png"
   },
   {
     "id": "镂月裁云之意",
@@ -240,7 +266,8 @@
     "path": "harmony",
     "acquisition": "namelessHonor",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/镂月裁云之意.png"
   },
   {
     "id": "轮契",
@@ -249,7 +276,8 @@
     "path": "harmony",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/轮契.png"
   },
   {
     "id": "论剑",
@@ -258,7 +286,8 @@
     "path": "hunt",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/论剑.png"
   },
   {
     "id": "秘密誓心",
@@ -267,7 +296,8 @@
     "path": "destruction",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/秘密誓心.png"
   },
   {
     "id": "匿影",
@@ -276,7 +306,8 @@
     "path": "nihility",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/匿影.png"
   },
   {
     "id": "暖夜不会漫长",
@@ -285,7 +316,8 @@
     "path": "abundance",
     "acquisition": "namelessHonor",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/暖夜不会漫长.png"
   },
   {
     "id": "齐颂",
@@ -294,7 +326,8 @@
     "path": "harmony",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/齐颂.png"
   },
   {
     "id": "如泥酣眠",
@@ -303,7 +336,8 @@
     "path": "hunt",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/如泥酣眠.png"
   },
   {
     "id": "睿见",
@@ -312,7 +346,8 @@
     "path": "erudition",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/睿见.png"
   },
   {
     "id": "时节不居",
@@ -321,7 +356,8 @@
     "path": "abundance",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/时节不居.png"
   },
   {
     "id": "戍御",
@@ -330,7 +366,8 @@
     "path": "preservation",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/戍御.png"
   },
   {
     "id": "天才们的休憩",
@@ -339,7 +376,8 @@
     "path": "erudition",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/天才们的休憩.png"
   },
   {
     "id": "天倾",
@@ -348,7 +386,8 @@
     "path": "destruction",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/天倾.png"
   },
   {
     "id": "同一种心情",
@@ -357,7 +396,8 @@
     "path": "abundance",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/同一种心情.png"
   },
   {
     "id": "晚安与睡颜",
@@ -366,7 +406,8 @@
     "path": "nihility",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/晚安与睡颜.png"
   },
   {
     "id": "汪！散步时间！",
@@ -375,7 +416,8 @@
     "path": "destruction",
     "acquisition": "worldShop",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/汪！散步时间！.png"
   },
   {
     "id": "唯有沉默",
@@ -384,7 +426,8 @@
     "path": "hunt",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/唯有沉默.png"
   },
   {
     "id": "我们是地火",
@@ -393,7 +436,8 @@
     "path": "preservation",
     "acquisition": "actionSummary",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/我们是地火.png"
   },
   {
     "id": "无处可逃",
@@ -402,7 +446,8 @@
     "path": "destruction",
     "acquisition": "namelessHonor",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/无处可逃.png"
   },
   {
     "id": "无可取代的东西",
@@ -411,7 +456,8 @@
     "path": "destruction",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/无可取代的东西.png"
   },
   {
     "id": "舞！舞！舞！",
@@ -420,7 +466,8 @@
     "path": "harmony",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/舞！舞！舞！.png"
   },
   {
     "id": "物穰",
@@ -429,7 +476,8 @@
     "path": "abundance",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/物穰.png"
   },
   {
     "id": "相抗",
@@ -438,7 +486,8 @@
     "path": "hunt",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/相抗.png"
   },
   {
     "id": "星海巡航",
@@ -447,7 +496,8 @@
     "path": "hunt",
     "acquisition": "simUniverseShop",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/星海巡航.png"
   },
   {
     "id": "延长记号",
@@ -456,7 +506,8 @@
     "path": "nihility",
     "acquisition": "worldShop",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/延长记号.png"
   },
   {
     "id": "鼹鼠党欢迎你",
@@ -465,7 +516,8 @@
     "path": "destruction",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/鼹鼠党欢迎你.png"
   },
   {
     "id": "一场术后对话",
@@ -474,7 +526,8 @@
     "path": "abundance",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/一场术后对话.png"
   },
   {
     "id": "以世界之名",
@@ -483,7 +536,8 @@
     "path": "nihility",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/以世界之名.png"
   },
   {
     "id": "银河铁道之夜",
@@ -492,7 +546,8 @@
     "path": "erudition",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/银河铁道之夜.png"
   },
   {
     "id": "幽邃",
@@ -501,7 +556,8 @@
     "path": "nihility",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/幽邃.png"
   },
   {
     "id": "于夜色中",
@@ -510,7 +566,8 @@
     "path": "hunt",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/于夜色中.png"
   },
   {
     "id": "余生的第一天",
@@ -519,7 +576,8 @@
     "path": "preservation",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/余生的第一天.png"
   },
   {
     "id": "与行星相会",
@@ -528,7 +586,8 @@
     "path": "harmony",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/与行星相会.png"
   },
   {
     "id": "宇宙市场趋势",
@@ -537,7 +596,8 @@
     "path": "preservation",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/宇宙市场趋势.png"
   },
   {
     "id": "渊环",
@@ -546,7 +606,8 @@
     "path": "nihility",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/渊环.png"
   },
   {
     "id": "在蓝天下",
@@ -555,7 +616,8 @@
     "path": "destruction",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/在蓝天下.png"
   },
   {
     "id": "早餐的仪式感",
@@ -564,7 +626,8 @@
     "path": "erudition",
     "acquisition": "quest",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/早餐的仪式感.png"
   },
   {
     "id": "这就是我啦！",
@@ -573,7 +636,8 @@
     "path": "preservation",
     "acquisition": "namelessHonor",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/这就是我啦！.png"
   },
   {
     "id": "制胜的瞬间",
@@ -582,7 +646,8 @@
     "path": "preservation",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/制胜的瞬间.png"
   },
   {
     "id": "智库",
@@ -591,7 +656,8 @@
     "path": "erudition",
     "acquisition": "warp",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/智库.png"
   },
   {
     "id": "重返幽冥",
@@ -600,7 +666,8 @@
     "path": "hunt",
     "acquisition": "namelessHonor",
     "releaseDate": "2023-04-26",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/重返幽冥.png"
   },
   {
     "id": "拂晓之前",
@@ -609,7 +676,8 @@
     "path": "erudition",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-05-17",
-    "releaseVersion": "1.0"
+    "releaseVersion": "1.0",
+    "image": "/cones/拂晓之前.png"
   },
   {
     "id": "新手任务开始前",
@@ -618,7 +686,8 @@
     "path": "nihility",
     "acquisition": "event",
     "releaseDate": "2023-06-07",
-    "releaseVersion": "1.1"
+    "releaseVersion": "1.1",
+    "image": "/cones/新手任务开始前.png"
   },
   {
     "id": "雨一直下",
@@ -627,7 +696,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-06-07",
-    "releaseVersion": "1.1"
+    "releaseVersion": "1.1",
+    "image": "/cones/雨一直下.png"
   },
   {
     "id": "棺的回响",
@@ -636,7 +706,8 @@
     "path": "abundance",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-06-28",
-    "releaseVersion": "1.1"
+    "releaseVersion": "1.1",
+    "image": "/cones/棺的回响.png"
   },
   {
     "id": "到不了的彼岸",
@@ -645,7 +716,8 @@
     "path": "destruction",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-07-19",
-    "releaseVersion": "1.2"
+    "releaseVersion": "1.2",
+    "image": "/cones/到不了的彼岸.png"
   },
   {
     "id": "只需等待",
@@ -654,7 +726,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-08-09",
-    "releaseVersion": "1.2"
+    "releaseVersion": "1.2",
+    "image": "/cones/只需等待.png"
   },
   {
     "id": "比阳光更明亮的",
@@ -663,7 +736,8 @@
     "path": "destruction",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-08-30",
-    "releaseVersion": "1.3"
+    "releaseVersion": "1.3",
+    "image": "/cones/比阳光更明亮的.png"
   },
   {
     "id": "孤独的疗愈",
@@ -672,7 +746,8 @@
     "path": "nihility",
     "acquisition": "simUniverseShop",
     "releaseDate": "2023-08-30",
-    "releaseVersion": "1.3"
+    "releaseVersion": "1.3",
+    "image": "/cones/孤独的疗愈.png"
   },
   {
     "id": "她已闭上双眼",
@@ -681,7 +756,8 @@
     "path": "preservation",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-09-20",
-    "releaseVersion": "1.3"
+    "releaseVersion": "1.3",
+    "image": "/cones/她已闭上双眼.png"
   },
   {
     "id": "此身为剑",
@@ -690,7 +766,8 @@
     "path": "destruction",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-10-11",
-    "releaseVersion": "1.4"
+    "releaseVersion": "1.4",
+    "image": "/cones/此身为剑.png"
   },
   {
     "id": "烦恼着，幸福着",
@@ -699,7 +776,8 @@
     "path": "hunt",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-10-27",
-    "releaseVersion": "1.4"
+    "releaseVersion": "1.4",
+    "image": "/cones/烦恼着，幸福着.png"
   },
   {
     "id": "嘿，我在这儿",
@@ -708,7 +786,8 @@
     "path": "abundance",
     "acquisition": "event",
     "releaseDate": "2023-11-15",
-    "releaseVersion": "1.5"
+    "releaseVersion": "1.5",
+    "image": "/cones/嘿，我在这儿.png"
   },
   {
     "id": "惊魂夜",
@@ -717,7 +796,8 @@
     "path": "abundance",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-11-15",
-    "releaseVersion": "1.5"
+    "releaseVersion": "1.5",
+    "image": "/cones/惊魂夜.png"
   },
   {
     "id": "片刻，留在眼底",
@@ -726,7 +806,8 @@
     "path": "erudition",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-12-06",
-    "releaseVersion": "1.5"
+    "releaseVersion": "1.5",
+    "image": "/cones/片刻，留在眼底.png"
   },
   {
     "id": "镜中故我",
@@ -735,7 +816,8 @@
     "path": "harmony",
     "acquisition": "limitedWarp",
     "releaseDate": "2023-12-27",
-    "releaseVersion": "1.6"
+    "releaseVersion": "1.6",
+    "image": "/cones/镜中故我.png"
   },
   {
     "id": "纯粹思维的洗礼",
@@ -744,7 +826,8 @@
     "path": "hunt",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-01-17",
-    "releaseVersion": "1.6"
+    "releaseVersion": "1.6",
+    "image": "/cones/纯粹思维的洗礼.png"
   },
   {
     "id": "好戏开演",
@@ -753,7 +836,8 @@
     "path": "nihility",
     "acquisition": "treasure",
     "releaseDate": "2024-02-06",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/好戏开演.png"
   },
   {
     "id": "何物为真",
@@ -762,7 +846,8 @@
     "path": "abundance",
     "acquisition": "treasure",
     "releaseDate": "2024-02-06",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/何物为真.png"
   },
   {
     "id": "美梦小镇大冒险",
@@ -771,7 +856,8 @@
     "path": "harmony",
     "acquisition": "treasure",
     "releaseDate": "2024-02-06",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/美梦小镇大冒险.png"
   },
   {
     "id": "铭记于心的约定",
@@ -780,7 +866,8 @@
     "path": "destruction",
     "acquisition": "warp",
     "releaseDate": "2024-02-06",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/铭记于心的约定.png"
   },
   {
     "id": "银河沦陷日",
@@ -789,7 +876,8 @@
     "path": "erudition",
     "acquisition": "treasure",
     "releaseDate": "2024-02-06",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/银河沦陷日.png"
   },
   {
     "id": "在火的远处",
@@ -798,7 +886,8 @@
     "path": "destruction",
     "acquisition": "treasure",
     "releaseDate": "2024-02-06",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/在火的远处.png"
   },
   {
     "id": "织造命运之线",
@@ -807,7 +896,8 @@
     "path": "preservation",
     "acquisition": "treasure",
     "releaseDate": "2024-02-06",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/织造命运之线.png"
   },
   {
     "id": "重塑时光之忆",
@@ -816,7 +906,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-02-06",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/重塑时光之忆.png"
   },
   {
     "id": "最后的赢家",
@@ -825,7 +916,8 @@
     "path": "hunt",
     "acquisition": "treasure",
     "releaseDate": "2024-02-06",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/最后的赢家.png"
   },
   {
     "id": "游戏尘寰",
@@ -834,7 +926,8 @@
     "path": "harmony",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-02-29",
-    "releaseVersion": "2.0"
+    "releaseVersion": "2.0",
+    "image": "/cones/游戏尘寰.png"
   },
   {
     "id": "行于流逝的岸",
@@ -843,7 +936,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-03-27",
-    "releaseVersion": "2.1"
+    "releaseVersion": "2.1",
+    "image": "/cones/行于流逝的岸.png"
   },
   {
     "id": "两个人的演唱会",
@@ -852,7 +946,8 @@
     "path": "preservation",
     "acquisition": "warp",
     "releaseDate": "2024-04-17",
-    "releaseVersion": "2.1"
+    "releaseVersion": "2.1",
+    "image": "/cones/两个人的演唱会.png"
   },
   {
     "id": "命运从未公平",
@@ -861,7 +956,8 @@
     "path": "preservation",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-04-17",
-    "releaseVersion": "2.1"
+    "releaseVersion": "2.1",
+    "image": "/cones/命运从未公平.png"
   },
   {
     "id": "为了明日的旅途",
@@ -870,7 +966,8 @@
     "path": "harmony",
     "acquisition": "event",
     "releaseDate": "2024-05-08",
-    "releaseVersion": "2.2"
+    "releaseVersion": "2.2",
+    "image": "/cones/为了明日的旅途.png"
   },
   {
     "id": "无边曼舞",
@@ -879,7 +976,8 @@
     "path": "nihility",
     "acquisition": "warp",
     "releaseDate": "2024-05-08",
-    "releaseVersion": "2.2"
+    "releaseVersion": "2.2",
+    "image": "/cones/无边曼舞.png"
   },
   {
     "id": "夜色流光溢彩",
@@ -888,7 +986,8 @@
     "path": "harmony",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-05-08",
-    "releaseVersion": "2.2"
+    "releaseVersion": "2.2",
+    "image": "/cones/夜色流光溢彩.png"
   },
   {
     "id": "驶向第二次生命",
@@ -897,7 +996,8 @@
     "path": "hunt",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-05-29",
-    "releaseVersion": "2.2"
+    "releaseVersion": "2.2",
+    "image": "/cones/驶向第二次生命.png"
   },
   {
     "id": "不息的演算",
@@ -906,7 +1006,8 @@
     "path": "erudition",
     "acquisition": "simUniverseShop",
     "releaseDate": "2024-06-19",
-    "releaseVersion": "2.3"
+    "releaseVersion": "2.3",
+    "image": "/cones/不息的演算.png"
   },
   {
     "id": "梦应归于何处",
@@ -915,7 +1016,8 @@
     "path": "destruction",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-06-19",
-    "releaseVersion": "2.3"
+    "releaseVersion": "2.3",
+    "image": "/cones/梦应归于何处.png"
   },
   {
     "id": "偏偏希望无价",
@@ -924,7 +1026,8 @@
     "path": "erudition",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-07-10",
-    "releaseVersion": "2.3"
+    "releaseVersion": "2.3",
+    "image": "/cones/偏偏希望无价.png"
   },
   {
     "id": "谐乐静默之后",
@@ -933,7 +1036,8 @@
     "path": "erudition",
     "acquisition": "warp",
     "releaseDate": "2024-07-10",
-    "releaseVersion": "2.3"
+    "releaseVersion": "2.3",
+    "image": "/cones/谐乐静默之后.png"
   },
   {
     "id": "落日时起舞",
@@ -942,7 +1046,8 @@
     "path": "destruction",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-07-31",
-    "releaseVersion": "2.4"
+    "releaseVersion": "2.4",
+    "image": "/cones/落日时起舞.png"
   },
   {
     "id": "芳华待灼",
@@ -951,7 +1056,8 @@
     "path": "harmony",
     "acquisition": "warp",
     "releaseDate": "2024-08-21",
-    "releaseVersion": "2.4"
+    "releaseVersion": "2.4",
+    "image": "/cones/芳华待灼.png"
   },
   {
     "id": "那无数个春天",
@@ -960,7 +1066,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-08-21",
-    "releaseVersion": "2.4"
+    "releaseVersion": "2.4",
+    "image": "/cones/那无数个春天.png"
   },
   {
     "id": "我将，巡征追猎",
@@ -969,7 +1076,8 @@
     "path": "hunt",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-09-10",
-    "releaseVersion": "2.5"
+    "releaseVersion": "2.5",
+    "image": "/cones/我将，巡征追猎.png"
   },
   {
     "id": "黑夜如影随行",
@@ -978,7 +1086,8 @@
     "path": "hunt",
     "acquisition": "warp",
     "releaseDate": "2024-10-02",
-    "releaseVersion": "2.5"
+    "releaseVersion": "2.5",
+    "image": "/cones/黑夜如影随行.png"
   },
   {
     "id": "唯有香如故",
@@ -987,7 +1096,8 @@
     "path": "abundance",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-10-02",
-    "releaseVersion": "2.5"
+    "releaseVersion": "2.5",
+    "image": "/cones/唯有香如故.png"
   },
   {
     "id": "梦的蒙太奇",
@@ -996,7 +1106,8 @@
     "path": "abundance",
     "acquisition": "warp",
     "releaseDate": "2024-10-23",
-    "releaseVersion": "2.6"
+    "releaseVersion": "2.6",
+    "image": "/cones/梦的蒙太奇.png"
   },
   {
     "id": "忍法帖•缭乱破魔",
@@ -1005,7 +1116,8 @@
     "path": "erudition",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-10-23",
-    "releaseVersion": "2.6"
+    "releaseVersion": "2.6",
+    "image": "/cones/忍法帖•缭乱破魔.png"
   },
   {
     "id": "忍事录•音律狩猎",
@@ -1014,7 +1126,8 @@
     "path": "destruction",
     "acquisition": "event",
     "releaseDate": "2024-10-23",
-    "releaseVersion": "2.6"
+    "releaseVersion": "2.6",
+    "image": "/cones/忍事录•音律狩猎.png"
   },
   {
     "id": "回到大地的飞行",
@@ -1023,7 +1136,8 @@
     "path": "harmony",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-12-04",
-    "releaseVersion": "2.7"
+    "releaseVersion": "2.7",
+    "image": "/cones/回到大地的飞行.png"
   },
   {
     "id": "长路终有归途",
@@ -1032,7 +1146,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2024-12-25",
-    "releaseVersion": "2.7"
+    "releaseVersion": "2.7",
+    "image": "/cones/长路终有归途.png"
   },
   {
     "id": "多流汗，少流泪",
@@ -1041,7 +1156,8 @@
     "path": "remembrance",
     "acquisition": "namelessHonor",
     "releaseDate": "2025-01-15",
-    "releaseVersion": "3.0"
+    "releaseVersion": "3.0",
+    "image": "/cones/多流汗，少流泪.png"
   },
   {
     "id": "焚影",
@@ -1050,7 +1166,8 @@
     "path": "remembrance",
     "acquisition": "warp",
     "releaseDate": "2025-01-15",
-    "releaseVersion": "3.0"
+    "releaseVersion": "3.0",
+    "image": "/cones/焚影.png"
   },
   {
     "id": "胜利只在朝夕间",
@@ -1059,7 +1176,8 @@
     "path": "remembrance",
     "acquisition": "treasure",
     "releaseDate": "2025-01-15",
-    "releaseVersion": "3.0"
+    "releaseVersion": "3.0",
+    "image": "/cones/胜利只在朝夕间.png"
   },
   {
     "id": "溯忆",
@@ -1068,7 +1186,8 @@
     "path": "remembrance",
     "acquisition": "warp",
     "releaseDate": "2025-01-15",
-    "releaseVersion": "3.0"
+    "releaseVersion": "3.0",
+    "image": "/cones/溯忆.png"
   },
   {
     "id": "向着不可追问处",
@@ -1077,7 +1196,8 @@
     "path": "erudition",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-01-15",
-    "releaseVersion": "3.0"
+    "releaseVersion": "3.0",
+    "image": "/cones/向着不可追问处.png"
   },
   {
     "id": "将光阴织成黄金",
@@ -1086,7 +1206,8 @@
     "path": "remembrance",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-02-05",
-    "releaseVersion": "3.0"
+    "releaseVersion": "3.0",
+    "image": "/cones/将光阴织成黄金.png"
   },
   {
     "id": "天才们的问候",
@@ -1095,7 +1216,8 @@
     "path": "remembrance",
     "acquisition": "warp",
     "releaseDate": "2025-02-05",
-    "releaseVersion": "3.0"
+    "releaseVersion": "3.0",
+    "image": "/cones/天才们的问候.png"
   },
   {
     "id": "记忆永不落幕",
@@ -1104,7 +1226,8 @@
     "path": "remembrance",
     "acquisition": "simUniverseShop",
     "releaseDate": "2025-02-26",
-    "releaseVersion": "3.1"
+    "releaseVersion": "3.1",
+    "image": "/cones/记忆永不落幕.png"
   },
   {
     "id": "如果时间是一朵花",
@@ -1113,7 +1236,8 @@
     "path": "harmony",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-02-26",
-    "releaseVersion": "3.1"
+    "releaseVersion": "3.1",
+    "image": "/cones/如果时间是一朵花.png"
   },
   {
     "id": "血火啊，燃烧前路",
@@ -1122,7 +1246,8 @@
     "path": "destruction",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-03-19",
-    "releaseVersion": "3.1"
+    "releaseVersion": "3.1",
+    "image": "/cones/血火啊，燃烧前路.png"
   },
   {
     "id": "让告别，更美一些",
@@ -1131,7 +1256,8 @@
     "path": "remembrance",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-04-09",
-    "releaseVersion": "3.2"
+    "releaseVersion": "3.2",
+    "image": "/cones/让告别，更美一些.png"
   },
   {
     "id": "宇宙大生意",
@@ -1140,7 +1266,8 @@
     "path": "erudition",
     "acquisition": "event",
     "releaseDate": "2025-04-09",
-    "releaseVersion": "3.2"
+    "releaseVersion": "3.2",
+    "image": "/cones/宇宙大生意.png"
   },
   {
     "id": "生命当付之一炬",
@@ -1149,7 +1276,8 @@
     "path": "erudition",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-04-30",
-    "releaseVersion": "3.2"
+    "releaseVersion": "3.2",
+    "image": "/cones/生命当付之一炬.png"
   },
   {
     "id": "愿虹光永驻天空",
@@ -1158,7 +1286,8 @@
     "path": "remembrance",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-05-21",
-    "releaseVersion": "3.3"
+    "releaseVersion": "3.3",
+    "image": "/cones/愿虹光永驻天空.png"
   },
   {
     "id": "谎言在风中飘扬",
@@ -1167,7 +1296,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-06-11",
-    "releaseVersion": "3.3"
+    "releaseVersion": "3.3",
+    "image": "/cones/谎言在风中飘扬.png"
   },
   {
     "id": "故事的下一页",
@@ -1176,7 +1306,8 @@
     "path": "remembrance",
     "acquisition": "warp",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/故事的下一页.png"
   },
   {
     "id": "花儿不会忘记",
@@ -1185,7 +1316,8 @@
     "path": "remembrance",
     "acquisition": "namelessHonor",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/花儿不会忘记.png"
   },
   {
     "id": "假日浴场大冒险",
@@ -1194,7 +1326,8 @@
     "path": "nihility",
     "acquisition": "namelessHonor",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/假日浴场大冒险.png"
   },
   {
     "id": "黎明恰如此燃烧",
@@ -1203,7 +1336,8 @@
     "path": "destruction",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/黎明恰如此燃烧.png"
   },
   {
     "id": "一行往日的血",
@@ -1212,7 +1346,8 @@
     "path": "destruction",
     "acquisition": "namelessHonor",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/一行往日的血.png"
   },
   {
     "id": "氤氲麦香的梦",
@@ -1221,7 +1356,8 @@
     "path": "erudition",
     "acquisition": "namelessHonor",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/氤氲麦香的梦.png"
   },
   {
     "id": "于那终点再见",
@@ -1230,7 +1366,8 @@
     "path": "hunt",
     "acquisition": "namelessHonor",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/于那终点再见.png"
   },
   {
     "id": "愿旅途永远坦然",
@@ -1239,7 +1376,8 @@
     "path": "preservation",
     "acquisition": "namelessHonor",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/愿旅途永远坦然.png"
   },
   {
     "id": "直到明天的明天",
@@ -1248,7 +1386,8 @@
     "path": "abundance",
     "acquisition": "namelessHonor",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/直到明天的明天.png"
   },
   {
     "id": "追逐风的时候",
@@ -1257,7 +1396,8 @@
     "path": "harmony",
     "acquisition": "namelessHonor",
     "releaseDate": "2025-07-02",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/追逐风的时候.png"
   },
   {
     "id": "理想燃烧的地狱",
@@ -1266,7 +1406,8 @@
     "path": "hunt",
     "acquisition": "collabWarp",
     "releaseDate": "2025-07-11",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/理想燃烧的地狱.png"
   },
   {
     "id": "没有回报的加冕",
@@ -1275,7 +1416,8 @@
     "path": "destruction",
     "acquisition": "collabWarp",
     "releaseDate": "2025-07-11",
-    "releaseVersion": "3.4"
+    "releaseVersion": "3.4",
+    "image": "/cones/没有回报的加冕.png"
   },
   {
     "id": "海洋为何而歌",
@@ -1284,7 +1426,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-08-13",
-    "releaseVersion": "3.5"
+    "releaseVersion": "3.5",
+    "image": "/cones/海洋为何而歌.png"
   },
   {
     "id": "永远的迷境饭",
@@ -1293,7 +1436,8 @@
     "path": "harmony",
     "acquisition": "event",
     "releaseDate": "2025-08-13",
-    "releaseVersion": "3.5"
+    "releaseVersion": "3.5",
+    "image": "/cones/永远的迷境饭.png"
   },
   {
     "id": "金血铭刻的时代",
@@ -1302,7 +1446,8 @@
     "path": "harmony",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-09-02",
-    "releaseVersion": "3.5"
+    "releaseVersion": "3.5",
+    "image": "/cones/金血铭刻的时代.png"
   },
   {
     "id": "致长夜的星光",
@@ -1311,7 +1456,8 @@
     "path": "remembrance",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-09-24",
-    "releaseVersion": "3.6"
+    "releaseVersion": "3.6",
+    "image": "/cones/致长夜的星光.png"
   },
   {
     "id": "纵然山河万程",
@@ -1320,7 +1466,8 @@
     "path": "preservation",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-10-15",
-    "releaseVersion": "3.6"
+    "releaseVersion": "3.6",
+    "image": "/cones/纵然山河万程.png"
   },
   {
     "id": "爱如此刻永恒",
@@ -1329,7 +1476,8 @@
     "path": "remembrance",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-11-05",
-    "releaseVersion": "3.7"
+    "releaseVersion": "3.7",
+    "image": "/cones/爱如此刻永恒.png"
   },
   {
     "id": "飞向粉色的明天",
@@ -1338,7 +1486,8 @@
     "path": "remembrance",
     "acquisition": "quest",
     "releaseDate": "2025-11-05",
-    "releaseVersion": "3.7"
+    "releaseVersion": "3.7",
+    "image": "/cones/飞向粉色的明天.png"
   },
   {
     "id": "勿忘她的火焰",
@@ -1347,7 +1496,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2025-12-17",
-    "releaseVersion": "3.8"
+    "releaseVersion": "3.8",
+    "image": "/cones/勿忘她的火焰.png"
   },
   {
     "id": "残泪",
@@ -1356,7 +1506,8 @@
     "path": "joviality",
     "acquisition": "warp",
     "releaseDate": "2026-02-13",
-    "releaseVersion": "4.0"
+    "releaseVersion": "4.0",
+    "image": "/cones/残泪.png"
   },
   {
     "id": "嗤笑",
@@ -1365,7 +1516,8 @@
     "path": "joviality",
     "acquisition": "warp",
     "releaseDate": "2026-02-13",
-    "releaseVersion": "4.0"
+    "releaseVersion": "4.0",
+    "image": "/cones/嗤笑.png"
   },
   {
     "id": "当她决定看见",
@@ -1374,7 +1526,8 @@
     "path": "joviality",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-02-13",
-    "releaseVersion": "4.0"
+    "releaseVersion": "4.0",
+    "image": "/cones/当她决定看见.png"
   },
   {
     "id": "菇菇嘎嘎历险记",
@@ -1383,7 +1536,8 @@
     "path": "joviality",
     "acquisition": "treasure",
     "releaseDate": "2026-02-13",
-    "releaseVersion": "4.0"
+    "releaseVersion": "4.0",
+    "image": "/cones/菇菇嘎嘎历险记.png"
   },
   {
     "id": "今日好手气",
@@ -1392,7 +1546,8 @@
     "path": "joviality",
     "acquisition": "namelessHonor",
     "releaseDate": "2026-02-13",
-    "releaseVersion": "4.0"
+    "releaseVersion": "4.0",
+    "image": "/cones/今日好手气.png"
   },
   {
     "id": "花花世界迷人眼",
@@ -1401,7 +1556,8 @@
     "path": "joviality",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-03-03",
-    "releaseVersion": "4.0"
+    "releaseVersion": "4.0",
+    "image": "/cones/花花世界迷人眼.png"
   },
   {
     "id": "欢愉满溢祝福",
@@ -1410,7 +1566,8 @@
     "path": "joviality",
     "acquisition": "simUniverseShop",
     "releaseDate": "2026-03-25",
-    "releaseVersion": "4.1"
+    "releaseVersion": "4.1",
+    "image": "/cones/欢愉满溢祝福.png"
   },
   {
     "id": "一场谎言的终幕",
@@ -1419,7 +1576,8 @@
     "path": "hunt",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-03-25",
-    "releaseVersion": "4.1"
+    "releaseVersion": "4.1",
+    "image": "/cones/一场谎言的终幕.png"
   },
   {
     "id": "欢迎来到银河城",
@@ -1428,7 +1586,8 @@
     "path": "joviality",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-04-22",
-    "releaseVersion": "4.2"
+    "releaseVersion": "4.2",
+    "image": "/cones/欢迎来到银河城.png"
   },
   {
     "id": "未来，有我们一起",
@@ -1437,7 +1596,8 @@
     "path": "joviality",
     "acquisition": "event",
     "releaseDate": "2026-04-22",
-    "releaseVersion": "4.2"
+    "releaseVersion": "4.2",
+    "image": "/cones/未来，有我们一起.png"
   },
   {
     "id": "邂逅于下一个花季",
@@ -1446,7 +1606,8 @@
     "path": "joviality",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-05-13",
-    "releaseVersion": "4.2"
+    "releaseVersion": "4.2",
+    "image": "/cones/邂逅于下一个花季.png"
   },
   {
     "id": "灼尽炼狱的新骸",
@@ -1455,7 +1616,8 @@
     "path": "nihility",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-06-01",
-    "releaseVersion": "4.3"
+    "releaseVersion": "4.3",
+    "image": "/cones/灼尽炼狱的新骸.png"
   },
   {
     "id": "当一颗星照亮夜空",
@@ -1464,7 +1626,8 @@
     "path": "erudition",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-07-15",
-    "releaseVersion": "4.4"
+    "releaseVersion": "4.4",
+    "image": "/cones/当一颗星照亮夜空.png"
   },
   {
     "id": "所见即我",
@@ -1473,7 +1636,8 @@
     "path": "destruction",
     "acquisition": "collabWarp",
     "releaseDate": "2026-07-24",
-    "releaseVersion": "4.4"
+    "releaseVersion": "4.4",
+    "image": "/cones/所见即我.png"
   },
   {
     "id": "星火悄然闪耀",
@@ -1482,7 +1646,8 @@
     "path": "erudition",
     "acquisition": "collabWarp",
     "releaseDate": "2026-07-24",
-    "releaseVersion": "4.4"
+    "releaseVersion": "4.4",
+    "image": "/cones/星火悄然闪耀.png"
   },
   {
     "id": "放个短假",
@@ -1491,7 +1656,8 @@
     "path": "joviality",
     "acquisition": "warp",
     "releaseDate": "2026-08-26",
-    "releaseVersion": "4.5"
+    "releaseVersion": "4.5",
+    "image": "/cones/放个短假.png"
   },
   {
     "id": "你将起身歌唱",
@@ -1500,7 +1666,8 @@
     "path": "remembrance",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-08-26",
-    "releaseVersion": "4.5"
+    "releaseVersion": "4.5",
+    "image": "/cones/你将起身歌唱.png"
   },
   {
     "id": "向着地平线的终点",
@@ -1509,7 +1676,8 @@
     "path": "hunt",
     "acquisition": "event",
     "releaseDate": "2026-08-26",
-    "releaseVersion": "4.5"
+    "releaseVersion": "4.5",
+    "image": "/cones/向着地平线的终点.png"
   },
   {
     "id": "向浪花掷下盛夏",
@@ -1518,7 +1686,8 @@
     "path": "joviality",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-09-12",
-    "releaseVersion": "4.5"
+    "releaseVersion": "4.5",
+    "image": "/cones/向浪花掷下盛夏.png"
   },
   {
     "id": "献给明日的色彩",
@@ -1527,6 +1696,7 @@
     "path": "joviality",
     "acquisition": "limitedWarp",
     "releaseDate": "2026-09-28",
-    "releaseVersion": "4.6"
+    "releaseVersion": "4.6",
+    "image": "/cones/献给明日的色彩.png"
   }
 ]

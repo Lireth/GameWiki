@@ -1711,6 +1711,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/「我」的诞生.png",
   },
   {
     id: "别让世界静下来",
@@ -1720,6 +1721,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/别让世界静下来.png",
   },
   {
     id: "蕃息",
@@ -1729,6 +1731,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/蕃息.png",
   },
   {
     id: "春水初生",
@@ -1738,6 +1741,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "actionSummary",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/春水初生.png",
   },
   {
     id: "此时恰好",
@@ -1747,6 +1751,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/此时恰好.png",
   },
   {
     id: "但战斗还未结束",
@@ -1756,6 +1761,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/但战斗还未结束.png",
   },
   {
     id: "等价交换",
@@ -1765,6 +1771,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "levelReward",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/等价交换.png",
   },
   {
     id: "点个关注吧！",
@@ -1774,6 +1781,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/点个关注吧！.png",
   },
   {
     id: "调和",
@@ -1783,6 +1791,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/调和.png",
   },
   {
     id: "锋镝",
@@ -1792,6 +1801,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/锋镝.png",
   },
   {
     id: "过往未来",
@@ -1801,6 +1811,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "worldShop",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/过往未来.png",
   },
   {
     id: "后会有期",
@@ -1810,6 +1821,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/后会有期.png",
   },
   {
     id: "琥珀",
@@ -1819,6 +1831,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/琥珀.png",
   },
   {
     id: "记一位星神的陨落",
@@ -1828,6 +1841,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "simUniverseShop",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/记一位星神的陨落.png",
   },
   {
     id: "记忆的质料",
@@ -1837,6 +1851,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "simUniverseShop",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/记忆的质料.png",
   },
   {
     id: "记忆中的模样",
@@ -1846,6 +1861,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/记忆中的模样.png",
   },
   {
     id: "嘉果",
@@ -1855,6 +1871,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/嘉果.png",
   },
   {
     id: "今日亦是和平的一日",
@@ -1864,6 +1881,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/今日亦是和平的一日.png",
   },
   {
     id: "俱殁",
@@ -1873,6 +1891,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/俱殁.png",
   },
   {
     id: "决心如汗珠般闪耀",
@@ -1882,6 +1901,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/决心如汗珠般闪耀.png",
   },
   {
     id: "开疆",
@@ -1891,6 +1911,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/开疆.png",
   },
   {
     id: "朗道的选择",
@@ -1900,6 +1921,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/朗道的选择.png",
   },
   {
     id: "乐圮",
@@ -1909,6 +1931,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/乐圮.png",
   },
   {
     id: "离弦",
@@ -1918,6 +1941,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/离弦.png",
   },
   {
     id: "猎物的视线",
@@ -1927,6 +1951,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/猎物的视线.png",
   },
   {
     id: "灵钥",
@@ -1936,6 +1961,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/灵钥.png",
   },
   {
     id: "镂月裁云之意",
@@ -1945,6 +1971,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/镂月裁云之意.png",
   },
   {
     id: "轮契",
@@ -1954,6 +1981,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/轮契.png",
   },
   {
     id: "论剑",
@@ -1963,6 +1991,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/论剑.png",
   },
   {
     id: "秘密誓心",
@@ -1972,6 +2001,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/秘密誓心.png",
   },
   {
     id: "匿影",
@@ -1981,6 +2011,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/匿影.png",
   },
   {
     id: "暖夜不会漫长",
@@ -1990,6 +2021,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/暖夜不会漫长.png",
   },
   {
     id: "齐颂",
@@ -1999,6 +2031,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/齐颂.png",
   },
   {
     id: "如泥酣眠",
@@ -2008,6 +2041,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/如泥酣眠.png",
   },
   {
     id: "睿见",
@@ -2017,6 +2051,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/睿见.png",
   },
   {
     id: "时节不居",
@@ -2026,6 +2061,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/时节不居.png",
   },
   {
     id: "戍御",
@@ -2035,6 +2071,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/戍御.png",
   },
   {
     id: "天才们的休憩",
@@ -2044,6 +2081,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/天才们的休憩.png",
   },
   {
     id: "天倾",
@@ -2053,6 +2091,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/天倾.png",
   },
   {
     id: "同一种心情",
@@ -2062,6 +2101,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/同一种心情.png",
   },
   {
     id: "晚安与睡颜",
@@ -2071,6 +2111,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/晚安与睡颜.png",
   },
   {
     id: "汪！散步时间！",
@@ -2080,6 +2121,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "worldShop",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/汪！散步时间！.png",
   },
   {
     id: "唯有沉默",
@@ -2089,6 +2131,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/唯有沉默.png",
   },
   {
     id: "我们是地火",
@@ -2098,6 +2141,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "actionSummary",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/我们是地火.png",
   },
   {
     id: "无处可逃",
@@ -2107,6 +2151,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/无处可逃.png",
   },
   {
     id: "无可取代的东西",
@@ -2116,6 +2161,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/无可取代的东西.png",
   },
   {
     id: "舞！舞！舞！",
@@ -2125,6 +2171,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/舞！舞！舞！.png",
   },
   {
     id: "物穰",
@@ -2134,6 +2181,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/物穰.png",
   },
   {
     id: "相抗",
@@ -2143,6 +2191,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/相抗.png",
   },
   {
     id: "星海巡航",
@@ -2152,6 +2201,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "simUniverseShop",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/星海巡航.png",
   },
   {
     id: "延长记号",
@@ -2161,6 +2211,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "worldShop",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/延长记号.png",
   },
   {
     id: "鼹鼠党欢迎你",
@@ -2170,6 +2221,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/鼹鼠党欢迎你.png",
   },
   {
     id: "一场术后对话",
@@ -2179,6 +2231,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/一场术后对话.png",
   },
   {
     id: "以世界之名",
@@ -2188,6 +2241,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/以世界之名.png",
   },
   {
     id: "银河铁道之夜",
@@ -2197,6 +2251,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/银河铁道之夜.png",
   },
   {
     id: "幽邃",
@@ -2206,6 +2261,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/幽邃.png",
   },
   {
     id: "于夜色中",
@@ -2215,6 +2271,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/于夜色中.png",
   },
   {
     id: "余生的第一天",
@@ -2224,6 +2281,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/余生的第一天.png",
   },
   {
     id: "与行星相会",
@@ -2233,6 +2291,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/与行星相会.png",
   },
   {
     id: "宇宙市场趋势",
@@ -2242,6 +2301,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/宇宙市场趋势.png",
   },
   {
     id: "渊环",
@@ -2251,6 +2311,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/渊环.png",
   },
   {
     id: "在蓝天下",
@@ -2260,6 +2321,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/在蓝天下.png",
   },
   {
     id: "早餐的仪式感",
@@ -2269,6 +2331,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "quest",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/早餐的仪式感.png",
   },
   {
     id: "这就是我啦！",
@@ -2278,6 +2341,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/这就是我啦！.png",
   },
   {
     id: "制胜的瞬间",
@@ -2287,6 +2351,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/制胜的瞬间.png",
   },
   {
     id: "智库",
@@ -2296,6 +2361,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/智库.png",
   },
   {
     id: "重返幽冥",
@@ -2305,6 +2371,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2023-04-26",
     releaseVersion: "1.0",
+    image: "/cones/重返幽冥.png",
   },
   {
     id: "拂晓之前",
@@ -2314,6 +2381,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-05-17",
     releaseVersion: "1.0",
+    image: "/cones/拂晓之前.png",
   },
   {
     id: "新手任务开始前",
@@ -2323,6 +2391,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "event",
     releaseDate: "2023-06-07",
     releaseVersion: "1.1",
+    image: "/cones/新手任务开始前.png",
   },
   {
     id: "雨一直下",
@@ -2332,6 +2401,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-06-07",
     releaseVersion: "1.1",
+    image: "/cones/雨一直下.png",
   },
   {
     id: "棺的回响",
@@ -2341,6 +2411,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-06-28",
     releaseVersion: "1.1",
+    image: "/cones/棺的回响.png",
   },
   {
     id: "到不了的彼岸",
@@ -2350,6 +2421,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-07-19",
     releaseVersion: "1.2",
+    image: "/cones/到不了的彼岸.png",
   },
   {
     id: "只需等待",
@@ -2359,6 +2431,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-08-09",
     releaseVersion: "1.2",
+    image: "/cones/只需等待.png",
   },
   {
     id: "比阳光更明亮的",
@@ -2368,6 +2441,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-08-30",
     releaseVersion: "1.3",
+    image: "/cones/比阳光更明亮的.png",
   },
   {
     id: "孤独的疗愈",
@@ -2377,6 +2451,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "simUniverseShop",
     releaseDate: "2023-08-30",
     releaseVersion: "1.3",
+    image: "/cones/孤独的疗愈.png",
   },
   {
     id: "她已闭上双眼",
@@ -2386,6 +2461,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-09-20",
     releaseVersion: "1.3",
+    image: "/cones/她已闭上双眼.png",
   },
   {
     id: "此身为剑",
@@ -2395,6 +2471,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-10-11",
     releaseVersion: "1.4",
+    image: "/cones/此身为剑.png",
   },
   {
     id: "烦恼着，幸福着",
@@ -2404,6 +2481,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-10-27",
     releaseVersion: "1.4",
+    image: "/cones/烦恼着，幸福着.png",
   },
   {
     id: "嘿，我在这儿",
@@ -2413,6 +2491,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "event",
     releaseDate: "2023-11-15",
     releaseVersion: "1.5",
+    image: "/cones/嘿，我在这儿.png",
   },
   {
     id: "惊魂夜",
@@ -2422,6 +2501,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-11-15",
     releaseVersion: "1.5",
+    image: "/cones/惊魂夜.png",
   },
   {
     id: "片刻，留在眼底",
@@ -2431,6 +2511,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-12-06",
     releaseVersion: "1.5",
+    image: "/cones/片刻，留在眼底.png",
   },
   {
     id: "镜中故我",
@@ -2440,6 +2521,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2023-12-27",
     releaseVersion: "1.6",
+    image: "/cones/镜中故我.png",
   },
   {
     id: "纯粹思维的洗礼",
@@ -2449,6 +2531,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-01-17",
     releaseVersion: "1.6",
+    image: "/cones/纯粹思维的洗礼.png",
   },
   {
     id: "好戏开演",
@@ -2458,6 +2541,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "treasure",
     releaseDate: "2024-02-06",
     releaseVersion: "2.0",
+    image: "/cones/好戏开演.png",
   },
   {
     id: "何物为真",
@@ -2467,6 +2551,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "treasure",
     releaseDate: "2024-02-06",
     releaseVersion: "2.0",
+    image: "/cones/何物为真.png",
   },
   {
     id: "美梦小镇大冒险",
@@ -2476,6 +2561,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "treasure",
     releaseDate: "2024-02-06",
     releaseVersion: "2.0",
+    image: "/cones/美梦小镇大冒险.png",
   },
   {
     id: "铭记于心的约定",
@@ -2485,6 +2571,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2024-02-06",
     releaseVersion: "2.0",
+    image: "/cones/铭记于心的约定.png",
   },
   {
     id: "银河沦陷日",
@@ -2494,6 +2581,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "treasure",
     releaseDate: "2024-02-06",
     releaseVersion: "2.0",
+    image: "/cones/银河沦陷日.png",
   },
   {
     id: "在火的远处",
@@ -2503,6 +2591,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "treasure",
     releaseDate: "2024-02-06",
     releaseVersion: "2.0",
+    image: "/cones/在火的远处.png",
   },
   {
     id: "织造命运之线",
@@ -2512,6 +2601,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "treasure",
     releaseDate: "2024-02-06",
     releaseVersion: "2.0",
+    image: "/cones/织造命运之线.png",
   },
   {
     id: "重塑时光之忆",
@@ -2521,6 +2611,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-02-06",
     releaseVersion: "2.0",
+    image: "/cones/重塑时光之忆.png",
   },
   {
     id: "最后的赢家",
@@ -2530,6 +2621,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "treasure",
     releaseDate: "2024-02-06",
     releaseVersion: "2.0",
+    image: "/cones/最后的赢家.png",
   },
   {
     id: "游戏尘寰",
@@ -2539,6 +2631,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-02-29",
     releaseVersion: "2.0",
+    image: "/cones/游戏尘寰.png",
   },
   {
     id: "行于流逝的岸",
@@ -2548,6 +2641,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-03-27",
     releaseVersion: "2.1",
+    image: "/cones/行于流逝的岸.png",
   },
   {
     id: "两个人的演唱会",
@@ -2557,6 +2651,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2024-04-17",
     releaseVersion: "2.1",
+    image: "/cones/两个人的演唱会.png",
   },
   {
     id: "命运从未公平",
@@ -2566,6 +2661,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-04-17",
     releaseVersion: "2.1",
+    image: "/cones/命运从未公平.png",
   },
   {
     id: "为了明日的旅途",
@@ -2575,6 +2671,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "event",
     releaseDate: "2024-05-08",
     releaseVersion: "2.2",
+    image: "/cones/为了明日的旅途.png",
   },
   {
     id: "无边曼舞",
@@ -2584,6 +2681,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2024-05-08",
     releaseVersion: "2.2",
+    image: "/cones/无边曼舞.png",
   },
   {
     id: "夜色流光溢彩",
@@ -2593,6 +2691,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-05-08",
     releaseVersion: "2.2",
+    image: "/cones/夜色流光溢彩.png",
   },
   {
     id: "驶向第二次生命",
@@ -2602,6 +2701,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-05-29",
     releaseVersion: "2.2",
+    image: "/cones/驶向第二次生命.png",
   },
   {
     id: "不息的演算",
@@ -2611,6 +2711,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "simUniverseShop",
     releaseDate: "2024-06-19",
     releaseVersion: "2.3",
+    image: "/cones/不息的演算.png",
   },
   {
     id: "梦应归于何处",
@@ -2620,6 +2721,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-06-19",
     releaseVersion: "2.3",
+    image: "/cones/梦应归于何处.png",
   },
   {
     id: "偏偏希望无价",
@@ -2629,6 +2731,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-07-10",
     releaseVersion: "2.3",
+    image: "/cones/偏偏希望无价.png",
   },
   {
     id: "谐乐静默之后",
@@ -2638,6 +2741,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2024-07-10",
     releaseVersion: "2.3",
+    image: "/cones/谐乐静默之后.png",
   },
   {
     id: "落日时起舞",
@@ -2647,6 +2751,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-07-31",
     releaseVersion: "2.4",
+    image: "/cones/落日时起舞.png",
   },
   {
     id: "芳华待灼",
@@ -2656,6 +2761,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2024-08-21",
     releaseVersion: "2.4",
+    image: "/cones/芳华待灼.png",
   },
   {
     id: "那无数个春天",
@@ -2665,6 +2771,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-08-21",
     releaseVersion: "2.4",
+    image: "/cones/那无数个春天.png",
   },
   {
     id: "我将，巡征追猎",
@@ -2674,6 +2781,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-09-10",
     releaseVersion: "2.5",
+    image: "/cones/我将，巡征追猎.png",
   },
   {
     id: "黑夜如影随行",
@@ -2683,6 +2791,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2024-10-02",
     releaseVersion: "2.5",
+    image: "/cones/黑夜如影随行.png",
   },
   {
     id: "唯有香如故",
@@ -2692,6 +2801,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-10-02",
     releaseVersion: "2.5",
+    image: "/cones/唯有香如故.png",
   },
   {
     id: "梦的蒙太奇",
@@ -2701,6 +2811,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2024-10-23",
     releaseVersion: "2.6",
+    image: "/cones/梦的蒙太奇.png",
   },
   {
     id: "忍法帖•缭乱破魔",
@@ -2710,6 +2821,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-10-23",
     releaseVersion: "2.6",
+    image: "/cones/忍法帖•缭乱破魔.png",
   },
   {
     id: "忍事录•音律狩猎",
@@ -2719,6 +2831,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "event",
     releaseDate: "2024-10-23",
     releaseVersion: "2.6",
+    image: "/cones/忍事录•音律狩猎.png",
   },
   {
     id: "回到大地的飞行",
@@ -2728,6 +2841,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-12-04",
     releaseVersion: "2.7",
+    image: "/cones/回到大地的飞行.png",
   },
   {
     id: "长路终有归途",
@@ -2737,6 +2851,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2024-12-25",
     releaseVersion: "2.7",
+    image: "/cones/长路终有归途.png",
   },
   {
     id: "多流汗，少流泪",
@@ -2746,6 +2861,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2025-01-15",
     releaseVersion: "3.0",
+    image: "/cones/多流汗，少流泪.png",
   },
   {
     id: "焚影",
@@ -2755,6 +2871,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2025-01-15",
     releaseVersion: "3.0",
+    image: "/cones/焚影.png",
   },
   {
     id: "胜利只在朝夕间",
@@ -2764,6 +2881,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "treasure",
     releaseDate: "2025-01-15",
     releaseVersion: "3.0",
+    image: "/cones/胜利只在朝夕间.png",
   },
   {
     id: "溯忆",
@@ -2773,6 +2891,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2025-01-15",
     releaseVersion: "3.0",
+    image: "/cones/溯忆.png",
   },
   {
     id: "向着不可追问处",
@@ -2782,6 +2901,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-01-15",
     releaseVersion: "3.0",
+    image: "/cones/向着不可追问处.png",
   },
   {
     id: "将光阴织成黄金",
@@ -2791,6 +2911,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-02-05",
     releaseVersion: "3.0",
+    image: "/cones/将光阴织成黄金.png",
   },
   {
     id: "天才们的问候",
@@ -2800,6 +2921,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2025-02-05",
     releaseVersion: "3.0",
+    image: "/cones/天才们的问候.png",
   },
   {
     id: "记忆永不落幕",
@@ -2809,6 +2931,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "simUniverseShop",
     releaseDate: "2025-02-26",
     releaseVersion: "3.1",
+    image: "/cones/记忆永不落幕.png",
   },
   {
     id: "如果时间是一朵花",
@@ -2818,6 +2941,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-02-26",
     releaseVersion: "3.1",
+    image: "/cones/如果时间是一朵花.png",
   },
   {
     id: "血火啊，燃烧前路",
@@ -2827,6 +2951,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-03-19",
     releaseVersion: "3.1",
+    image: "/cones/血火啊，燃烧前路.png",
   },
   {
     id: "让告别，更美一些",
@@ -2836,6 +2961,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-04-09",
     releaseVersion: "3.2",
+    image: "/cones/让告别，更美一些.png",
   },
   {
     id: "宇宙大生意",
@@ -2845,6 +2971,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "event",
     releaseDate: "2025-04-09",
     releaseVersion: "3.2",
+    image: "/cones/宇宙大生意.png",
   },
   {
     id: "生命当付之一炬",
@@ -2854,6 +2981,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-04-30",
     releaseVersion: "3.2",
+    image: "/cones/生命当付之一炬.png",
   },
   {
     id: "愿虹光永驻天空",
@@ -2863,6 +2991,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-05-21",
     releaseVersion: "3.3",
+    image: "/cones/愿虹光永驻天空.png",
   },
   {
     id: "谎言在风中飘扬",
@@ -2872,6 +3001,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-06-11",
     releaseVersion: "3.3",
+    image: "/cones/谎言在风中飘扬.png",
   },
   {
     id: "故事的下一页",
@@ -2881,6 +3011,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/故事的下一页.png",
   },
   {
     id: "花儿不会忘记",
@@ -2890,6 +3021,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/花儿不会忘记.png",
   },
   {
     id: "假日浴场大冒险",
@@ -2899,6 +3031,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/假日浴场大冒险.png",
   },
   {
     id: "黎明恰如此燃烧",
@@ -2908,6 +3041,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/黎明恰如此燃烧.png",
   },
   {
     id: "一行往日的血",
@@ -2917,6 +3051,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/一行往日的血.png",
   },
   {
     id: "氤氲麦香的梦",
@@ -2926,6 +3061,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/氤氲麦香的梦.png",
   },
   {
     id: "于那终点再见",
@@ -2935,6 +3071,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/于那终点再见.png",
   },
   {
     id: "愿旅途永远坦然",
@@ -2944,6 +3081,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/愿旅途永远坦然.png",
   },
   {
     id: "直到明天的明天",
@@ -2953,6 +3091,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/直到明天的明天.png",
   },
   {
     id: "追逐风的时候",
@@ -2962,6 +3101,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2025-07-02",
     releaseVersion: "3.4",
+    image: "/cones/追逐风的时候.png",
   },
   {
     id: "理想燃烧的地狱",
@@ -2971,6 +3111,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "collabWarp",
     releaseDate: "2025-07-11",
     releaseVersion: "3.4",
+    image: "/cones/理想燃烧的地狱.png",
   },
   {
     id: "没有回报的加冕",
@@ -2980,6 +3121,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "collabWarp",
     releaseDate: "2025-07-11",
     releaseVersion: "3.4",
+    image: "/cones/没有回报的加冕.png",
   },
   {
     id: "海洋为何而歌",
@@ -2989,6 +3131,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-08-13",
     releaseVersion: "3.5",
+    image: "/cones/海洋为何而歌.png",
   },
   {
     id: "永远的迷境饭",
@@ -2998,6 +3141,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "event",
     releaseDate: "2025-08-13",
     releaseVersion: "3.5",
+    image: "/cones/永远的迷境饭.png",
   },
   {
     id: "金血铭刻的时代",
@@ -3007,6 +3151,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-09-02",
     releaseVersion: "3.5",
+    image: "/cones/金血铭刻的时代.png",
   },
   {
     id: "致长夜的星光",
@@ -3016,6 +3161,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-09-24",
     releaseVersion: "3.6",
+    image: "/cones/致长夜的星光.png",
   },
   {
     id: "纵然山河万程",
@@ -3025,6 +3171,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-10-15",
     releaseVersion: "3.6",
+    image: "/cones/纵然山河万程.png",
   },
   {
     id: "爱如此刻永恒",
@@ -3034,6 +3181,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-11-05",
     releaseVersion: "3.7",
+    image: "/cones/爱如此刻永恒.png",
   },
   {
     id: "飞向粉色的明天",
@@ -3043,6 +3191,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "quest",
     releaseDate: "2025-11-05",
     releaseVersion: "3.7",
+    image: "/cones/飞向粉色的明天.png",
   },
   {
     id: "勿忘她的火焰",
@@ -3052,6 +3201,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2025-12-17",
     releaseVersion: "3.8",
+    image: "/cones/勿忘她的火焰.png",
   },
   {
     id: "残泪",
@@ -3061,6 +3211,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2026-02-13",
     releaseVersion: "4.0",
+    image: "/cones/残泪.png",
   },
   {
     id: "嗤笑",
@@ -3070,6 +3221,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2026-02-13",
     releaseVersion: "4.0",
+    image: "/cones/嗤笑.png",
   },
   {
     id: "当她决定看见",
@@ -3079,6 +3231,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-02-13",
     releaseVersion: "4.0",
+    image: "/cones/当她决定看见.png",
   },
   {
     id: "菇菇嘎嘎历险记",
@@ -3088,6 +3241,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "treasure",
     releaseDate: "2026-02-13",
     releaseVersion: "4.0",
+    image: "/cones/菇菇嘎嘎历险记.png",
   },
   {
     id: "今日好手气",
@@ -3097,6 +3251,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "namelessHonor",
     releaseDate: "2026-02-13",
     releaseVersion: "4.0",
+    image: "/cones/今日好手气.png",
   },
   {
     id: "花花世界迷人眼",
@@ -3106,6 +3261,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-03-03",
     releaseVersion: "4.0",
+    image: "/cones/花花世界迷人眼.png",
   },
   {
     id: "欢愉满溢祝福",
@@ -3115,6 +3271,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "simUniverseShop",
     releaseDate: "2026-03-25",
     releaseVersion: "4.1",
+    image: "/cones/欢愉满溢祝福.png",
   },
   {
     id: "一场谎言的终幕",
@@ -3124,6 +3281,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-03-25",
     releaseVersion: "4.1",
+    image: "/cones/一场谎言的终幕.png",
   },
   {
     id: "欢迎来到银河城",
@@ -3133,6 +3291,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-04-22",
     releaseVersion: "4.2",
+    image: "/cones/欢迎来到银河城.png",
   },
   {
     id: "未来，有我们一起",
@@ -3142,6 +3301,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "event",
     releaseDate: "2026-04-22",
     releaseVersion: "4.2",
+    image: "/cones/未来，有我们一起.png",
   },
   {
     id: "邂逅于下一个花季",
@@ -3151,6 +3311,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-05-13",
     releaseVersion: "4.2",
+    image: "/cones/邂逅于下一个花季.png",
   },
   {
     id: "灼尽炼狱的新骸",
@@ -3160,6 +3321,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-06-01",
     releaseVersion: "4.3",
+    image: "/cones/灼尽炼狱的新骸.png",
   },
   {
     id: "当一颗星照亮夜空",
@@ -3169,6 +3331,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-07-15",
     releaseVersion: "4.4",
+    image: "/cones/当一颗星照亮夜空.png",
   },
   {
     id: "所见即我",
@@ -3178,6 +3341,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "collabWarp",
     releaseDate: "2026-07-24",
     releaseVersion: "4.4",
+    image: "/cones/所见即我.png",
   },
   {
     id: "星火悄然闪耀",
@@ -3187,6 +3351,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "collabWarp",
     releaseDate: "2026-07-24",
     releaseVersion: "4.4",
+    image: "/cones/星火悄然闪耀.png",
   },
   {
     id: "放个短假",
@@ -3196,6 +3361,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "warp",
     releaseDate: "2026-08-26",
     releaseVersion: "4.5",
+    image: "/cones/放个短假.png",
   },
   {
     id: "你将起身歌唱",
@@ -3205,6 +3371,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-08-26",
     releaseVersion: "4.5",
+    image: "/cones/你将起身歌唱.png",
   },
   {
     id: "向着地平线的终点",
@@ -3214,6 +3381,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "event",
     releaseDate: "2026-08-26",
     releaseVersion: "4.5",
+    image: "/cones/向着地平线的终点.png",
   },
   {
     id: "向浪花掷下盛夏",
@@ -3223,6 +3391,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-09-12",
     releaseVersion: "4.5",
+    image: "/cones/向浪花掷下盛夏.png",
   },
   {
     id: "献给明日的色彩",
@@ -3232,6 +3401,7 @@ export const lightConeSeed: LightCone[] = [
     acquisition: "limitedWarp",
     releaseDate: "2026-09-28",
     releaseVersion: "4.6",
+    image: "/cones/献给明日的色彩.png",
   },
 ];
 
@@ -3259,6 +3429,7 @@ export const relicSeed: RelicSet[] = [
         name: "诗人的钉银之履",
       },
     ],
+    image: "/relics/哀歌覆国的诗人.png",
   },
   {
     id: "宝命长存的莳者",
@@ -3282,6 +3453,7 @@ export const relicSeed: RelicSet[] = [
         name: "莳者的天人丝履",
       },
     ],
+    image: "/relics/宝命长存的莳者.png",
   },
   {
     id: "奔狼的都蓝王朝",
@@ -3300,6 +3472,7 @@ export const relicSeed: RelicSet[] = [
         name: "都蓝的器兽缰辔",
       },
     ],
+    image: "/relics/奔狼的都蓝王朝.png",
   },
   {
     id: "不老者的仙舟",
@@ -3318,6 +3491,7 @@ export const relicSeed: RelicSet[] = [
         name: "罗浮仙舟的建木枝蔓",
       },
     ],
+    image: "/relics/不老者的仙舟.png",
   },
   {
     id: "苍穹战线格拉默",
@@ -3336,6 +3510,7 @@ export const relicSeed: RelicSet[] = [
         name: "格拉默的寂静坟碑",
       },
     ],
+    image: "/relics/苍穹战线格拉默.png",
   },
   {
     id: "沉欢醉饮的海隅",
@@ -3354,6 +3529,7 @@ export const relicSeed: RelicSet[] = [
         name: "酣歌海垠的歌咏步道",
       },
     ],
+    image: "/relics/沉欢醉饮的海隅.png",
   },
   {
     id: "沉陆海域露莎卡",
@@ -3372,6 +3548,7 @@ export const relicSeed: RelicSet[] = [
         name: "露莎卡的双生航道",
       },
     ],
+    image: "/relics/沉陆海域露莎卡.png",
   },
   {
     id: "晨昏交界的翔鹰",
@@ -3395,6 +3572,7 @@ export const relicSeed: RelicSet[] = [
         name: "翔鹰的绒羽绑带",
       },
     ],
+    image: "/relics/晨昏交界的翔鹰.png",
   },
   {
     id: "出云显世与高天神国",
@@ -3413,6 +3591,7 @@ export const relicSeed: RelicSet[] = [
         name: "出云的终始一刀",
       },
     ],
+    image: "/relics/出云显世与高天神国.png",
   },
   {
     id: "荡除蠹灾的铁骑",
@@ -3436,6 +3615,7 @@ export const relicSeed: RelicSet[] = [
         name: "铁骑的行空护胫",
       },
     ],
+    image: "/relics/荡除蠹灾的铁骑.png",
   },
   {
     id: "盗匪荒漠的废土客",
@@ -3459,6 +3639,7 @@ export const relicSeed: RelicSet[] = [
         name: "废土客的动力腿甲",
       },
     ],
+    image: "/relics/盗匪荒漠的废土客.png",
   },
   {
     id: "盗贼公国塔利亚",
@@ -3477,6 +3658,7 @@ export const relicSeed: RelicSet[] = [
         name: "塔利亚的裸皮电线",
       },
     ],
+    image: "/relics/盗贼公国塔利亚.png",
   },
   {
     id: "恶海逐波的船长",
@@ -3500,6 +3682,7 @@ export const relicSeed: RelicSet[] = [
         name: "船长的踏浪游靴",
       },
     ],
+    image: "/relics/恶海逐波的船长.png",
   },
   {
     id: "繁星璀璨的天才",
@@ -3523,6 +3706,7 @@ export const relicSeed: RelicSet[] = [
         name: "天才的引力漫步",
       },
     ],
+    image: "/relics/繁星璀璨的天才.png",
   },
   {
     id: "繁星竞技场",
@@ -3541,6 +3725,7 @@ export const relicSeed: RelicSet[] = [
         name: "泰科铵的弧光赛道",
       },
     ],
+    image: "/relics/繁星竞技场.png",
   },
   {
     id: "泛银河商业公司",
@@ -3559,6 +3744,7 @@ export const relicSeed: RelicSet[] = [
         name: "公司的贸易航道",
       },
     ],
+    image: "/relics/泛银河商业公司.png",
   },
   {
     id: "风举云飞的勇烈",
@@ -3582,6 +3768,7 @@ export const relicSeed: RelicSet[] = [
         name: "勇烈的逐猎腿甲",
       },
     ],
+    image: "/relics/风举云飞的勇烈.png",
   },
   {
     id: "骇域漫游的信使",
@@ -3605,6 +3792,7 @@ export const relicSeed: RelicSet[] = [
         name: "信使的酷跑板鞋",
       },
     ],
+    image: "/relics/骇域漫游的信使.png",
   },
   {
     id: "寰宇生研院",
@@ -3623,6 +3811,7 @@ export const relicSeed: RelicSet[] = [
         name: "生研院的外周管线",
       },
     ],
+    image: "/relics/寰宇生研院.png",
   },
   {
     id: "毁烬焚骨的大公",
@@ -3646,6 +3835,7 @@ export const relicSeed: RelicSet[] = [
         name: "大公的绅雅礼靴",
       },
     ],
+    image: "/relics/毁烬焚骨的大公.png",
   },
   {
     id: "机心戏梦的钟表匠",
@@ -3669,6 +3859,7 @@ export const relicSeed: RelicSet[] = [
         name: "钟表匠的隐梦革履",
       },
     ],
+    image: "/relics/机心戏梦的钟表匠.png",
   },
   {
     id: "激奏雷电的乐队",
@@ -3692,6 +3883,7 @@ export const relicSeed: RelicSet[] = [
         name: "乐队的铆钉短靴",
       },
     ],
+    image: "/relics/激奏雷电的乐队.png",
   },
   {
     id: "街头出身的拳王",
@@ -3715,6 +3907,7 @@ export const relicSeed: RelicSet[] = [
         name: "拳王的弧步战靴",
       },
     ],
+    image: "/relics/街头出身的拳王.png",
   },
   {
     id: "劫火莲灯铸炼宫",
@@ -3733,6 +3926,7 @@ export const relicSeed: RelicSet[] = [
         name: "铸炼宫的焰轮天绸",
       },
     ],
+    image: "/relics/劫火莲灯铸炼宫.png",
   },
   {
     id: "净庭教宗的圣骑士",
@@ -3756,6 +3950,7 @@ export const relicSeed: RelicSet[] = [
         name: "圣骑的秩序铁靴",
       },
     ],
+    image: "/relics/净庭教宗的圣骑士.png",
   },
   {
     id: "凯歌祝捷的英豪",
@@ -3779,6 +3974,7 @@ export const relicSeed: RelicSet[] = [
         name: "英豪的赴火护胫",
       },
     ],
+    image: "/relics/凯歌祝捷的英豪.png",
   },
   {
     id: "叩问天工的名冶",
@@ -3802,6 +3998,7 @@ export const relicSeed: RelicSet[] = [
         name: "名冶的无拘重靴",
       },
     ],
+    image: "/relics/叩问天工的名冶.png",
   },
   {
     id: "烈阳惊雷的女武神",
@@ -3825,6 +4022,7 @@ export const relicSeed: RelicSet[] = [
         name: "女武神的勋礼马刺",
       },
     ],
+    image: "/relics/烈阳惊雷的女武神.png",
   },
   {
     id: "零号关卡朋克洛德",
@@ -3843,6 +4041,7 @@ export const relicSeed: RelicSet[] = [
         name: "朋克洛德的数据洪流",
       },
     ],
+    image: "/relics/零号关卡朋克洛德.png",
   },
   {
     id: "流星追迹的怪盗",
@@ -3866,6 +4065,7 @@ export const relicSeed: RelicSet[] = [
         name: "怪盗的流星快靴",
       },
     ],
+    image: "/relics/流星追迹的怪盗.png",
   },
   {
     id: "梦想之地匹诺康尼",
@@ -3884,6 +4084,7 @@ export const relicSeed: RelicSet[] = [
         name: "匹诺康尼的逐梦轨道",
       },
     ],
+    image: "/relics/梦想之地匹诺康尼.png",
   },
   {
     id: "密林卧雪的猎人",
@@ -3907,6 +4108,7 @@ export const relicSeed: RelicSet[] = [
         name: "雪猎的鹿皮软靴",
       },
     ],
+    image: "/relics/密林卧雪的猎人.png",
   },
   {
     id: "谧宁拾骨地",
@@ -3925,6 +4127,7 @@ export const relicSeed: RelicSet[] = [
         name: "哀地里亚的入溟骨链",
       },
     ],
+    image: "/relics/谧宁拾骨地.png",
   },
   {
     id: "奇想蕉乐园",
@@ -3943,6 +4146,7 @@ export const relicSeed: RelicSet[] = [
         name: "蕉乐园的模因线缆",
       },
     ],
+    image: "/relics/奇想蕉乐园.png",
   },
   {
     id: "千星荟萃之城",
@@ -3961,6 +4165,7 @@ export const relicSeed: RelicSet[] = [
         name: "千星城的雇员凭证",
       },
     ],
+    image: "/relics/千星荟萃之城.png",
   },
   {
     id: "熔岩锻铸的火匠",
@@ -3984,6 +4189,7 @@ export const relicSeed: RelicSet[] = [
         name: "火匠的合金义肢",
       },
     ],
+    image: "/relics/熔岩锻铸的火匠.png",
   },
   {
     id: "闪耀功勋的魔法少女",
@@ -4007,6 +4213,7 @@ export const relicSeed: RelicSet[] = [
         name: "魔法少女的缔约长靴",
       },
     ],
+    image: "/relics/闪耀功勋的魔法少女.png",
   },
   {
     id: "生命的翁瓦克",
@@ -4025,6 +4232,7 @@ export const relicSeed: RelicSet[] = [
         name: "翁瓦克的环岛海岸",
       },
     ],
+    image: "/relics/生命的翁瓦克.png",
   },
   {
     id: "识海迷坠的学者",
@@ -4048,6 +4256,7 @@ export const relicSeed: RelicSet[] = [
         name: "学者的绒皮雪靴",
       },
     ],
+    image: "/relics/识海迷坠的学者.png",
   },
   {
     id: "戍卫风雪的铁卫",
@@ -4071,6 +4280,7 @@ export const relicSeed: RelicSet[] = [
         name: "铁卫的白银护胫",
       },
     ],
+    image: "/relics/戍卫风雪的铁卫.png",
   },
   {
     id: "死水深潜的先驱",
@@ -4094,6 +4304,7 @@ export const relicSeed: RelicSet[] = [
         name: "先驱的泊星桩锚",
       },
     ],
+    image: "/relics/死水深潜的先驱.png",
   },
   {
     id: "太空封印站",
@@ -4112,6 +4323,7 @@ export const relicSeed: RelicSet[] = [
         name: "「黑塔」的漫历轨迹",
       },
     ],
+    image: "/relics/太空封印站.png",
   },
   {
     id: "天国@直播间",
@@ -4130,6 +4342,7 @@ export const relicSeed: RelicSet[] = [
         name: "直播间的畅聊语流",
       },
     ],
+    image: "/relics/天国@直播间.png",
   },
   {
     id: "停转的萨尔索图",
@@ -4148,6 +4361,7 @@ export const relicSeed: RelicSet[] = [
         name: "萨尔索图的晨昏界线",
       },
     ],
+    image: "/relics/停转的萨尔索图.png",
   },
   {
     id: "无主荒星茨冈尼亚",
@@ -4166,6 +4380,7 @@ export const relicSeed: RelicSet[] = [
         name: "茨冈尼亚的轮回纽结",
       },
     ],
+    image: "/relics/无主荒星茨冈尼亚.png",
   },
   {
     id: "星如我见的领航员",
@@ -4189,6 +4404,7 @@ export const relicSeed: RelicSet[] = [
         name: "领航员的永行魔靴",
       },
     ],
+    image: "/relics/星如我见的领航员.png",
   },
   {
     id: "星体差分机",
@@ -4207,6 +4423,7 @@ export const relicSeed: RelicSet[] = [
         name: "螺丝星的环星孔带",
       },
     ],
+    image: "/relics/星体差分机.png",
   },
   {
     id: "妖精织梦的乐园",
@@ -4225,6 +4442,7 @@ export const relicSeed: RelicSet[] = [
         name: "迷路迷境的祈愿笛哨",
       },
     ],
+    image: "/relics/妖精织梦的乐园.png",
   },
   {
     id: "野穗伴行的快枪手",
@@ -4248,6 +4466,7 @@ export const relicSeed: RelicSet[] = [
         name: "快枪手的铆钉马靴",
       },
     ],
+    image: "/relics/野穗伴行的快枪手.png",
   },
   {
     id: "应天涉远的卜者",
@@ -4271,6 +4490,7 @@ export const relicSeed: RelicSet[] = [
         name: "卜者的飞腾云履",
       },
     ],
+    image: "/relics/应天涉远的卜者.png",
   },
   {
     id: "永恒之地翁法罗斯",
@@ -4289,6 +4509,7 @@ export const relicSeed: RelicSet[] = [
         name: "翁法罗斯的永恒诗篇",
       },
     ],
+    image: "/relics/永恒之地翁法罗斯.png",
   },
   {
     id: "幽锁深牢的系囚",
@@ -4312,6 +4533,7 @@ export const relicSeed: RelicSet[] = [
         name: "系囚的绝足锁桎",
       },
     ],
+    image: "/relics/幽锁深牢的系囚.png",
   },
   {
     id: "渊思寂虑的巨树",
@@ -4330,6 +4552,7 @@ export const relicSeed: RelicSet[] = [
         name: "神悟树庭的联识叶路",
       },
     ],
+    image: "/relics/渊思寂虑的巨树.png",
   },
   {
     id: "云无留迹的过客",
@@ -4353,6 +4576,7 @@ export const relicSeed: RelicSet[] = [
         name: "过客的冥途游履",
       },
     ],
+    image: "/relics/云无留迹的过客.png",
   },
   {
     id: "再创天地的救世主",
@@ -4376,6 +4600,7 @@ export const relicSeed: RelicSet[] = [
         name: "救世主的拓荒长靴",
       },
     ],
+    image: "/relics/再创天地的救世主.png",
   },
   {
     id: "折断的龙骨",
@@ -4394,6 +4619,7 @@ export const relicSeed: RelicSet[] = [
         name: "伊须磨洲的坼裂缆索",
       },
     ],
+    image: "/relics/折断的龙骨.png",
   },
   {
     id: "重循苦旅的司铎",
@@ -4417,6 +4643,7 @@ export const relicSeed: RelicSet[] = [
         name: "司铎的苦旅短靴",
       },
     ],
+    image: "/relics/重循苦旅的司铎.png",
   },
   {
     id: "筑城者的贝洛伯格",
@@ -4435,6 +4662,7 @@ export const relicSeed: RelicSet[] = [
         name: "贝洛伯格的铁卫防线",
       },
     ],
+    image: "/relics/筑城者的贝洛伯格.png",
   },
   {
     id: "坠星启航地",
@@ -4453,6 +4681,7 @@ export const relicSeed: RelicSet[] = [
         name: "启航地的梦想银轨",
       },
     ],
+    image: "/relics/坠星启航地.png",
   },
   {
     id: "自匿星芒的隐士",
@@ -4476,6 +4705,7 @@ export const relicSeed: RelicSet[] = [
         name: "隐士的麂皮软鞋",
       },
     ],
+    image: "/relics/自匿星芒的隐士.png",
   },
 ];
 
