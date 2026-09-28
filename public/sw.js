@@ -1,7 +1,9 @@
 /* 星穹铁道资料站 Service Worker。
    - 页面导航请求：网络优先，失败时回退缓存，最后回退到预缓存的应用壳，
      保证离线状态下（含首次离线访问未到过的路由）SPA 仍可打开；
-   - 其余同源 GET：stale-while-revalidate；
+   - /assets/ 构建产物（文件名带内容 hash）与少量根文件：stale-while-revalidate；
+   - /avatars|cones|relics/ 本地化游戏图片：缓存优先 + FIFO 数量上限
+     （IMAGE_LIMIT，独立缓存名），离线可用且存储占用有界；
    - 跨域请求（外链图片等）不缓存。
    首次离线访问前需至少成功联网加载过一次。
    更新流程：新 SW 安装后进入 waiting 等待，不自动接管 —— 避免旧页面仍在
@@ -11,8 +13,16 @@
    __BUILD_ID__ 占位符在构建时替换为本次构建时间戳（见 vite.config.ts），
    使每次发布都产生新的缓存名，旧缓存随 activate 阶段清理。 */
 const CACHE_NAME = 'hsr-wiki-__BUILD_ID__';
+// 图片走独立缓存：FIFO 淘汰只统计图片条目，不干扰应用壳与构建产物缓存
+const IMAGE_CACHE_NAME = `${CACHE_NAME}-img`;
 // 应用壳取 SW 所在目录：随部署 base 自适应（根路径为 /，子路径为 /<repo>/）
 const APP_SHELL = new URL('./', self.registration.scope).pathname;
+// 本地化游戏图片目录（随 base 自适应）；上限按当前规模（约 330 张）留出
+// 数年余量，防止 Cache Storage 随版本无界增长
+const IMAGE_DIRS = ['avatars', 'cones', 'relics'].map(
+  (dir) => `${APP_SHELL}${dir}/`,
+);
+const IMAGE_LIMIT = 600;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -35,7 +45,9 @@ self.addEventListener('activate', (event) => {
     (async () => {
       const keys = await caches.keys();
       await Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)),
+        keys
+          .filter((key) => key !== CACHE_NAME && key !== IMAGE_CACHE_NAME)
+          .map((key) => caches.delete(key)),
       );
       await self.clients.claim();
     })(),
@@ -76,7 +88,31 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 静态资源：stale-while-revalidate
+  // 本地化游戏图片：缓存优先 + FIFO 数量上限。缓存命中即离线可用；
+  // 未命中回源后写入并淘汰超限的最旧条目（Cache API keys() 按创建序返回，
+  // FIFO 近似 LRU，足够约束总量）
+  if (IMAGE_DIRS.some((dir) => url.pathname.startsWith(dir))) {
+    event.respondWith(
+      (async () => {
+        const cache = await caches.open(IMAGE_CACHE_NAME);
+        const cached = await cache.match(request);
+        if (cached) return cached;
+        const response = await fetch(request);
+        if (response && response.ok) {
+          await cache.put(request, response.clone());
+          const keys = await cache.keys();
+          for (const key of keys.slice(0, keys.length - IMAGE_LIMIT)) {
+            await cache.delete(key);
+          }
+        }
+        return response;
+      })(),
+    );
+    return;
+  }
+
+  // 其余静态资源（/assets/ 构建产物与 manifest、图标等少量根文件，
+  // 总量小且 /assets/ 文件名带内容 hash）：stale-while-revalidate
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
