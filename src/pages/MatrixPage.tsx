@@ -1,5 +1,6 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronLeftIcon, ChevronRightIcon } from '../components/icons';
 import { EmptyState, LoadingState } from '../components/ui/EmptyState';
 import {
   FacetChip,
@@ -16,6 +17,7 @@ import {
   useCharacters,
   useFacetFilter,
 } from '../hooks/useWikiData';
+import { useEntityImage } from '../hooks/useEntityImage';
 import { ELEMENT_META, PATH_META, RARITY_META, buildVersionGroups } from '../lib/meta';
 import { characterLink } from '../lib/links';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
@@ -59,21 +61,94 @@ function useMatrixCells(characters: Character[]) {
   }, [characters]);
 }
 
-function MatrixChip({ character }: { character: Character }) {
-  const color = RARITY_META[character.rarity].color;
+/** 矩阵块统一比例（与头像素材一致的 160/188），同格多角色时用左右按钮切换 */
+function MatrixCell({ characters }: { characters: Character[] }) {
+  const count = characters.length;
+  const [rawIndex, setRawIndex] = useState(0);
+  const index = Math.min(rawIndex, count - 1);
+  const character = characters[index];
+  const element = ELEMENT_META[character.element];
+  const rarityColor = RARITY_META[character.rarity].color;
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const avatarSrc = useEntityImage(character.avatar);
+  const showAvatar = avatarSrc && avatarSrc !== failedSrc;
+
+  const step = (delta: number) =>
+    setRawIndex((index + delta + count) % count);
+
   return (
-    <Link
-      to={characterLink(character.id)}
-      title={`${character.name} · v${character.releaseVersion} · ${character.releaseDate}`}
-      className="block truncate border px-1.5 py-1 text-xs leading-4 transition hover:brightness-125"
-      style={{
-        color,
-        borderColor: `${color}44`,
-        backgroundColor: `${color}12`,
-      }}
-    >
-      {character.name}
-    </Link>
+    <div className="group relative bg-space-900">
+      <Link
+        to={characterLink(character.id)}
+        title={`${character.name} · v${character.releaseVersion} · ${character.releaseDate}`}
+        className="block"
+      >
+        {showAvatar ? (
+          <img
+            src={avatarSrc}
+            alt={character.name}
+            loading="lazy"
+            decoding="async"
+            onError={() => setFailedSrc(avatarSrc ?? null)}
+            className="aspect-[160/188] w-full object-cover"
+          />
+        ) : (
+          <span
+            className="flex aspect-[160/188] w-full items-center justify-center"
+            style={{
+              background: `linear-gradient(135deg, ${element.color}2b, transparent 65%)`,
+            }}
+          >
+            <span
+              className="font-display text-2xl font-bold"
+              style={{ color: `${element.color}d0` }}
+            >
+              {character.name.slice(0, 1)}
+            </span>
+          </span>
+        )}
+        {/* 名称条：底色渐变保证可读性，文字颜色区分稀有度 */}
+        <span
+          className="absolute inset-x-0 bottom-0 truncate bg-gradient-to-t from-space-900/95 via-space-900/60 to-transparent px-1 pb-0.5 pt-3 text-[11px] font-medium leading-4"
+          style={{ color: rarityColor }}
+        >
+          {character.name}
+        </span>
+      </Link>
+
+      {count > 1 && (
+        <>
+          <button
+            type="button"
+            aria-label="上一位角色"
+            onClick={() => step(-1)}
+            className="absolute left-0.5 top-1/2 z-10 flex size-6 -translate-y-1/2 items-center justify-center border border-space-600/80 bg-space-900/85 text-slate-300 transition hover:border-gold-500/60 hover:text-gold-300"
+          >
+            <ChevronLeftIcon className="size-3.5" />
+          </button>
+          <button
+            type="button"
+            aria-label="下一位角色"
+            onClick={() => step(1)}
+            className="absolute right-0.5 top-1/2 z-10 flex size-6 -translate-y-1/2 items-center justify-center border border-space-600/80 bg-space-900/85 text-slate-300 transition hover:border-gold-500/60 hover:text-gold-300"
+          >
+            <ChevronRightIcon className="size-3.5" />
+          </button>
+          <span className="absolute right-0.5 top-0.5 bg-space-900/85 px-1 font-display text-[10px] leading-4 text-slate-300">
+            {index + 1}/{count}
+          </span>
+        </>
+      )}
+    </div>
+  );
+}
+
+/** 空格子：与数据格子保持同一比例，矩阵整体尺寸一致 */
+function EmptyCell() {
+  return (
+    <div className="flex aspect-[160/188] items-center justify-center bg-space-900">
+      <span className="text-slate-700">—</span>
+    </div>
   );
 }
 
@@ -81,14 +156,13 @@ function Legend() {
   return (
     <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-500">
       <span className="flex items-center gap-1.5">
-        <i aria-hidden className="size-2.5 rotate-45 bg-star-5" />
-        5★ 角色
+        <span className="font-semibold text-star-5">5★</span>/
+        <span className="font-semibold text-star-4">4★</span>
+        名称颜色代表稀有度
       </span>
-      <span className="flex items-center gap-1.5">
-        <i aria-hidden className="size-2.5 rotate-45 bg-star-4" />
-        4★ 角色
+      <span>
+        横轴为命途、纵轴为战斗属性，格内默认展示最新实装的角色，同格多角色时可用左右按钮切换
       </span>
-      <span>横轴为命途、纵轴为战斗属性，单元格内按实装日期从新到旧排列</span>
     </div>
   );
 }
@@ -137,9 +211,8 @@ export function MatrixPage() {
   return (
     <div>
       <PageHeader
-        en="Path × Type Matrix"
         title="命途 × 战斗属性矩阵"
-        description="每个单元格展示对应「战斗属性 × 命途」组合下的角色，点击角色名可查看详情。支持按稀有度、性别与实装版本筛选。"
+        description="每个单元格展示对应「战斗属性 × 命途」组合下的角色，点击头像可查看详情；同格多角色时可用左右按钮切换。支持按稀有度、性别与实装版本筛选。"
       />
 
       {hasData ? (
@@ -192,7 +265,7 @@ export function MatrixPage() {
             />
           </Panel>
 
-          {/* 桌面端：完整二维矩阵 */}
+          {/* 桌面端：完整二维矩阵，所有格子统一比例 */}
           <div className="hidden overflow-x-auto pb-2 md:block">
             <div className="min-w-[1080px]">
               <div
@@ -215,9 +288,6 @@ export function MatrixPage() {
                       style={{ color: path.color }}
                     >
                       <p className="text-sm font-semibold">{path.label}</p>
-                      <p className="mt-0.5 font-display text-[10px] tracking-widest text-slate-500 uppercase">
-                        {path.en}
-                      </p>
                       <p className="mt-0.5 font-display text-[10px] text-slate-500">
                         {pathCounts.get(pathId) ?? 0}
                       </p>
@@ -235,9 +305,6 @@ export function MatrixPage() {
                         style={{ color: element.color }}
                       >
                         <p className="text-sm font-semibold">{element.label}</p>
-                        <p className="mt-0.5 font-display text-[10px] tracking-widest text-slate-500 uppercase">
-                          {element.en}
-                        </p>
                         <p className="mt-0.5 font-display text-[10px] text-slate-500">
                           {elementCounts.get(elementId) ?? 0}
                         </p>
@@ -246,24 +313,13 @@ export function MatrixPage() {
                         const bucket = cells.get(
                           `${elementId}${CELL_KEY_SEPARATOR}${pathId}`,
                         );
-                        return (
-                          <div
+                        return bucket && bucket.length > 0 ? (
+                          <MatrixCell
                             key={pathId}
-                            className="min-h-[52px] bg-space-900 p-1.5"
-                          >
-                            {bucket ? (
-                              <div className="space-y-1">
-                                {bucket.map((character) => (
-                                  <MatrixChip
-                                    key={character.id}
-                                    character={character}
-                                  />
-                                ))}
-                              </div>
-                            ) : (
-                              <span className="text-slate-700">—</span>
-                            )}
-                          </div>
+                            characters={bucket}
+                          />
+                        ) : (
+                          <EmptyCell key={pathId} />
                         );
                       })}
                     </Fragment>
@@ -273,7 +329,7 @@ export function MatrixPage() {
             </div>
           </div>
 
-          {/* 移动端：按属性分组的堆叠视图 */}
+          {/* 移动端：按属性分组的堆叠视图，格子与桌面端同款 */}
           <div className="space-y-4 md:hidden">
             {ELEMENT_IDS.map((elementId) => {
               const element = ELEMENT_META[elementId];
@@ -293,9 +349,6 @@ export function MatrixPage() {
                     style={{ color: element.color }}
                   >
                     {element.label}
-                    <span className="ml-2 font-display text-[10px] tracking-widest text-slate-500 uppercase">
-                      {element.en}
-                    </span>
                     <span className="ml-2 font-display text-[10px] text-slate-500">
                       {elementCounts.get(elementId) ?? 0}
                     </span>
@@ -309,13 +362,10 @@ export function MatrixPage() {
                         >
                           {PATH_META[pathId].label}
                         </dt>
-                        <dd className="flex min-w-0 flex-1 flex-wrap gap-1.5">
-                          {bucket.map((character) => (
-                            <MatrixChip
-                              key={character.id}
-                              character={character}
-                            />
-                          ))}
+                        <dd className="min-w-0 flex-1">
+                          <div className="w-24">
+                            <MatrixCell characters={bucket} />
+                          </div>
                         </dd>
                       </div>
                     ))}

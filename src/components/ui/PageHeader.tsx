@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
 
 interface PageHeaderProps {
-  en: string;
+  /** 英文副标题；不传则只显示中文标题 */
+  en?: string;
   title: string;
   description?: string;
   children?: ReactNode;
@@ -10,9 +11,11 @@ interface PageHeaderProps {
 export function PageHeader({ en, title, description, children }: PageHeaderProps) {
   return (
     <header className="relative mb-8 border-b border-space-600/40 pb-6">
-      <p className="font-display text-xs tracking-[0.4em] text-gold-500/90 uppercase">
-        {en}
-      </p>
+      {en && (
+        <p className="font-display text-xs tracking-[0.4em] text-gold-500/90 uppercase">
+          {en}
+        </p>
+      )}
       <h1 className="mt-2 font-display text-3xl font-bold text-slate-50 md:text-4xl">
         {title}
       </h1>
