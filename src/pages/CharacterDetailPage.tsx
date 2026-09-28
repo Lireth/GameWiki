@@ -93,7 +93,7 @@ export function CharacterDetailPage() {
         {/* 侧栏：立绘占位 + 基本信息 */}
         <Panel className="self-start overflow-hidden" ticks>
           <div
-            className="relative flex h-44 items-center justify-center overflow-hidden"
+            className="relative mx-auto flex aspect-[160/188] w-full max-w-[320px] items-center justify-center overflow-hidden"
             style={{
               background: `linear-gradient(150deg, ${element.color}30, transparent 70%)`,
             }}

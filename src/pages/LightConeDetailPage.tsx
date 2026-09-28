@@ -85,7 +85,7 @@ export function LightConeDetailPage() {
       <div className="mt-5 grid gap-6 lg:grid-cols-[320px_1fr]">
         <Panel className="self-start overflow-hidden" ticks>
           <div
-            className="relative flex h-44 items-center justify-center overflow-hidden"
+            className="relative mx-auto flex aspect-square w-full max-w-[320px] items-center justify-center overflow-hidden"
             style={{
               background: `linear-gradient(150deg, ${path.color}26, transparent 70%)`,
             }}
