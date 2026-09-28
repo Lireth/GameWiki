@@ -207,11 +207,29 @@ async function main() {
       a.name.localeCompare(b.name, 'zh'),
   );
 
+  // 数量守卫：SMW 半量返回时宁失败也不覆盖残缺数据上线（结构校验无法发现）。
+  // 如确属正常删减，删除 characters_seed.json 后重跑可跳过守卫。
+  if (previous.length > 0 && characters.length < previous.length * 0.8) {
+    console.error(
+      `数量守卫触发：characters_seed.json 新值 ${characters.length} 条不足旧值 ${previous.length} 条的 80%，疑似上游数据异常（分类被清空 / 改名或抓取被拦截）。`,
+    );
+    process.exit(1);
+  }
+
   fs.writeFileSync(
     __dirname + '/characters_seed.json',
     JSON.stringify(characters, null, 2),
   );
   console.log('已写出 characters_seed.json，共', characters.length, '条');
+  // 消失 id 告警：wiki 改标题会让同一条目产生新旧两个 id（老用户库中并存、
+  // 收藏与外链失效），需人工核对
+  const nextIds = new Set(characters.map((c) => c.id));
+  const removedIds = previous.filter((c) => !nextIds.has(c.id)).map((c) => c.id);
+  if (removedIds.length > 0) {
+    console.log(
+      `[告警] ${removedIds.length} 个角色 id 从种子中消失（若为改标题将新旧 id 并存，需人工核对）：${removedIds.join('、')}`,
+    );
+  }
   const noAvatar = characters.filter(c => !c.avatar).map(c => c.name);
   if (noAvatar.length) console.log('无头像:', noAvatar.join('、'));
 }

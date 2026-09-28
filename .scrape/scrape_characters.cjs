@@ -38,6 +38,12 @@ async function main() {
         const json = JSON.parse(text);
         if (json.error) throw new Error(`SMW 错误: ${json.error.info}`);
         const count = Object.keys(json.query.results).length;
+        // limit=500 无 continuation：达到上限说明仍有角色被静默截断
+        if (count >= 500) {
+          throw new Error(
+            `SMW 结果 ${count} 条达 limit=500 上限，可能被静默截断，请分页抓取或提高 limit`,
+          );
+        }
         fs.writeFileSync(OUT, JSON.stringify(json, null, 2));
         console.log(`characters_smw.json 已更新：${count} 个角色条目`);
         return;
