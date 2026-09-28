@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { RelicSet } from '../../db/types';
 import { relicLink } from '../../lib/links';
@@ -10,6 +11,7 @@ import { useEntityImage } from '../../hooks/useEntityImage';
 
 export function RelicCard({ relic }: { relic: RelicSet }) {
   const category = RELIC_CATEGORY_META[relic.category];
+  const [failedImage, setFailedImage] = useState(false);
   const imageSrc = useEntityImage(relic.image);
 
   return (
@@ -26,12 +28,13 @@ export function RelicCard({ relic }: { relic: RelicSet }) {
           background: `linear-gradient(135deg, ${category.color}22, transparent 65%)`,
         }}
       >
-        {imageSrc ? (
+        {imageSrc && !failedImage ? (
           <img
             src={imageSrc}
             alt={relic.name}
             loading="lazy"
             decoding="async"
+            onError={() => setFailedImage(true)}
             className="h-full w-full object-cover"
           />
         ) : (

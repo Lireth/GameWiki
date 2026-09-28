@@ -2,19 +2,42 @@ import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppLayout } from './components/layout/AppLayout';
 import { ScrollToTop } from './components/ScrollToTop';
-import { CharacterDetailPage } from './pages/CharacterDetailPage';
-import { CharactersPage } from './pages/CharactersPage';
 import { HomePage } from './pages/HomePage';
-import { LightConeDetailPage } from './pages/LightConeDetailPage';
-import { LightConesPage } from './pages/LightConesPage';
-import { MatrixPage } from './pages/MatrixPage';
-import { NewsPage } from './pages/NewsPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { RelicDetailPage } from './pages/RelicDetailPage';
-import { RelicsPage } from './pages/RelicsPage';
 
-// 低频页面按路由分割，减小主包体积；Suspense 边界在 AppLayout 的内容区，
+// 首页保持首屏直达，404 页极小保持急加载；其余页面（含高频图鉴页）按路由分割，
+// 显著减小主包体积。Suspense 边界在 AppLayout 的内容区，
 // 避免加载 chunk 时导航壳一起被占位替换。
+const CharactersPage = lazy(() =>
+  import('./pages/CharactersPage').then((m) => ({ default: m.CharactersPage })),
+);
+const CharacterDetailPage = lazy(() =>
+  import('./pages/CharacterDetailPage').then((m) => ({
+    default: m.CharacterDetailPage,
+  })),
+);
+const LightConesPage = lazy(() =>
+  import('./pages/LightConesPage').then((m) => ({ default: m.LightConesPage })),
+);
+const LightConeDetailPage = lazy(() =>
+  import('./pages/LightConeDetailPage').then((m) => ({
+    default: m.LightConeDetailPage,
+  })),
+);
+const RelicsPage = lazy(() =>
+  import('./pages/RelicsPage').then((m) => ({ default: m.RelicsPage })),
+);
+const RelicDetailPage = lazy(() =>
+  import('./pages/RelicDetailPage').then((m) => ({
+    default: m.RelicDetailPage,
+  })),
+);
+const MatrixPage = lazy(() =>
+  import('./pages/MatrixPage').then((m) => ({ default: m.MatrixPage })),
+);
+const NewsPage = lazy(() =>
+  import('./pages/NewsPage').then((m) => ({ default: m.NewsPage })),
+);
 const AdminPage = lazy(() =>
   import('./pages/AdminPage').then((m) => ({ default: m.AdminPage })),
 );
@@ -46,10 +69,10 @@ export default function App() {
           <Route index element={<HomePage />} />
           <Route path="characters" element={<CharactersPage />} />
           <Route path="characters/:id" element={<CharacterDetailPage />} />
-            <Route path="light-cones" element={<LightConesPage />} />
-            <Route path="light-cones/:id" element={<LightConeDetailPage />} />
-            <Route path="relics" element={<RelicsPage />} />
-            <Route path="relics/:id" element={<RelicDetailPage />} />
+          <Route path="light-cones" element={<LightConesPage />} />
+          <Route path="light-cones/:id" element={<LightConeDetailPage />} />
+          <Route path="relics" element={<RelicsPage />} />
+          <Route path="relics/:id" element={<RelicDetailPage />} />
           <Route path="matrix" element={<MatrixPage />} />
           <Route path="news" element={<NewsPage />} />
           <Route path="versions" element={<VersionIndexPage />} />

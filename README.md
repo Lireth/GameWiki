@@ -47,8 +47,8 @@ npm run lint       # ESLint 静态检查
 
 **页面代码不包含任何游戏数据**，全部数据存放在浏览器 IndexedDB 中，并通过种子文件录入：
 
-1. 打开 [`src/data/seed.ts`](src/data/seed.ts)，往 `characterSeed` / `lightConeSeed` / `relicSeed` / `newsEventSeed` 数组中添加条目，并把文件末尾的 `SEED_VERSION` 加 1；
-2. 启动应用后，`src/db/bootstrap.ts` 会自动同步：对应表为空时全量写入种子数据；表非空但种子版本落后时按 `id` 增量更新（不会删除表中额外条目）；
+1. 打开 [`src/data/seed.ts`](src/data/seed.ts)，往 `characterSeed` / `lightConeSeed` / `relicSeed` / `newsEventSeed` 数组中添加条目 —— 种子内容变化会被启动时的内容指纹自动检测，无需手动递增版本号；
+2. 启动应用后，`src/db/bootstrap.ts` 会自动同步：对应表为空时全量写入种子数据；表非空但种子内容变化时按 `id` 增量更新（不会删除表中额外条目）；在「数据管理」中删除过的条目有删除墓碑保护，不会被种子更新复活；
 3. 页面通过 `dexie-react-hooks` 的 `useLiveQuery` 实时读取，无需刷新即可看到新数据。
 
 手工录入的数据与收藏可通过页脚的「导出数据 / 导入数据」按钮备份与恢复（JSON 文件含 schema 版本号，数据按 `id` 合并导入，收藏取并集）。收藏保存在 IndexedDB（meta 表）中，旧版本存于 localStorage 的收藏会在启动时自动迁移；业务表不再引用的孤儿图片也会在启动时自动回收。
@@ -74,7 +74,7 @@ npm run lint       # ESLint 静态检查
 
 ```
 src/
-├── data/seed.ts        # 种子数据（与页面代码分离，当前为空）
+├── data/seed.ts        # 种子数据（与页面代码分离，按需动态加载不进主包）
 ├── db/                 # Dexie 数据库、类型定义、初始化逻辑
 ├── hooks/              # useLiveQuery 数据查询 hooks
 ├── lib/                # 分类元数据（命途/属性/稀有度/事件类型）、日期工具

@@ -1,5 +1,4 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { Link } from 'react-router-dom';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -13,6 +12,8 @@ interface ErrorBoundaryState {
  * 渲染错误兜底：任一页面抛错时降级为错误提示（导航壳保持可用），
  * 而不是整站白屏。切路由时通过 key 重建实例，自动恢复下一页的渲染。
  * 常见来源：懒加载 chunk 拉取失败、脏数据触发的渲染异常。
+ * 「返回首页」用原生 <a>（整页刷新复位状态）：本组件同时挂载在
+ * AppLayout 内容区（Router 内）与 main.tsx 根节点（Router 外）。
  */
 export class ErrorBoundary extends Component<
   ErrorBoundaryProps,
@@ -51,12 +52,12 @@ export class ErrorBoundary extends Component<
           >
             刷新页面
           </button>
-          <Link
-            to="/"
+          <a
+            href="/"
             className="chamfer-xs border border-space-600/60 px-4 py-2 text-sm text-slate-300 transition hover:border-gold-500/50 hover:text-gold-300"
           >
             返回首页
-          </Link>
+          </a>
         </div>
       </div>
     );

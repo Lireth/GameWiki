@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import 'fake-indexeddb/auto';
 
-// 种子数据用固定假数据替代（真实 seed 为空数组），以覆盖 bootstrap 的写入与重灌分支
+// 种子数据用固定假数据替代，以覆盖 bootstrap 的写入与重灌分支
+// （与 src/data/seed.ts 同构，含真实内容时同样适用）
 vi.mock('../data/seed', () => ({
   characterSeed: [
     {
@@ -31,10 +32,9 @@ vi.mock('../data/seed', () => ({
       relatedCharacterId: 'seele',
     },
   ],
-  SEED_VERSION: 2,
 }));
 
-import { bootstrapDatabase } from './bootstrap';
+import { bootstrapDatabase, addSeedTombstones, removeSeedTombstones, SEED_HASH_KEY } from './bootstrap';
 import { db } from './db';
 import type { Character } from './types';
 
@@ -57,18 +57,26 @@ beforeEach(async () => {
   await db.delete();
 });
 
+/** 首次 bootstrap 后把内容指纹标记为过期，下次启动触发种子增量同步 */
+async function markSeedStale() {
+  const row = await db.meta.get(SEED_HASH_KEY);
+  await db.meta.put({ key: SEED_HASH_KEY, value: `stale-${row?.value ?? ''}` });
+}
+
 describe('bootstrapDatabase（fake-indexeddb 集成）', () => {
-  it('空表时全量写入种子并记录种子版本', async () => {
+  it('空表时全量写入种子并记录内容指纹', async () => {
     await bootstrapDatabase();
 
     expect(await db.characters.count()).toBe(1);
     expect(await db.lightCones.count()).toBe(1);
     expect(await db.newsEvents.count()).toBe(1);
-    const meta = await db.meta.get('seedVersion');
-    expect(meta?.value).toBe('2');
+    const hash = await db.meta.get(SEED_HASH_KEY);
+    expect(hash?.value).toBeTruthy();
+    // 旧版手动版本号键已被内容指纹取代
+    expect(await db.meta.get('seedVersion')).toBeUndefined();
   });
 
-  it('种子版本未变时不重复写入，用户修改保留', async () => {
+  it('种子内容未变时不重复写入，用户修改保留', async () => {
     await bootstrapDatabase();
     await db.characters.put({ ...SEELE, name: '改过的希儿' });
 
@@ -79,10 +87,11 @@ describe('bootstrapDatabase（fake-indexeddb 集成）', () => {
     expect(await db.characters.count()).toBe(1);
   });
 
-  it('种子版本落后时按 id 增量更新：种子条目恢复、额外条目保留', async () => {
+  it('种子内容变化时按 id 增量更新：种子条目恢复、额外条目保留', async () => {
     await bootstrapDatabase();
-    // 模拟旧版本数据：手动降版本号 + 篡改种子条目 + 追加一条不在种子中的数据
-    await db.meta.put({ key: 'seedVersion', value: '1' });
+    const hash = (await db.meta.get(SEED_HASH_KEY))?.value;
+    // 模拟旧版本数据：指纹标记为过期 + 篡改种子条目 + 追加一条不在种子中的数据
+    await markSeedStale();
     await db.characters.put({ ...SEELE, name: '旧数据' });
     await db.characters.put({ ...SEELE, id: 'extra', name: '额外角色' });
 
@@ -93,8 +102,8 @@ describe('bootstrapDatabase（fake-indexeddb 集成）', () => {
     const extra = await db.characters.get('extra');
     expect(extra?.name).toBe('额外角色'); // 不在种子中的条目不受影响
     expect(await db.characters.count()).toBe(2);
-    const meta = await db.meta.get('seedVersion');
-    expect(meta?.value).toBe('2');
+    // 同步完成后指纹回写为当前内容哈希
+    expect((await db.meta.get(SEED_HASH_KEY))?.value).toBe(hash);
   });
 
   it('重复初始化幂等，不产生重复数据', async () => {
@@ -105,6 +114,56 @@ describe('bootstrapDatabase（fake-indexeddb 集成）', () => {
     expect(await db.characters.count()).toBe(1);
     expect(await db.lightCones.count()).toBe(1);
     expect(await db.newsEvents.count()).toBe(1);
+  });
+});
+
+describe('种子删除墓碑', () => {
+  it('被删除的种子条目在种子更新时不会被复活', async () => {
+    await bootstrapDatabase();
+    // 模拟管理页删除：删记录 + 记墓碑（AdminPage.remove 在同一事务内完成这两步）
+    await db.characters.delete('seele');
+    await addSeedTombstones(['characters:seele']);
+    await markSeedStale();
+
+    await bootstrapDatabase();
+
+    expect(await db.characters.get('seele')).toBeUndefined();
+    // 无墓碑的其它表照常增量同步
+    expect((await db.lightCones.get('lc-cruel'))?.name).toBe('残酷的夜');
+  });
+
+  it('墓碑条目重新保存（同 id 录入 / 备份导入）后恢复种子同步资格', async () => {
+    await bootstrapDatabase();
+    await db.characters.delete('seele');
+    await addSeedTombstones(['characters:seele']);
+    // 模拟重新录入：removeSeedTombstones 由 AdminPage.save / Footer.importData 调用
+    await removeSeedTombstones(['characters:seele']);
+    await markSeedStale();
+
+    await bootstrapDatabase();
+
+    expect((await db.characters.get('seele'))?.name).toBe('希儿');
+  });
+
+  it('种子已不再包含的条目，其墓碑随种子更新被清理', async () => {
+    await bootstrapDatabase();
+    await addSeedTombstones(['characters:ghost-id']);
+    await markSeedStale();
+
+    await bootstrapDatabase();
+
+    const row = await db.meta.get('seedTombstones');
+    expect(JSON.parse(row?.value ?? '[]')).toEqual([]);
+  });
+
+  it('重复墓碑写入幂等，不产生冗余 meta 更新', async () => {
+    await db.open();
+    await addSeedTombstones(['characters:seele']);
+    const first = await db.meta.get('seedTombstones');
+    await addSeedTombstones(['characters:seele']);
+    const second = await db.meta.get('seedTombstones');
+
+    expect(first).toEqual(second);
   });
 });
 

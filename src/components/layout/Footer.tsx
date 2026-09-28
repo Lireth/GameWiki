@@ -7,6 +7,7 @@ import {
   isRelicRecord,
 } from '../../lib/recordValidation';
 import { getFavorites, mergeFavorites } from '../../lib/favorites';
+import { removeSeedTombstones } from '../../db/bootstrap';
 import { blobToDataURL, parseImageRef } from '../../lib/imageRef';
 import { alertDialog, confirmDialog } from '../../lib/dialog';
 
@@ -134,12 +135,20 @@ async function importData(file: File) {
 
     await db.transaction(
       'rw',
-      [db.characters, db.lightCones, db.newsEvents, db.relics],
+      [db.characters, db.lightCones, db.newsEvents, db.relics, db.meta],
       async () => {
         if (characters.length) await db.characters.bulkPut(characters);
         if (lightCones.length) await db.lightCones.bulkPut(lightCones);
         if (newsEvents.length) await db.newsEvents.bulkPut(newsEvents);
         if (relics.length) await db.relics.bulkPut(relics);
+        // 导入即视为用户主动恢复这些条目：清除对应删除墓碑，
+        // 恢复其对种子增量更新的正常参与
+        await removeSeedTombstones([
+          ...characters.map((c) => `characters:${c.id}`),
+          ...lightCones.map((lc) => `lightCones:${lc.id}`),
+          ...relics.map((r) => `relics:${r.id}`),
+          ...newsEvents.map((e) => `newsEvents:${e.id}`),
+        ]);
       },
     );
     // 收藏与现有收藏集合并（并集），不覆盖丢失

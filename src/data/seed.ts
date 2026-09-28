@@ -1567,7 +1567,7 @@ export const relicSeed: RelicSet[] = [];
 export const newsEventSeed: NewsEvent[] = [];
 
 /**
- * 种子数据版本：修改上方任一种子数组的内容后请 +1，
- * 应用启动时会检测到版本落后并按 id 增量更新已录入的数据（不会删除额外条目）。
+ * 种子内容变化由启动时的内容指纹自动检测（见 db/bootstrap.ts 的 hashSeeds），
+ * 修改上方任一种子数组后无需手动递增版本号；在「数据管理」中删除过的条目
+ * 有删除墓碑保护，不会被种子更新复活。
  */
-export const SEED_VERSION = 2;

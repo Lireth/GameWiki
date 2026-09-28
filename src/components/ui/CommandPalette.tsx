@@ -8,6 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import type { Character, LightCone, RelicSet } from '../../db/types';
 import {
+  useAllVersions,
   useCharacters,
   useLightCones,
   useRelics,
@@ -22,7 +23,6 @@ import {
   ELEMENT_META,
   PATH_META,
   RELIC_CATEGORY_META,
-  VERSION_GROUPS,
 } from '../../lib/meta';
 import { CloseIcon, SearchIcon } from '../icons';
 
@@ -72,17 +72,18 @@ function relicItems(relics: RelicSet[]): CommandItem[] {
   }));
 }
 
-/** 版本条目来自分类元数据（常显），可直达版本详情页 */
-function versionItems(): CommandItem[] {
-  return VERSION_GROUPS.flatMap((group) =>
-    group.values.map((version) => ({
-      key: `v:${version}`,
-      label: `版本 ${version}`,
-      hint: '版本详情',
-      to: versionLink(version),
-      searchText: `版本 ${version} v${version} ${group.major}`.toLowerCase(),
-    })),
-  );
+/**
+ * 版本条目来自数据中实际出现的版本（与版本索引 / 详情页同源，见 useAllVersions），
+ * 数据新增版本后无需改动元数据即可直达。
+ */
+function versionItems(versions: readonly string[]): CommandItem[] {
+  return versions.map((version) => ({
+    key: `v:${version}`,
+    label: `版本 ${version}`,
+    hint: '版本详情',
+    to: versionLink(version),
+    searchText: `版本 ${version} v${version} ${version.split('.')[0]}`.toLowerCase(),
+  }));
 }
 
 /**
@@ -95,6 +96,7 @@ export function CommandPalette() {
   const characters = useCharacters();
   const lightCones = useLightCones();
   const relics = useRelics();
+  const allVersions = useAllVersions();
 
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -106,9 +108,9 @@ export function CommandPalette() {
       ...characterItems(characters),
       ...lightConeItems(lightCones),
       ...relicItems(relics),
-      ...versionItems(),
+      ...versionItems(allVersions),
     ],
-    [characters, lightCones, relics],
+    [characters, lightCones, relics, allVersions],
   );
 
   const results = useMemo(() => {

@@ -12,6 +12,10 @@ import {
   useRelics,
 } from '../hooks/useWikiData';
 import { db } from '../db/db';
+import {
+  addSeedTombstones,
+  removeSeedTombstones,
+} from '../db/bootstrap';
 import { makeImageKey, compressImageFile } from '../lib/imageRef';
 import {
   checkWikiData,
@@ -72,7 +76,9 @@ export function AdminPage() {
   useEffect(() => {
     if (!isDirty) return;
     const handler = (event: BeforeUnloadEvent) => {
+      // preventDefault 与 returnValue 双写：部分浏览器（Safari）仅认 returnValue
       event.preventDefault();
+      event.returnValue = '';
     };
     window.addEventListener('beforeunload', handler);
     return () => window.removeEventListener('beforeunload', handler);
@@ -199,10 +205,16 @@ export function AdminPage() {
           if (!confirmed) return;
         }
       }
-      if (entryType === 'character') await db.characters.put(entry as Character);
-      else if (entryType === 'lightCone') await db.lightCones.put(entry as LightCone);
-      else if (entryType === 'relic') await db.relics.put(entry as RelicSet);
-      else await db.newsEvents.put(entry as NewsEvent);
+      const table = tableFor(entryType);
+      // 同一事务内写入条目并清除其删除墓碑：重新录入同 id 条目即视为恢复，
+      // 恢复该条目的种子增量更新资格
+      await db.transaction('rw', [table, db.meta], async () => {
+        if (entryType === 'character') await db.characters.put(entry as Character);
+        else if (entryType === 'lightCone') await db.lightCones.put(entry as LightCone);
+        else if (entryType === 'relic') await db.relics.put(entry as RelicSet);
+        else await db.newsEvents.put(entry as NewsEvent);
+        await removeSeedTombstones([`${table.name}:${entry.id}`]);
+      });
       cancelEdit();
       showNotice(`已保存「${entryLabel(entry)}」`);
     } catch (error) {
@@ -228,9 +240,11 @@ export function AdminPage() {
     try {
       await db.transaction(
         'rw',
-        [db.characters, db.lightCones, db.newsEvents, db.relics, db.images],
+        [db.characters, db.lightCones, db.newsEvents, db.relics, db.images, db.meta],
         async () => {
           await tableFor(entryType).delete(id);
+          // 记录删除墓碑（含表名前缀）：种子内容更新时跳过该 id，防止已删除条目被复活
+          await addSeedTombstones([`${tableFor(entryType).name}:${id}`]);
           // 同步清除资讯事件中的悬挂关联，避免日历条目跳转到不存在的详情页
           if (relatedField) {
             const linked = await db.newsEvents

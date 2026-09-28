@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeftIcon } from '../components/icons';
 import { RarityStars } from '../components/ui/Badges';
@@ -26,6 +27,8 @@ export function RelicDetailPage() {
   const newsEvents = useNewsEvents();
   const dataReady = useBootstrapStatus() === 'ok';
   const imageSrc = useEntityImage(relic?.image);
+  /** 图片加载失败的地址（切换条目时按地址比较自动重置判断） */
+  const [failedImage, setFailedImage] = useState<string | null>(null);
   useDocumentTitle(
     relic ? `${relic.name} · 遗器详情` : '遗器详情',
     relic?.description,
@@ -68,6 +71,7 @@ export function RelicDetailPage() {
   const relatedEvents = newsEvents.filter(
     (event) => event.relatedRelicId === relic.id,
   );
+  const showImage = Boolean(imageSrc) && failedImage !== imageSrc;
 
   return (
     <div>
@@ -88,12 +92,13 @@ export function RelicDetailPage() {
               background: `linear-gradient(150deg, ${category.color}30, transparent 70%)`,
             }}
           >
-            {imageSrc ? (
+            {showImage ? (
               <img
                 src={imageSrc}
                 alt={relic.name}
                 loading="lazy"
                 decoding="async"
+                onError={() => setFailedImage(imageSrc ?? null)}
                 className="h-full w-full object-cover"
               />
             ) : (

@@ -40,6 +40,19 @@ function publicCopyWithSwBuildId(): Plugin {
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), publicCopyWithSwBuildId()],
+  build: {
+    rollupOptions: {
+      output: {
+        // 框架依赖独立分包：应用代码迭代不再使框架缓存失效，
+        // 主包只含应用代码（种子数据由 bootstrap 动态加载，同样不进主包）
+        manualChunks(id: string) {
+          if (!id.includes('node_modules')) return undefined;
+          if (id.includes('dexie')) return 'dexie';
+          return 'vendor';
+        },
+      },
+    },
+  },
   test: {
     environment: 'node',
     include: ['src/**/*.test.{ts,tsx}'],
