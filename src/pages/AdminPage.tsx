@@ -309,12 +309,14 @@ export function AdminPage() {
     }
   };
 
-  /** 批量录入写入：items 已通过 recordValidation 校验，按 id 覆盖 */
+  /** 批量录入写入：items 已通过 recordValidation 校验，按 id 覆盖。
+   *  与单条保存 / 备份导入语义一致：同一事务内清除录入条目的删除墓碑，
+   *  恢复其种子增量更新资格，否则后续种子同步会跳过这些 id。 */
   const importBatch = async (items: Record<string, unknown>[]) => {
     try {
       await db.transaction(
         'rw',
-        [db.characters, db.lightCones, db.newsEvents, db.relics],
+        [db.characters, db.lightCones, db.newsEvents, db.relics, db.meta],
         async () => {
           if (entryType === 'character') {
             await db.characters.bulkPut(items as unknown as Character[]);
@@ -325,6 +327,9 @@ export function AdminPage() {
           } else {
             await db.newsEvents.bulkPut(items as unknown as NewsEvent[]);
           }
+          await removeSeedTombstones(
+            items.map((item) => `${tableFor(entryType).name}:${String(item.id)}`),
+          );
         },
       );
       const label = ENTRY_TYPES.find((type) => type.value === entryType)?.label;

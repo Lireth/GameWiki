@@ -48,7 +48,8 @@ export class WikiDatabase extends Dexie {
   }
 }
 
-/** 当前 schema 版本（随上方 version() 链同步维护），写入导出备份供导入方判断兼容性 */
-export const DB_SCHEMA_VERSION = 6;
-
 export const db = new WikiDatabase();
+
+/** 当前 schema 版本（派生自上方 version() 链，加版本时无需手工同步），
+ *  写入导出备份供导入方判断兼容性 */
+export const DB_SCHEMA_VERSION = db.verno;

@@ -115,6 +115,19 @@ describe('bootstrapDatabase（fake-indexeddb 集成）', () => {
     expect(await db.lightCones.count()).toBe(1);
     expect(await db.newsEvents.count()).toBe(1);
   });
+
+  it('表被清空而指纹未变时仍重新灌入种子（bulkPut 幂等覆盖，兼容并发首启窗口）', async () => {
+    await bootstrapDatabase();
+    // 模拟极端情况：另一标签页并发首启时本页读到空表（count 读取与写入
+    // 之间存在窗口）。bulkPut 覆盖相同数据无副作用，不会像 bulkAdd 那样
+    // 因主键冲突抛 ConstraintError 误报初始化失败
+    await db.characters.clear();
+
+    await bootstrapDatabase();
+
+    expect((await db.characters.get('seele'))?.name).toBe('希儿');
+    expect(await db.characters.count()).toBe(1);
+  });
 });
 
 describe('种子删除墓碑', () => {

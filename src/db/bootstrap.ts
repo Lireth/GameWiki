@@ -117,8 +117,8 @@ function hashSeeds(groups: readonly unknown[]): string {
 }
 
 /**
- * 单表种子同步：对应表为空且存在有效种子数据时全量写入；
- * 表非空且种子内容变化时按 id 增量更新（bulkPut，不删除表中额外条目）。
+ * 单表种子同步：空表且存在有效种子数据时全量写入；
+ * 表非空且种子内容变化时按 id 增量更新（不删除表中额外条目）。
  * 墓碑中的 id 一律跳过（对应条目已被用户删除）。
  */
 async function seedTable<T extends { id: string }>(
@@ -133,9 +133,10 @@ async function seedTable<T extends { id: string }>(
       ? seed.filter((entry) => !tombstones.has(`${prefix}${entry.id}`))
       : seed;
   const count = await table.count();
-  if (count === 0 && active.length > 0) {
-    await table.bulkAdd(active);
-  } else if (count > 0 && seedChanged) {
+  // 统一用 bulkPut（幂等覆盖）：count 读取与写入之间存在窗口，双标签页
+  // 同时首启时后到者若用 bulkAdd 会因主键冲突抛 ConstraintError，
+  // 被外层捕获后误报“初始化失败”；覆盖写入相同数据则无副作用
+  if (active.length > 0 && (count === 0 || seedChanged)) {
     await table.bulkPut(active);
   }
 }
