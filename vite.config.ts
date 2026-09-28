@@ -9,6 +9,28 @@ import { copyFileSync, cpSync, readFileSync, writeFileSync } from 'node:fs';
 declare const process: { env: Record<string, string | undefined> };
 
 /**
+ * 生产构建注入的 CSP meta（见下方 writeBundle 注入点；dev 不注入 ——
+ * Vite / plugin-react 在开发态依赖内联脚本与 HMR websocket，meta CSP
+ * 会破坏开发体验）。
+ * - script-src 'self'：构建产物无内联脚本；
+ * - style-src 'unsafe-inline'：React 内联 style 属性所需；
+ * - img-src：idb 图片运行期走 blob:，旧备份内联图走 data:，favicon 为
+ *   data: SVG，未本地化成功的历史条目回退 wiki 热链；
+ * - worker-src 'self'：Service Worker 注册。
+ */
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  'img-src \'self\' data: blob: https://wiki.biligame.com',
+  "font-src 'self'",
+  "connect-src 'self'",
+  "worker-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+].join('; ');
+
+/**
  * public 目录复制 + SW 缓存版本注入。
  *
  * Vite 7 在 rollup 钩子全部结束后才复制 public 目录，任何对 dist/sw.js 的
@@ -36,15 +58,21 @@ function publicCopyWithSwBuildId(): Plugin {
       } catch {
         /* index.html 不存在时跳过 */
       }
-      // og:image 的 meta content 不在 vite 的资源改写范围内，手动按 base 补齐
+      // og:image 的 meta content 不在 vite 的资源改写范围内，手动按 base 补齐；
+      // 同时注入 CSP meta（仅生产，理由见 CSP 常量注释）
       try {
         const html = readFileSync('dist/index.html', 'utf8');
         writeFileSync(
           'dist/index.html',
-          html.replaceAll('content="/og.png"', `content="${base}og.png"`),
+          html
+            .replaceAll('content="/og.png"', `content="${base}og.png"`)
+            .replace(
+              '<head>',
+              `<head>\n    <meta http-equiv="Content-Security-Policy" content="${CSP}">`,
+            ),
         );
       } catch {
-        /* 无 og:image 时跳过 */
+        /* 无 index.html 时跳过 */
       }
       try {
         const code = readFileSync('dist/sw.js', 'utf8');

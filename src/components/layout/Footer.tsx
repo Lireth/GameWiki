@@ -70,11 +70,28 @@ async function exportData() {
   }
 }
 
+/** 导入文件大小上限：正常备份（全量种子 + 图片 data URL）为数 MB 量级，
+ *  超过上限基本可断定不是本站备份；全量读入内存可致标签页崩溃 */
+const MAX_IMPORT_BYTES = 50 * 1024 * 1024;
+
 /** 读取备份 JSON 并按主键合并写入（同 id 条目覆盖，其余保留） */
 async function importData(file: File) {
   try {
+    if (file.size > MAX_IMPORT_BYTES) {
+      void alertDialog(
+        `文件大小 ${(file.size / 1024 / 1024).toFixed(1)} MB 超过 50 MB 上限，已拒绝导入。`,
+        '导入失败',
+      );
+      return;
+    }
     const parsed: unknown = JSON.parse(await file.text());
     const data = (parsed ?? {}) as Record<string, unknown>;
+    // 备份标识校验（与导出侧 app 字段对应）：不符即其它应用的 JSON。
+    // 早期备份无该字段，仅在存在且不匹配时拒绝，保证向后兼容
+    if (typeof data.app === 'string' && data.app !== 'hsr-wiki') {
+      void alertDialog('该文件不是本站导出的备份（app 标识不符）。', '导入失败');
+      return;
+    }
     const isStr = (value: unknown) => typeof value === 'string';
     /** 取对象数组（元素保持 unknown，由各校验谓词收窄） */
     const listOf = (value: unknown): unknown[] =>
