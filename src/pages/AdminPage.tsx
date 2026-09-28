@@ -346,6 +346,31 @@ function entrySummary(
   return `${NEWS_TYPE_META[event.type].label} · ${event.date}${event.endDate ? ` 至 ${event.endDate}` : ''}${related ? ` · 关联 ${related}` : ''}`;
 }
 
+/** 实体类型 → 资讯事件的关联字段名（删除实体时同步清理悬挂引用） */
+const RELATED_FIELD = {
+  character: 'relatedCharacterId',
+  lightCone: 'relatedLightConeId',
+  relic: 'relatedRelicId',
+} as const;
+
+/** 实体记录上的图片字段名（用于删除时同步清理 images 表） */
+function imageFieldOf(type: EntryType): 'avatar' | 'image' | null {
+  if (type === 'character') return 'avatar';
+  if (type === 'lightCone' || type === 'relic') return 'image';
+  return null;
+}
+
+/** 实体类型 → 业务表（新增 / 删除共用） */
+function tableFor(type: EntryType) {
+  return type === 'character'
+    ? db.characters
+    : type === 'lightCone'
+      ? db.lightCones
+      : type === 'relic'
+        ? db.relics
+        : db.newsEvents;
+}
+
 const inputClass =
   'w-full border border-space-600/60 bg-space-850/80 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-600 focus:border-gold-500/60 focus:outline-none';
 
@@ -504,15 +529,7 @@ export function AdminPage() {
     try {
       if (!editingId) {
         // 新增时若 id 已存在，提示覆盖
-        const table =
-          entryType === 'character'
-            ? db.characters
-            : entryType === 'lightCone'
-              ? db.lightCones
-              : entryType === 'relic'
-                ? db.relics
-                : db.newsEvents;
-        if (await table.get(entry.id)) {
+        if (await tableFor(entryType).get(entry.id)) {
           if (!window.confirm(`ID「${entry.id}」已存在，保存将覆盖现有条目，是否继续？`)) {
             return;
           }
@@ -529,15 +546,6 @@ export function AdminPage() {
     }
   };
 
-  /** 实体记录上的图片字段名（用于删除时同步清理 images 表） */
-  function imageFieldOf(
-    type: EntryType,
-  ): 'avatar' | 'image' | null {
-    if (type === 'character') return 'avatar';
-    if (type === 'lightCone' || type === 'relic') return 'image';
-    return null;
-  }
-
   const remove = async (
     entry: Character | LightCone | NewsEvent | RelicSet,
     label: string,
@@ -550,44 +558,28 @@ export function AdminPage() {
       : undefined;
     const imageKey =
       typeof imageValue === 'string' ? parseImageRef(imageValue) : null;
+    const relatedField =
+      entryType === 'newsEvent' ? null : RELATED_FIELD[entryType];
     try {
       await db.transaction(
         'rw',
         [db.characters, db.lightCones, db.newsEvents, db.relics, db.images],
         async () => {
-          if (entryType === 'character') {
-            await db.characters.delete(id);
-            // 同步清除资讯事件中的悬挂关联，避免日历条目跳转到不存在的详情页
+          await tableFor(entryType).delete(id);
+          // 同步清除资讯事件中的悬挂关联，避免日历条目跳转到不存在的详情页
+          if (relatedField) {
             const linked = await db.newsEvents
-              .filter((event) => event.relatedCharacterId === id)
+              .filter((event) => event[relatedField] === id)
               .toArray();
             if (linked.length) {
               await db.newsEvents.bulkPut(
-                linked.map(({ relatedCharacterId: _removed, ...rest }) => rest as NewsEvent),
+                linked.map((event) => {
+                  const rest: Record<string, unknown> = { ...event };
+                  delete rest[relatedField];
+                  return rest as unknown as NewsEvent;
+                }),
               );
             }
-          } else if (entryType === 'lightCone') {
-            await db.lightCones.delete(id);
-            const linked = await db.newsEvents
-              .filter((event) => event.relatedLightConeId === id)
-              .toArray();
-            if (linked.length) {
-              await db.newsEvents.bulkPut(
-                linked.map(({ relatedLightConeId: _removed, ...rest }) => rest as NewsEvent),
-              );
-            }
-          } else if (entryType === 'relic') {
-            await db.relics.delete(id);
-            const linked = await db.newsEvents
-              .filter((event) => event.relatedRelicId === id)
-              .toArray();
-            if (linked.length) {
-              await db.newsEvents.bulkPut(
-                linked.map(({ relatedRelicId: _removed, ...rest }) => rest as NewsEvent),
-              );
-            }
-          } else {
-            await db.newsEvents.delete(id);
           }
           if (imageKey) await db.images.delete(imageKey);
         },

@@ -91,9 +91,25 @@ async function cleanupOrphanImages(): Promise<void> {
 }
 
 /**
+ * 单表种子同步：对应表为空且存在种子数据时全量写入；
+ * 表非空且种子版本落后时按 id 增量更新（bulkPut，不删除表中额外条目）。
+ */
+async function seedTable<T extends { id: string }>(
+  table: Dexie.Table<T, string>,
+  seed: T[],
+  seedChanged: boolean,
+): Promise<void> {
+  const count = await table.count();
+  if (count === 0 && seed.length > 0) {
+    await table.bulkAdd(seed);
+  } else if (count > 0 && seedChanged) {
+    await table.bulkPut(seed);
+  }
+}
+
+/**
  * 应用启动时调用：
- * - 对应表为空且存在种子数据时全量写入；
- * - 表非空但种子版本落后时按 id 增量更新（bulkPut，不删除表中额外条目）；
+ * - 逐表执行种子同步（见 seedTable）；
  * - 失败时记录状态供界面提示，不阻塞页面渲染。
  */
 export async function bootstrapDatabase(): Promise<void> {
@@ -104,38 +120,10 @@ export async function bootstrapDatabase(): Promise<void> {
     const seedChanged = storedVersion < SEED_VERSION;
 
     await Promise.all([
-      db.characters.count().then((count) => {
-        if (count === 0 && characterSeed.length > 0) {
-          return db.characters.bulkAdd(characterSeed);
-        }
-        if (count > 0 && seedChanged) {
-          return db.characters.bulkPut(characterSeed);
-        }
-      }),
-      db.lightCones.count().then((count) => {
-        if (count === 0 && lightConeSeed.length > 0) {
-          return db.lightCones.bulkAdd(lightConeSeed);
-        }
-        if (count > 0 && seedChanged) {
-          return db.lightCones.bulkPut(lightConeSeed);
-        }
-      }),
-      db.newsEvents.count().then((count) => {
-        if (count === 0 && newsEventSeed.length > 0) {
-          return db.newsEvents.bulkAdd(newsEventSeed);
-        }
-        if (count > 0 && seedChanged) {
-          return db.newsEvents.bulkPut(newsEventSeed);
-        }
-      }),
-      db.relics.count().then((count) => {
-        if (count === 0 && relicSeed.length > 0) {
-          return db.relics.bulkAdd(relicSeed);
-        }
-        if (count > 0 && seedChanged) {
-          return db.relics.bulkPut(relicSeed);
-        }
-      }),
+      seedTable(db.characters, characterSeed, seedChanged),
+      seedTable(db.lightCones, lightConeSeed, seedChanged),
+      seedTable(db.newsEvents, newsEventSeed, seedChanged),
+      seedTable(db.relics, relicSeed, seedChanged),
     ]);
     if (seedChanged) {
       await db.meta.put({ key: 'seedVersion', value: String(SEED_VERSION) });

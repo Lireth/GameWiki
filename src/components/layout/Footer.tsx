@@ -1,7 +1,19 @@
 import { Link } from 'react-router-dom';
 import { db, DB_SCHEMA_VERSION } from '../../db/db';
-import type { Character, LightCone, NewsEvent, RelicSet } from '../../db/types';
-import { MAX_IMAGE_DATA_URL_LENGTH } from '../../lib/entryValidation';
+import {
+  ACQUISITION_TYPES,
+  BODY_TYPES,
+  ELEMENT_IDS,
+  GENDERS,
+  NEWS_EVENT_TYPES,
+  PATH_IDS,
+  RELIC_CATEGORIES,
+  type Character,
+  type LightCone,
+  type NewsEvent,
+  type RelicSet,
+} from '../../db/types';
+import { DATE_PATTERN, MAX_IMAGE_DATA_URL_LENGTH } from '../../lib/entryValidation';
 import { getFavorites, mergeFavorites } from '../../lib/favorites';
 import { blobToDataURL, parseImageRef } from '../../lib/imageRef';
 
@@ -69,30 +81,51 @@ async function importData(file: File) {
     const isRecord = (item: unknown): item is Record<string, unknown> =>
       typeof item === 'object' && item !== null;
     const isStr = (value: unknown) => typeof value === 'string';
-    const pick = <T,>(value: unknown, guard: (item: Record<string, unknown>) => boolean): T[] =>
-      Array.isArray(value) ? value.filter((item): item is T => isRecord(item) && guard(item)) : [];
+    /** 枚举字段宽松校验：缺省（旧版备份）放行，出现时必须在白名单内 */
+    const inList = (value: unknown, ids: readonly string[]) =>
+      value === undefined || (isStr(value) && ids.includes(value));
+    /** 日期字段宽松校验：缺省放行，出现时必须为 YYYY-MM-DD */
+    const isDate = (value: unknown) =>
+      value === undefined || (isStr(value) && DATE_PATTERN.test(value));
+    /** 取对象数组（元素保持 unknown，由各校验谓词收窄） */
+    const listOf = (value: unknown): unknown[] =>
+      Array.isArray(value) ? value : [];
 
     // 备份来自更新版本站点时，未知字段会被宽松导入忽略，提前告知
     const schemaVersion =
       typeof data.schemaVersion === 'number' ? data.schemaVersion : 0;
     const newerThanApp = schemaVersion > DB_SCHEMA_VERSION;
 
-    // 逐类型校验必填字段，避免脏数据混入数据库
-    const allCharacters = pick<Character>(data.characters, (item) =>
-      isStr(item.id) && isStr(item.name) && isStr(item.path) && isStr(item.element) &&
-      (item.rarity === 4 || item.rarity === 5) && isStr(item.releaseDate) && isStr(item.releaseVersion),
+    // 必填字段 + 枚举白名单 + 日期格式（与管理页表单校验同口径），脏数据不入库
+    const allCharacters = listOf(data.characters);
+    const characters = allCharacters.filter((item): item is Character =>
+      isRecord(item) && isStr(item.id) && isStr(item.name) && isStr(item.path) &&
+      isStr(item.element) &&
+      (item.rarity === 4 || item.rarity === 5) && isStr(item.releaseDate) &&
+      isStr(item.releaseVersion) &&
+      inList(item.path, PATH_IDS) && inList(item.element, ELEMENT_IDS) &&
+      inList(item.gender, GENDERS) && inList(item.bodyType, BODY_TYPES) &&
+      isDate(item.releaseDate),
     );
-    const allLightCones = pick<LightCone>(data.lightCones, (item) =>
-      isStr(item.id) && isStr(item.name) && isStr(item.path) &&
-      (item.rarity === 3 || item.rarity === 4 || item.rarity === 5),
+    const allLightCones = listOf(data.lightCones);
+    const lightCones = allLightCones.filter((item): item is LightCone =>
+      isRecord(item) && isStr(item.id) && isStr(item.name) && isStr(item.path) &&
+      (item.rarity === 3 || item.rarity === 4 || item.rarity === 5) &&
+      inList(item.path, PATH_IDS) && inList(item.acquisition, ACQUISITION_TYPES) &&
+      isDate(item.releaseDate),
     );
-    const newsEvents = pick<NewsEvent>(data.newsEvents, (item) =>
-      isStr(item.id) && isStr(item.type) && isStr(item.title) && isStr(item.date),
+    const allNewsEvents = listOf(data.newsEvents);
+    const newsEvents = allNewsEvents.filter((item): item is NewsEvent =>
+      isRecord(item) && isStr(item.id) && isStr(item.type) && isStr(item.title) &&
+      isStr(item.date) && inList(item.type, NEWS_EVENT_TYPES) &&
+      (isStr(item.date) && DATE_PATTERN.test(item.date)) && isDate(item.endDate),
     );
-    const relics = pick<RelicSet>(data.relics, (item) =>
-      isStr(item.id) && isStr(item.name) && isStr(item.category) &&
+    const allRelics = listOf(data.relics);
+    const relics = allRelics.filter((item): item is RelicSet =>
+      isRecord(item) && isStr(item.id) && isStr(item.name) && isStr(item.category) &&
       isStr(item.effect2) &&
-      (item.rarity === 2 || item.rarity === 3 || item.rarity === 4 || item.rarity === 5),
+      (item.rarity === 2 || item.rarity === 3 || item.rarity === 4 || item.rarity === 5) &&
+      inList(item.category, RELIC_CATEGORIES) && isDate(item.releaseDate),
     );
     const favorites = Array.isArray(data.favorites)
       ? data.favorites.filter((item): item is string => isStr(item))
@@ -103,15 +136,17 @@ async function importData(file: File) {
       typeof value === 'string' &&
       value.startsWith('data:') &&
       value.length > MAX_IMAGE_DATA_URL_LENGTH;
-    const characters = allCharacters.filter((c) => !oversized(c.avatar));
-    const lightCones = allLightCones.filter((c) => !oversized(c.image));
+    const validCharacters = characters.filter((c) => !oversized(c.avatar));
+    const validLightCones = lightCones.filter((c) => !oversized(c.image));
     const skipped =
-      allCharacters.length - characters.length +
-      (allLightCones.length - lightCones.length);
+      allCharacters.length - validCharacters.length +
+      (allLightCones.length - validLightCones.length) +
+      (allNewsEvents.length - newsEvents.length) +
+      (allRelics.length - relics.length);
 
     if (
-      characters.length +
-        lightCones.length +
+      validCharacters.length +
+        validLightCones.length +
         newsEvents.length +
         relics.length +
         favorites.length ===
@@ -121,11 +156,11 @@ async function importData(file: File) {
       return;
     }
     const confirmed = window.confirm(
-      `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条` +
+      `将导入：角色 ${validCharacters.length} 名、光锥 ${validLightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条` +
         (favorites.length ? `、收藏 ${favorites.length} 条` : '') +
         '.' +
         (newerThanApp ? '\n注意：该备份来自更新版本的站点，新字段将被忽略。' : '') +
-        (skipped > 0 ? `\n另有 ${skipped} 条图片超过 1MB 的条目将被跳过。` : '') +
+        (skipped > 0 ? `\n另有 ${skipped} 条校验未通过（枚举 / 日期格式 / 图片超限）的条目将被跳过。` : '') +
         '\n与现有数据 id 相同的条目会被覆盖，其余保留。是否继续？',
     );
     if (!confirmed) return;
@@ -134,8 +169,8 @@ async function importData(file: File) {
       'rw',
       [db.characters, db.lightCones, db.newsEvents, db.relics],
       async () => {
-        if (characters.length) await db.characters.bulkPut(characters);
-        if (lightCones.length) await db.lightCones.bulkPut(lightCones);
+        if (validCharacters.length) await db.characters.bulkPut(validCharacters);
+        if (validLightCones.length) await db.lightCones.bulkPut(validLightCones);
         if (newsEvents.length) await db.newsEvents.bulkPut(newsEvents);
         if (relics.length) await db.relics.bulkPut(relics);
       },

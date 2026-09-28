@@ -15,7 +15,8 @@ export interface EntryFieldSpec {
   required?: boolean;
 }
 
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+/** 日期格式唯一真相：YYYY-MM-DD（管理页表单校验、健康检查、JSON 导入共用） */
+export const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 /** 单字段校验：返回错误文案或 null */
 function validateFieldValue(

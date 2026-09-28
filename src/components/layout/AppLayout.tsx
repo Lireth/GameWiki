@@ -1,12 +1,14 @@
 import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Footer } from './Footer';
 import { Navbar } from './Navbar';
+import { ErrorBoundary } from '../ErrorBoundary';
 import { useBootstrapStatus } from '../../hooks/useWikiData';
 import { bootstrapDatabase } from '../../db/bootstrap';
 
 export function AppLayout() {
   const bootstrapStatus = useBootstrapStatus();
+  const { pathname } = useLocation();
 
   return (
     <div className="flex min-h-dvh flex-col">
@@ -29,18 +31,22 @@ export function AppLayout() {
         </div>
       )}
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 pb-16 pt-6 md:px-6 md:pt-10">
-        {/* 边界只包内容区：懒加载 chunk 时导航栏与页脚保持稳定 */}
-        <Suspense
-          fallback={
-            <div className="flex min-h-[50vh] items-center justify-center">
-              <p className="font-display text-sm tracking-widest text-slate-500">
-                LOADING…
-              </p>
-            </div>
-          }
-        >
-          <Outlet />
-        </Suspense>
+        {/* 边界只包内容区：懒加载 chunk 时导航栏与页脚保持稳定。
+            错误边界在 Suspense 外层以捕获 chunk 加载失败；
+            key 随路由变化重建实例，切换页面时自动恢复渲染。 */}
+        <ErrorBoundary key={pathname}>
+          <Suspense
+            fallback={
+              <div className="flex min-h-[50vh] items-center justify-center">
+                <p className="font-display text-sm tracking-widest text-slate-500">
+                  LOADING…
+                </p>
+              </div>
+            }
+          >
+            <Outlet />
+          </Suspense>
+        </ErrorBoundary>
       </main>
       <Footer />
     </div>

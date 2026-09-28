@@ -14,6 +14,7 @@ import {
   RELIC_CATEGORIES,
 } from '../db/types';
 import { parseImageRef } from './imageRef';
+import { DATE_PATTERN } from './entryValidation';
 
 export type HealthTable = 'characters' | 'lightCones' | 'relics' | 'newsEvents';
 
@@ -31,8 +32,6 @@ export const HEALTH_TABLE_LABEL: Record<HealthTable, string> = {
   relics: '遗器',
   newsEvents: '资讯',
 };
-
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 /** 名称重复计数（同表内），返回出现次数 > 1 的名称集合 */
 function findDuplicateNames(names: string[]): Set<string> {
