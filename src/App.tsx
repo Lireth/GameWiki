@@ -65,7 +65,9 @@ const FavoritesPage = lazy(() =>
 
 export default function App() {
   return (
-    <BrowserRouter>
+    // basename 随构建 base 变化（默认 '/'，子路径部署时由 DEPLOY_BASE 注入），
+    // links.ts 中的绝对站内路径会自动拼接
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <Routes>
         <Route element={<AppLayout />}>

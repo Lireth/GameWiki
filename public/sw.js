@@ -7,7 +7,8 @@
    __BUILD_ID__ 占位符在构建时替换为本次构建时间戳（见 vite.config.ts），
    使每次发布都产生新的缓存名，旧缓存随 activate 阶段清理。 */
 const CACHE_NAME = 'hsr-wiki-__BUILD_ID__';
-const APP_SHELL = '/';
+// 应用壳取 SW 所在目录：随部署 base 自适应（根路径为 /，子路径为 /<repo>/）
+const APP_SHELL = new URL('./', self.registration.scope).pathname;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

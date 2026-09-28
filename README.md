@@ -43,6 +43,7 @@ npm run build      # 类型检查 + 生产构建（输出 dist/）
 npm run preview    # 预览生产构建
 npm test           # 运行单元测试（Vitest，覆盖日期工具 / 分面计数 / 版本分组等纯逻辑与组件、hooks、收藏存储、种子数据质量门禁）
 npm run e2e        # 浏览器端 E2E 冒烟测试（首次需 npx playwright install chromium）
+npm run check:size # 构建产物包体预算检查（gzip，超预算退出码 1）
 npm run lint       # ESLint 静态检查
 ```
 
@@ -53,6 +54,7 @@ npm run lint       # ESLint 静态检查
 数据更新方式：
 
 - **Wiki 抓取**：`node .scrape/scrape_wiki.cjs` 抓取光锥 / 遗器 / 卡池并派生资讯事件，再运行 `node .scrape/gen_seed_ts.cjs` 重新生成 `src/data/seed.ts`（生成文件，勿直接手改）；
+- **头像资产化**：`node .scrape/scrape_avatars.cjs` 把角色头像下载为本地缩略图（`public/avatars/`，宽 320px），`avatar` 字段改写为站内路径 —— 消除对 Wiki 的热链依赖，头像随站点部署并由 Service Worker 缓存，离线可用；
 - **手工补充**：直接编辑 `.scrape/*.json` 后运行生成脚本，或在应用内「数据管理」页面录入；
 - 种子内容变化由启动时的内容指纹自动检测（无需手动递增版本号），`src/db/bootstrap.ts` 按 `id` 增量更新且不删除表中额外条目；在「数据管理」中删除过的条目有删除墓碑保护，不会被种子更新复活；
 - 页面通过 `dexie-react-hooks` 的 `useLiveQuery` 实时读取，无需刷新即可看到新数据。
@@ -72,7 +74,7 @@ npm run lint       # ESLint 静态检查
 
 ### 注意事项
 
-- `id` 必须唯一（建议英文短横线命名，如 `seele`）；
+- `id` 必须唯一；当前种子沿用 Wiki 页面标题（中文）作为 id，站内 URL 会 percent-encode 但功能与分享完整。如需改为英文短横线 id，须在抓取管线中统一重映射，并同步全部资讯关联字段与收藏键；
 - 日期一律使用 `YYYY-MM-DD` 格式；
 - 需要清空本地数据时，可在浏览器 DevTools → Application → IndexedDB 中删除 `hsr-wiki` 数据库后刷新（应用会按种子重新初始化）。
 
@@ -92,7 +94,16 @@ src/
 └── pages/              # 各路由页面
 ```
 
-`.scrape/` 目录为数据抓取与种子生成脚本（`scrape_wiki.cjs` / `gen_seed_ts.cjs`，需 Node 18+）。
+`.scrape/` 目录为数据抓取与种子生成脚本（需 Node 18+）：`scrape_wiki.cjs` / `scrape_avatars.cjs` 抓取数据与头像，`gen_seed.cjs` 为角色原始抓取脚本，`gen_seed_ts.cjs` 合成 `src/data/seed.ts`；`*_seed.json` 为可编辑的数据源，`characters_smw.json` 为角色原始抓取物（留存供离线重生成）。
+
+## 部署
+
+纯静态产物（`dist/`），可托管于任意静态服务：
+
+- **GitHub Pages**：`.github/workflows/deploy.yml` 在 push 到 main 时构建并发布到项目站点（`https://<owner>.github.io/<repo>/`）。需先在仓库 Settings → Pages 中把 Source 设为「GitHub Actions」；子路径经 `DEPLOY_BASE=/<repo>/` 注入构建，React Router（basename）、Service Worker、manifest 与 og:image 均随 base 自适应，未匹配路由由 404.html 回退应用壳；
+- **其它静态托管**（Vercel / Netlify / Nginx 等）：根路径直接 `npm run build` 发布 `dist/`，SPA 路由回退指向 `index.html` 即可。
+
+PWA 位图图标与社交分享图由 `node scripts/generate-assets.mjs` 生成（调整站点视觉后重跑）；`npm run check:size` 在本地与 CI 校验构建产物包体预算。
 
 ## 后续可扩展
 

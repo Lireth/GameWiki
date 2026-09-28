@@ -18,8 +18,9 @@ if ('serviceWorker' in navigator && import.meta.env.PROD) {
     const notifyUpdateReady = (registration: ServiceWorkerRegistration) => {
       window.dispatchEvent(new CustomEvent('sw-update-ready', { detail: registration }));
     };
+    // 随构建 base 变化（子路径部署时位于 /<base>/sw.js）
     navigator.serviceWorker
-      .register('/sw.js')
+      .register(`${import.meta.env.BASE_URL}sw.js`)
       .then((registration) => {
         // 页面打开前已有等待接管的新 SW
         if (registration.waiting && navigator.serviceWorker.controller) {
