@@ -23,6 +23,7 @@ import {
 } from '../lib/format';
 import { eventLink, versionLink } from '../lib/links';
 import { NEWS_TYPE_META } from '../lib/meta';
+import { buildNewsIcs, downloadIcsFile } from '../lib/ics';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const WEEKDAY_HEADERS = ['一', '二', '三', '四', '五', '六', '日'];
@@ -171,6 +172,19 @@ export function NewsPage() {
       else n.set('d', iso);
     });
 
+  /** 导出当前类型筛选下的全部事件为 ICS（可导入系统日历做提醒） */
+  const exportIcs = () => {
+    const exportEvents =
+      typeFilter === 'all'
+        ? events
+        : events.filter((event) => event.type === typeFilter);
+    if (exportEvents.length === 0) {
+      window.alert('暂无可导出的资讯事件。');
+      return;
+    }
+    downloadIcsFile('hsr-wiki-calendar.ics', buildNewsIcs(exportEvents));
+  };
+
   const isCurrentMonth =
     year === now.getFullYear() && month0 === now.getMonth();
 
@@ -246,6 +260,14 @@ export function NewsPage() {
             );
           })}
           <CopyLinkButton className="ml-1" />
+          <button
+            type="button"
+            onClick={exportIcs}
+            title="将当前筛选的资讯事件导出为日历文件（ICS）"
+            className="chamfer-xs ml-1 border border-space-600/60 px-2.5 py-1 text-xs text-slate-400 transition hover:border-gold-500/50 hover:text-gold-300"
+          >
+            导出 ICS
+          </button>
         </div>
       </div>
 

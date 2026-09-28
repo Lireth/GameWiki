@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { CloseIcon, MenuIcon } from '../icons';
+import { CloseIcon, MenuIcon, SearchIcon } from '../icons';
+import { OPEN_COMMAND_PALETTE_EVENT } from '../ui/CommandPalette';
 
 const NAV_ITEMS = [
   { to: '/', label: '首页', end: true },
@@ -12,6 +13,42 @@ const NAV_ITEMS = [
   { to: '/versions', label: '版本', end: false },
   { to: '/favorites', label: '收藏', end: false },
 ];
+
+/** 打开全局搜索面板（事件由 CommandPalette 监听） */
+function openCommandPalette() {
+  window.dispatchEvent(new CustomEvent(OPEN_COMMAND_PALETTE_EVENT));
+}
+
+/** 全局搜索入口：桌面端展示快捷键提示，点击或 Ctrl+K 均可打开 */
+function SearchTrigger({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <button
+        type="button"
+        onClick={openCommandPalette}
+        className="flex items-center gap-2 border-l-2 border-transparent py-2.5 pl-3 text-sm text-slate-400 transition hover:text-slate-100"
+      >
+        <SearchIcon className="size-4" />
+        全局搜索
+      </button>
+    );
+  }
+  return (
+    <button
+      type="button"
+      onClick={openCommandPalette}
+      title="全局搜索（Ctrl+K）"
+      aria-label="全局搜索"
+      className="chamfer-xs flex items-center gap-1.5 border border-space-600/60 px-2.5 py-1.5 text-xs text-slate-400 transition hover:border-gold-500/50 hover:text-gold-300"
+    >
+      <SearchIcon className="size-3.5" />
+      <span className="hidden lg:inline">搜索</span>
+      <kbd className="hidden font-display text-[10px] tracking-wider text-slate-500 lg:inline">
+        CTRL·K
+      </kbd>
+    </button>
+  );
+}
 
 function LogoMark({ className = '' }: { className?: string }) {
   return (
@@ -48,34 +85,38 @@ export function Navbar() {
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 md:h-16 md:px-6">
         <Brand />
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="主导航">
-          {NAV_ITEMS.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) =>
-                `chamfer-xs px-3 py-1.5 text-sm transition ${
-                  isActive
-                    ? 'bg-gold-500/12 text-gold-300'
-                    : 'text-slate-400 hover:text-slate-100'
-                }`
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <button
-          type="button"
-          className="border border-space-600/60 p-2 text-slate-300 hover:text-gold-300 md:hidden"
-          aria-label={open ? '关闭菜单' : '打开菜单'}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <CloseIcon className="size-5" /> : <MenuIcon className="size-5" />}
-        </button>
+        <div className="flex items-center gap-2">
+          <nav className="hidden items-center gap-1 md:flex" aria-label="主导航">
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) =>
+                  `chamfer-xs px-3 py-1.5 text-sm transition ${
+                    isActive
+                      ? 'bg-gold-500/12 text-gold-300'
+                      : 'text-slate-400 hover:text-slate-100'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+          <div className="hidden md:block">
+            <SearchTrigger />
+          </div>
+          <button
+            type="button"
+            className="border border-space-600/60 p-2 text-slate-300 hover:text-gold-300 md:hidden"
+            aria-label={open ? '关闭菜单' : '打开菜单'}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <CloseIcon className="size-5" /> : <MenuIcon className="size-5" />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -84,6 +125,7 @@ export function Navbar() {
           aria-label="移动端导航"
         >
           <div className="flex flex-col">
+            <SearchTrigger compact />
             {NAV_ITEMS.map((item) => (
               <NavLink
                 key={item.to}

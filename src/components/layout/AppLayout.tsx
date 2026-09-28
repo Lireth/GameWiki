@@ -3,6 +3,8 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Footer } from './Footer';
 import { Navbar } from './Navbar';
 import { ErrorBoundary } from '../ErrorBoundary';
+import { PwaUpdateBanner } from '../PwaUpdateBanner';
+import { CommandPalette } from '../ui/CommandPalette';
 import { useBootstrapStatus } from '../../hooks/useWikiData';
 import { bootstrapDatabase } from '../../db/bootstrap';
 
@@ -12,6 +14,7 @@ export function AppLayout() {
 
   return (
     <div className="flex min-h-dvh flex-col">
+      <PwaUpdateBanner />
       <Navbar />
       {bootstrapStatus === 'failed' && (
         <div
@@ -49,6 +52,7 @@ export function AppLayout() {
         </ErrorBoundary>
       </main>
       <Footer />
+      <CommandPalette />
     </div>
   );
 }

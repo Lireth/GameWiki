@@ -3,8 +3,10 @@
      保证离线状态下（含首次离线访问未到过的路由）SPA 仍可打开；
    - 其余同源 GET：stale-while-revalidate；
    - 跨域请求（外链图片等）不缓存。
-   首次离线访问前需至少成功联网加载过一次。 */
-const CACHE_NAME = 'hsr-wiki-v2';
+   首次离线访问前需至少成功联网加载过一次。
+   __BUILD_ID__ 占位符在构建时替换为本次构建时间戳（见 vite.config.ts），
+   使每次发布都产生新的缓存名，旧缓存随 activate 阶段清理。 */
+const CACHE_NAME = 'hsr-wiki-__BUILD_ID__';
 const APP_SHELL = '/';
 
 self.addEventListener('install', (event) => {
@@ -32,6 +34,11 @@ self.addEventListener('activate', (event) => {
       await self.clients.claim();
     })(),
   );
+});
+
+// 更新提示：页面在收到新版本就绪通知后发送 SKIP_WAITING，立即接管并刷新
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 self.addEventListener('fetch', (event) => {
