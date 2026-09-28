@@ -1,19 +1,11 @@
 import { Link } from 'react-router-dom';
 import { db, DB_SCHEMA_VERSION } from '../../db/db';
 import {
-  ACQUISITION_TYPES,
-  BODY_TYPES,
-  ELEMENT_IDS,
-  GENDERS,
-  NEWS_EVENT_TYPES,
-  PATH_IDS,
-  RELIC_CATEGORIES,
-  type Character,
-  type LightCone,
-  type NewsEvent,
-  type RelicSet,
-} from '../../db/types';
-import { DATE_PATTERN, MAX_IMAGE_DATA_URL_LENGTH } from '../../lib/entryValidation';
+  isCharacterRecord,
+  isLightConeRecord,
+  isNewsEventRecord,
+  isRelicRecord,
+} from '../../lib/recordValidation';
 import { getFavorites, mergeFavorites } from '../../lib/favorites';
 import { blobToDataURL, parseImageRef } from '../../lib/imageRef';
 import { alertDialog, confirmDialog } from '../../lib/dialog';
@@ -82,15 +74,7 @@ async function importData(file: File) {
   try {
     const parsed: unknown = JSON.parse(await file.text());
     const data = (parsed ?? {}) as Record<string, unknown>;
-    const isRecord = (item: unknown): item is Record<string, unknown> =>
-      typeof item === 'object' && item !== null;
     const isStr = (value: unknown) => typeof value === 'string';
-    /** 枚举字段宽松校验：缺省（旧版备份）放行，出现时必须在白名单内 */
-    const inList = (value: unknown, ids: readonly string[]) =>
-      value === undefined || (isStr(value) && ids.includes(value));
-    /** 日期字段宽松校验：缺省放行，出现时必须为 YYYY-MM-DD */
-    const isDate = (value: unknown) =>
-      value === undefined || (isStr(value) && DATE_PATTERN.test(value));
     /** 取对象数组（元素保持 unknown，由各校验谓词收窄） */
     const listOf = (value: unknown): unknown[] =>
       Array.isArray(value) ? value : [];
@@ -100,57 +84,30 @@ async function importData(file: File) {
       typeof data.schemaVersion === 'number' ? data.schemaVersion : 0;
     const newerThanApp = schemaVersion > DB_SCHEMA_VERSION;
 
-    // 必填字段 + 枚举白名单 + 日期格式（与管理页表单校验同口径），脏数据不入库
+    // 记录级校验（必填 + 枚举白名单 + 日期格式 + 图片体积）与管理页批量录入同口径，
+    // 纯逻辑见 lib/recordValidation.ts
     const allCharacters = listOf(data.characters);
-    const characters = allCharacters.filter((item): item is Character =>
-      isRecord(item) && isStr(item.id) && isStr(item.name) && isStr(item.path) &&
-      isStr(item.element) &&
-      (item.rarity === 4 || item.rarity === 5) && isStr(item.releaseDate) &&
-      isStr(item.releaseVersion) &&
-      inList(item.path, PATH_IDS) && inList(item.element, ELEMENT_IDS) &&
-      inList(item.gender, GENDERS) && inList(item.bodyType, BODY_TYPES) &&
-      isDate(item.releaseDate),
-    );
+    const characters = allCharacters.filter(isCharacterRecord);
     const allLightCones = listOf(data.lightCones);
-    const lightCones = allLightCones.filter((item): item is LightCone =>
-      isRecord(item) && isStr(item.id) && isStr(item.name) && isStr(item.path) &&
-      (item.rarity === 3 || item.rarity === 4 || item.rarity === 5) &&
-      inList(item.path, PATH_IDS) && inList(item.acquisition, ACQUISITION_TYPES) &&
-      isDate(item.releaseDate),
-    );
+    const lightCones = allLightCones.filter(isLightConeRecord);
     const allNewsEvents = listOf(data.newsEvents);
-    const newsEvents = allNewsEvents.filter((item): item is NewsEvent =>
-      isRecord(item) && isStr(item.id) && isStr(item.type) && isStr(item.title) &&
-      isStr(item.date) && inList(item.type, NEWS_EVENT_TYPES) &&
-      (isStr(item.date) && DATE_PATTERN.test(item.date)) && isDate(item.endDate),
-    );
+    const newsEvents = allNewsEvents.filter(isNewsEventRecord);
     const allRelics = listOf(data.relics);
-    const relics = allRelics.filter((item): item is RelicSet =>
-      isRecord(item) && isStr(item.id) && isStr(item.name) && isStr(item.category) &&
-      isStr(item.effect2) &&
-      (item.rarity === 2 || item.rarity === 3 || item.rarity === 4 || item.rarity === 5) &&
-      inList(item.category, RELIC_CATEGORIES) && isDate(item.releaseDate),
-    );
+    const relics = allRelics.filter(isRelicRecord);
     const favorites = Array.isArray(data.favorites)
       ? data.favorites.filter((item): item is string => isStr(item))
       : [];
 
-    // 图片 data URL 超限的条目跳过（与管理页上传的 1MB 上限一致）
-    const oversized = (value: unknown) =>
-      typeof value === 'string' &&
-      value.startsWith('data:') &&
-      value.length > MAX_IMAGE_DATA_URL_LENGTH;
-    const validCharacters = characters.filter((c) => !oversized(c.avatar));
-    const validLightCones = lightCones.filter((c) => !oversized(c.image));
     const skipped =
-      allCharacters.length - validCharacters.length +
-      (allLightCones.length - validLightCones.length) +
-      (allNewsEvents.length - newsEvents.length) +
-      (allRelics.length - relics.length);
+      allCharacters.length -
+        characters.length +
+        (allLightCones.length - lightCones.length) +
+        (allNewsEvents.length - newsEvents.length) +
+        (allRelics.length - relics.length);
 
     if (
-      validCharacters.length +
-        validLightCones.length +
+      characters.length +
+        lightCones.length +
         newsEvents.length +
         relics.length +
         favorites.length ===
@@ -165,7 +122,7 @@ async function importData(file: File) {
     const confirmed = await confirmDialog({
       title: '确认导入？',
       message:
-        `将导入：角色 ${validCharacters.length} 名、光锥 ${validLightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条` +
+        `将导入：角色 ${characters.length} 名、光锥 ${lightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条` +
         (favorites.length ? `、收藏 ${favorites.length} 条` : '') +
         '.' +
         (newerThanApp ? '\n注意：该备份来自更新版本的站点，新字段将被忽略。' : '') +
@@ -179,8 +136,8 @@ async function importData(file: File) {
       'rw',
       [db.characters, db.lightCones, db.newsEvents, db.relics],
       async () => {
-        if (validCharacters.length) await db.characters.bulkPut(validCharacters);
-        if (validLightCones.length) await db.lightCones.bulkPut(validLightCones);
+        if (characters.length) await db.characters.bulkPut(characters);
+        if (lightCones.length) await db.lightCones.bulkPut(lightCones);
         if (newsEvents.length) await db.newsEvents.bulkPut(newsEvents);
         if (relics.length) await db.relics.bulkPut(relics);
       },

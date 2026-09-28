@@ -71,6 +71,28 @@ export function useBootstrapStatus(): BootstrapStatus {
   return useSyncExternalStore(subscribeBootstrap, getBootstrapStatus);
 }
 
+/** 数据中出现的全部实装版本（数值序），版本详情导航与版本对比共用 */
+export function useAllVersions(): string[] {
+  const characters = useCharacters();
+  const lightCones = useLightCones();
+  const newsEvents = useNewsEvents();
+  const relics = useRelics();
+  return useMemo(
+    () =>
+      [
+        ...new Set([
+          ...characters.map((c) => c.releaseVersion),
+          ...lightCones.map((lc) => lc.releaseVersion ?? ''),
+          ...newsEvents.map((event) => event.version ?? ''),
+          ...relics.map((r) => r.releaseVersion ?? ''),
+        ]),
+      ]
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
+    [characters, lightCones, newsEvents, relics],
+  );
+}
+
 /* ------------------------------------------------------------------ */
 /* 搜索输入防抖                                                        */
 /* ------------------------------------------------------------------ */

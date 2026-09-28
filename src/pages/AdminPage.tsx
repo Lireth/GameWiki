@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AdminForm } from '../components/admin/AdminForm';
+import { BatchImportPanel } from '../components/admin/BatchImportPanel';
 import { EntryList, type AnyEntry } from '../components/admin/EntryList';
 import { HealthCheckPanel } from '../components/admin/HealthCheckPanel';
 import { PageHeader } from '../components/ui/PageHeader';
@@ -47,6 +48,8 @@ export function AdminPage() {
   const relics = useRelics();
 
   const [entryType, setEntryType] = useState<EntryType>('character');
+  /** 录入模式：单条表单 / 批量 JSON（批量跟随 entryType） */
+  const [mode, setMode] = useState<'form' | 'batch'>('form');
   const [form, setForm] = useState<FormState>(() => emptyForm('character'));
   /** 表单基线：与 form 不一致即视为有未保存修改 */
   const [baseline, setBaseline] = useState<FormState>(() => emptyForm('character'));
@@ -292,6 +295,34 @@ export function AdminPage() {
     }
   };
 
+  /** 批量录入写入：items 已通过 recordValidation 校验，按 id 覆盖 */
+  const importBatch = async (items: Record<string, unknown>[]) => {
+    try {
+      await db.transaction(
+        'rw',
+        [db.characters, db.lightCones, db.newsEvents, db.relics],
+        async () => {
+          if (entryType === 'character') {
+            await db.characters.bulkPut(items as unknown as Character[]);
+          } else if (entryType === 'lightCone') {
+            await db.lightCones.bulkPut(items as unknown as LightCone[]);
+          } else if (entryType === 'relic') {
+            await db.relics.bulkPut(items as unknown as RelicSet[]);
+          } else {
+            await db.newsEvents.bulkPut(items as unknown as NewsEvent[]);
+          }
+        },
+      );
+      const label = ENTRY_TYPES.find((type) => type.value === entryType)?.label;
+      showNotice(`已批量导入 ${items.length} 条${label ?? ''}记录`);
+    } catch (error) {
+      void alertDialog(
+        `${error instanceof Error ? error.message : String(error)}`,
+        '批量导入失败',
+      );
+    }
+  };
+
   return (
     <div>
       <PageHeader
@@ -300,8 +331,8 @@ export function AdminPage() {
         description="在应用内直接维护角色、光锥与资讯事件数据，保存后所有页面实时更新。录入数据会立即写入浏览器 IndexedDB，建议定期在页脚导出备份。"
       />
 
-      {/* 类型切换 */}
-      <div className="mb-5 flex flex-wrap gap-1.5">
+      {/* 类型 + 录入模式切换 */}
+      <div className="mb-5 flex flex-wrap items-center gap-1.5">
         {ENTRY_TYPES.map((type) => {
           const count =
             type.value === 'character'
@@ -327,35 +358,64 @@ export function AdminPage() {
             </button>
           );
         })}
+        <div className="ml-auto flex items-center gap-1.5">
+          {(
+            [
+              { value: 'form', label: '单条录入' },
+              { value: 'batch', label: '批量录入' },
+            ] as const
+          ).map((item) => (
+            <button
+              key={item.value}
+              type="button"
+              onClick={() => setMode(item.value)}
+              className={`chamfer-xs border px-3 py-1.5 text-sm transition ${
+                mode === item.value
+                  ? 'border-gold-500 bg-gold-500/12 text-gold-300'
+                  : 'border-space-600/60 text-slate-400 hover:border-gold-500/50 hover:text-gold-300'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        <AdminForm
-          fields={fields}
-          form={form}
-          fieldErrors={fieldErrors}
-          editingId={editingId}
-          isDirty={isDirty}
-          notice={notice}
-          optionsFor={optionsFor}
-          setField={setField}
-          onImageUpload={(file, fieldName) => void readImage(file, fieldName)}
-          onSave={() => void save()}
-          onCancelEdit={cancelEdit}
-        />
-
-        <EntryList
+      {mode === 'batch' ? (
+        <BatchImportPanel
           entryType={entryType}
-          entries={entries}
-          visibleEntries={visibleEntries}
-          editingId={editingId}
-          listQuery={listQuery}
-          relatedNames={relatedNames}
-          onQueryChange={setListQuery}
-          onStartEdit={(entry) => void startEdit(entry)}
-          onRemove={(entry, label) => void remove(entry, label)}
+          typeLabel={ENTRY_TYPES.find((type) => type.value === entryType)?.label ?? ''}
+          onImport={(items) => void importBatch(items)}
         />
-      </div>
+      ) : (
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          <AdminForm
+            fields={fields}
+            form={form}
+            fieldErrors={fieldErrors}
+            editingId={editingId}
+            isDirty={isDirty}
+            notice={notice}
+            optionsFor={optionsFor}
+            setField={setField}
+            onImageUpload={(file, fieldName) => void readImage(file, fieldName)}
+            onSave={() => void save()}
+            onCancelEdit={cancelEdit}
+          />
+
+          <EntryList
+            entryType={entryType}
+            entries={entries}
+            visibleEntries={visibleEntries}
+            editingId={editingId}
+            listQuery={listQuery}
+            relatedNames={relatedNames}
+            onQueryChange={setListQuery}
+            onStartEdit={(entry) => void startEdit(entry)}
+            onRemove={(entry, label) => void remove(entry, label)}
+          />
+        </div>
+      )}
 
       {/* 健康检查 */}
       <HealthCheckPanel issues={healthIssues} onRun={() => void runHealthCheck()} />

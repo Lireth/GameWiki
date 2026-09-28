@@ -23,6 +23,11 @@ const VersionDetailPage = lazy(() =>
     default: m.VersionDetailPage,
   })),
 );
+const VersionComparePage = lazy(() =>
+  import('./pages/VersionComparePage').then((m) => ({
+    default: m.VersionComparePage,
+  })),
+);
 const VersionIndexPage = lazy(() =>
   import('./pages/VersionIndexPage').then((m) => ({
     default: m.VersionIndexPage,
@@ -49,6 +54,7 @@ export default function App() {
           <Route path="news" element={<NewsPage />} />
           <Route path="versions" element={<VersionIndexPage />} />
           <Route path="versions/:version" element={<VersionDetailPage />} />
+          <Route path="versions/:version/compare" element={<VersionComparePage />} />
           <Route path="favorites" element={<FavoritesPage />} />
           <Route path="admin" element={<AdminPage />} />
           <Route path="*" element={<NotFoundPage />} />

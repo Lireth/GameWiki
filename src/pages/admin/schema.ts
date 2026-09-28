@@ -19,6 +19,7 @@ import {
 } from '../../db/types';
 import { parseImageRef } from '../../lib/imageRef';
 import { parseAliases } from '../../lib/entryValidation';
+import type { RecordType } from '../../lib/recordValidation';
 import {
   ACQUISITION_LABEL,
   BODY_TYPE_LABEL,
@@ -30,7 +31,8 @@ import {
   RELIC_SLOT_LABEL,
 } from '../../lib/meta';
 
-export type EntryType = 'character' | 'lightCone' | 'newsEvent' | 'relic';
+/** 条目类型（与 lib/recordValidation 的 RecordType 保持同一来源） */
+export type EntryType = RecordType;
 
 export const ENTRY_TYPES: { value: EntryType; label: string }[] = [
   { value: 'character', label: '角色' },

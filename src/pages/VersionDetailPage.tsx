@@ -9,6 +9,7 @@ import { EmptyState } from '../components/ui/EmptyState';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import {
+  useAllVersions,
   useCharacters,
   useLightCones,
   useNewsEvents,
@@ -70,20 +71,7 @@ export function VersionDetailPage() {
     0;
 
   /** 数据中出现的全部版本（数值序），用于上一版本 / 下一版本导航 */
-  const allVersions = useMemo(
-    () =>
-      [
-        ...new Set([
-          ...characters.map((c) => c.releaseVersion),
-          ...lightCones.map((lc) => lc.releaseVersion ?? ''),
-          ...newsEvents.map((event) => event.version ?? ''),
-          ...relics.map((r) => r.releaseVersion ?? ''),
-        ]),
-      ]
-        .filter(Boolean)
-        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
-    [characters, lightCones, newsEvents, relics],
-  );
+  const allVersions = useAllVersions();
   const versionIndex = allVersions.indexOf(version);
   const prevVersion = versionIndex > 0 ? allVersions[versionIndex - 1] : null;
   const nextVersion =
@@ -149,6 +137,15 @@ export function VersionDetailPage() {
               className="chamfer-xs border border-space-600/60 px-2.5 py-1 text-slate-300 transition hover:border-gold-500/50 hover:text-gold-300"
             >
               v{nextVersion} →
+            </Link>
+          )}
+          {prevVersion && (
+            <Link
+              to={`/versions/${version}/compare?with=${prevVersion}`}
+              title={`对比 v${version} 与 v${prevVersion} 的实装差异`}
+              className="chamfer-xs border border-gold-500/50 px-2.5 py-1 text-gold-300 transition hover:bg-gold-500/10"
+            >
+              版本对比
             </Link>
           )}
           {timeSpan && (
