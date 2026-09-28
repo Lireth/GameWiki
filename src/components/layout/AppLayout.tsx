@@ -5,6 +5,7 @@ import { Navbar } from './Navbar';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PwaUpdateBanner } from '../PwaUpdateBanner';
 import { CommandPalette } from '../ui/CommandPalette';
+import { DialogHost } from '../ui/Dialog';
 import { useBootstrapStatus } from '../../hooks/useWikiData';
 import { bootstrapDatabase } from '../../db/bootstrap';
 
@@ -53,6 +54,7 @@ export function AppLayout() {
       </main>
       <Footer />
       <CommandPalette />
+      <DialogHost />
     </div>
   );
 }

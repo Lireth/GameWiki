@@ -16,6 +16,7 @@ import {
 import { DATE_PATTERN, MAX_IMAGE_DATA_URL_LENGTH } from '../../lib/entryValidation';
 import { getFavorites, mergeFavorites } from '../../lib/favorites';
 import { blobToDataURL, parseImageRef } from '../../lib/imageRef';
+import { alertDialog, confirmDialog } from '../../lib/dialog';
 
 /** 导出时把 idb: 图片引用还原为 data URL，保证备份 JSON 自包含可迁移 */
 async function resolveExportImage(
@@ -69,7 +70,10 @@ async function exportData() {
     link.click();
     URL.revokeObjectURL(url);
   } catch (error) {
-    alert(`导出失败：${error instanceof Error ? error.message : String(error)}`);
+    void alertDialog(
+      `${error instanceof Error ? error.message : String(error)}`,
+      '导出失败',
+    );
   }
 }
 
@@ -152,17 +156,23 @@ async function importData(file: File) {
         favorites.length ===
       0
     ) {
-      alert('文件中未找到可导入的数据（需要 characters / lightCones / relics / newsEvents / favorites 字段）。');
+      void alertDialog(
+        '文件中未找到可导入的数据（需要 characters / lightCones / relics / newsEvents / favorites 字段）。',
+        '无可导入数据',
+      );
       return;
     }
-    const confirmed = window.confirm(
-      `将导入：角色 ${validCharacters.length} 名、光锥 ${validLightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条` +
+    const confirmed = await confirmDialog({
+      title: '确认导入？',
+      message:
+        `将导入：角色 ${validCharacters.length} 名、光锥 ${validLightCones.length} 件、遗器 ${relics.length} 套、资讯 ${newsEvents.length} 条` +
         (favorites.length ? `、收藏 ${favorites.length} 条` : '') +
         '.' +
         (newerThanApp ? '\n注意：该备份来自更新版本的站点，新字段将被忽略。' : '') +
         (skipped > 0 ? `\n另有 ${skipped} 条校验未通过（枚举 / 日期格式 / 图片超限）的条目将被跳过。` : '') +
-        '\n与现有数据 id 相同的条目会被覆盖，其余保留。是否继续？',
-    );
+        '\n与现有数据 id 相同的条目会被覆盖，其余保留。',
+      confirmText: '导入',
+    });
     if (!confirmed) return;
 
     await db.transaction(
@@ -177,9 +187,9 @@ async function importData(file: File) {
     );
     // 收藏与现有收藏集合并（并集），不覆盖丢失
     if (favorites.length) await mergeFavorites(favorites);
-    alert('导入完成，页面数据已实时更新。');
+    void alertDialog('导入完成，页面数据已实时更新。', '导入成功');
   } catch {
-    alert('导入失败：文件不是有效的备份 JSON。');
+    void alertDialog('文件不是有效的备份 JSON。', '导入失败');
   }
 }
 

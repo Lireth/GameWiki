@@ -24,6 +24,7 @@ import {
 import { eventLink, versionLink } from '../lib/links';
 import { NEWS_TYPE_META } from '../lib/meta';
 import { buildNewsIcs, downloadIcsFile } from '../lib/ics';
+import { alertDialog } from '../lib/dialog';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const WEEKDAY_HEADERS = ['一', '二', '三', '四', '五', '六', '日'];
@@ -92,7 +93,10 @@ function readMonth(raw: string | null, now: Date): number {
 }
 
 export function NewsPage() {
-  useDocumentTitle('资讯日历');
+  useDocumentTitle(
+    '资讯日历',
+    '以年月日历视图展示版本更新、角色 / 光锥实装、卡池与活动等关键时间节点。',
+  );
   const events = useNewsEvents();
   const dataReady = useBootstrapStatus() === 'ok';
   const [params, setParams] = useSearchParams();
@@ -179,7 +183,7 @@ export function NewsPage() {
         ? events
         : events.filter((event) => event.type === typeFilter);
     if (exportEvents.length === 0) {
-      window.alert('暂无可导出的资讯事件。');
+      void alertDialog('暂无可导出的资讯事件。', '导出 ICS');
       return;
     }
     downloadIcsFile('hsr-wiki-calendar.ics', buildNewsIcs(exportEvents));

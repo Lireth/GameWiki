@@ -43,7 +43,10 @@ function useFavoritesByType() {
 }
 
 export function FavoritesPage() {
-  useDocumentTitle('我的收藏');
+  useDocumentTitle(
+    '我的收藏',
+    '聚合展示收藏的角色、光锥与遗器条目；收藏保存在本地，随导出备份一起保留。',
+  );
   const dataReady = useBootstrapStatus() === 'ok';
   const hasAnyData =
     useCharacters().length +

@@ -53,7 +53,10 @@ const SORT_ACCESSORS = {
 };
 
 export function RelicsPage() {
-  useDocumentTitle('遗器图鉴');
+  useDocumentTitle(
+    '遗器图鉴',
+    '按名称、类别、稀有度与实装版本搜索和筛选遗器套装，查看部件与套装效果。',
+  );
   const relics = useRelics();
   const dataReady = useBootstrapStatus() === 'ok';
   const { favOnly, favCount, visibleItems, toggleFavOnly } =

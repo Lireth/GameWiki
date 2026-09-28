@@ -94,7 +94,10 @@ function Legend() {
 }
 
 export function MatrixPage() {
-  useDocumentTitle('命途 × 属性矩阵');
+  useDocumentTitle(
+    '命途 × 属性矩阵',
+    '命途 × 战斗属性矩阵：每格展示对应组合下的角色，支持按稀有度、性别与实装版本筛选。',
+  );
   const characters = useCharacters();
   const dataReady = useBootstrapStatus() === 'ok';
   const {

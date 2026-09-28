@@ -59,7 +59,10 @@ const SORT_ACCESSORS = {
 };
 
 export function LightConesPage() {
-  useDocumentTitle('光锥图鉴');
+  useDocumentTitle(
+    '光锥图鉴',
+    '按名称、稀有度、命途、获取方式与实装版本搜索和筛选光锥。',
+  );
   const lightCones = useLightCones();
   const dataReady = useBootstrapStatus() === 'ok';
   const { favOnly, favCount, visibleItems, toggleFavOnly } =

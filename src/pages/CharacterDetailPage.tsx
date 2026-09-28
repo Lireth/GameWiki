@@ -31,7 +31,10 @@ export function CharacterDetailPage() {
   const characterCount = useCharacterCount();
   const newsEvents = useNewsEvents();
   const dataReady = useBootstrapStatus() === 'ok';
-  useDocumentTitle(character ? `${character.name} · 角色详情` : '角色详情');
+  useDocumentTitle(
+    character ? `${character.name} · 角色详情` : '角色详情',
+    character?.description,
+  );
   /** 头像加载失败的头像地址（切换角色时重置判断） */
   const [failedAvatar, setFailedAvatar] = useState<string | null>(null);
   const avatarSrc = useEntityImage(character?.avatar);

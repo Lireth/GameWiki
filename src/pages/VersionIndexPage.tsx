@@ -59,7 +59,10 @@ const KIND_LABELS: { key: keyof VersionStats; unit: string }[] = [
 ];
 
 export function VersionIndexPage() {
-  useDocumentTitle('版本索引');
+  useDocumentTitle(
+    '版本索引',
+    '按大版本分组列出收录的全部实装版本，点击查看该版本聚合的角色、光锥、遗器与资讯。',
+  );
   const dataReady = useBootstrapStatus() === 'ok';
   const { stats, hasData } = useVersionStats();
 

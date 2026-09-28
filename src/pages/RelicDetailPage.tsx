@@ -26,7 +26,10 @@ export function RelicDetailPage() {
   const newsEvents = useNewsEvents();
   const dataReady = useBootstrapStatus() === 'ok';
   const imageSrc = useEntityImage(relic?.image);
-  useDocumentTitle(relic ? `${relic.name} · 遗器详情` : '遗器详情');
+  useDocumentTitle(
+    relic ? `${relic.name} · 遗器详情` : '遗器详情',
+    relic?.description,
+  );
 
   if (!relic) {
     return (

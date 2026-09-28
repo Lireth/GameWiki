@@ -4,6 +4,7 @@ import { SearchIcon, StarIcon } from '../icons';
 import { useDebouncedSearch } from '../../hooks/useWikiData';
 import { SORT_OPTIONS } from '../../lib/facets';
 import { RARITY_META } from '../../lib/meta';
+import { alertDialog } from '../../lib/dialog';
 
 /** 列表页排序下拉框的共用样式 */
 export const sortSelectClass =
@@ -19,7 +20,10 @@ export function CopyLinkButton({ className = '' }: { className?: string }) {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
-      alert('复制失败：当前环境不支持访问剪贴板（需 HTTPS 或 localhost）。');
+      void alertDialog(
+        '当前环境不支持访问剪贴板（需 HTTPS 或 localhost）。',
+        '复制失败',
+      );
     }
   };
 

@@ -16,6 +16,7 @@ import {
 } from '../hooks/useWikiData';
 import { formatDateShort } from '../lib/format';
 import { eventLink, newsMonthLink, versionLink } from '../lib/links';
+import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 export function VersionDetailPage() {
   const { version = '' } = useParams();
@@ -23,6 +24,10 @@ export function VersionDetailPage() {
   const lightCones = useLightCones();
   const newsEvents = useNewsEvents();
   const relics = useRelics();
+  useDocumentTitle(
+    version ? `版本 ${version}` : '版本详情',
+    `星穹铁道 ${version} 版本实装内容：聚合该版本的全部角色、光锥与资讯事件。`,
+  );
 
   const versionChars = useMemo(
     () =>

@@ -26,7 +26,10 @@ export function LightConeDetailPage() {
   const lightConeCount = useLightConeCount();
   const newsEvents = useNewsEvents();
   const dataReady = useBootstrapStatus() === 'ok';
-  useDocumentTitle(lightCone ? `${lightCone.name} · 光锥详情` : '光锥详情');
+  useDocumentTitle(
+    lightCone ? `${lightCone.name} · 光锥详情` : '光锥详情',
+    lightCone?.description,
+  );
   const [failedImage, setFailedImage] = useState<string | null>(null);
   const imageSrc = useEntityImage(lightCone?.image);
 

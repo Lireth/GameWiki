@@ -68,7 +68,10 @@ const SORT_ACCESSORS = {
 };
 
 export function CharactersPage() {
-  useDocumentTitle('角色图鉴');
+  useDocumentTitle(
+    '角色图鉴',
+    '按名称、稀有度、命途、战斗属性、体型与实装版本搜索和筛选角色。',
+  );
   const characters = useCharacters();
   const dataReady = useBootstrapStatus() === 'ok';
   const { favOnly, favCount, visibleItems, toggleFavOnly } =
