@@ -12,7 +12,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const TODAY = '2026-09-28';
+/** 抓取日（UTC 日期，略保守：只排除开始时间晚于今天的未开卡池） */
+const TODAY = new Date().toISOString().slice(0, 10);
 const API = 'https://wiki.biligame.com/sr/api.php';
 const OUT = __dirname;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -128,6 +129,12 @@ async function scrapeLightCones() {
   const results = await ask(
     '[[分类:光锥]]|?名称|?本体名|?外文名|?稀有度|?命途|?实装日期|?实装版本|?获取方式|?技能|?技能描述|?效果|?描述|?介绍|limit=500',
   );
+  // 保留已本地化的站内图片路径（scrape_images.cjs 的成果），重抓按 id 回填
+  const localImages = new Map(
+    loadJson('light_cones_seed.json')
+      .filter((c) => c.image && c.image.startsWith('/cones/'))
+      .map((c) => [c.id, c.image]),
+  );
   const seed = [];
   const skipped = [];
   const unmappedAcq = new Set();
@@ -173,6 +180,7 @@ async function scrapeLightCones() {
       acquisition,
       releaseDate,
       releaseVersion,
+      ...(localImages.has(title) ? { image: localImages.get(title) } : {}),
       aliases: aliases.length ? aliases : undefined,
       description: firstText(p, ['技能', '技能描述', '效果', '描述', '介绍'])
         ? stripHtml(firstText(p, ['技能', '技能描述', '效果', '描述', '介绍']))
@@ -198,6 +206,12 @@ async function scrapeRelics() {
     return;
   }
   console.log(`命中分类「${found.category}」`);
+  // 保留已本地化的站内图片路径（scrape_images.cjs 的成果），重抓按 id 回填
+  const localImages = new Map(
+    loadJson('relics_seed.json')
+      .filter((r) => r.image && r.image.startsWith('/relics/'))
+      .map((r) => [r.id, r.image]),
+  );
   const seed = [];
   const skipped = [];
   const noRarity = [];
@@ -230,6 +244,7 @@ async function scrapeRelics() {
       effect4: effect4 || undefined,
       releaseDate: releaseDate || undefined,
       releaseVersion: (p['实装版本'] || [])[0] || undefined,
+      ...(localImages.has(title) ? { image: localImages.get(title) } : {}),
       pieces: pieces.length > 0 ? pieces : undefined,
       description: firstText(p, ['介绍', '描述'])
         ? stripHtml(firstText(p, ['介绍', '描述']))

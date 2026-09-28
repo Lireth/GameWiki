@@ -3415,6 +3415,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "量子属性伤害提高10%。",
     effect4: "使装备者的速度降低8%。进入战斗前，若装备者的速度小于110/95，使装备者的暴击率提高20%/32%。该效果同时对装备者的忆灵生效。",
     releaseVersion: "3.0",
+    image: "/relics/哀歌覆国的诗人.png",
     pieces: [
       {
         slot: "head",
@@ -3429,7 +3430,6 @@ export const relicSeed: RelicSet[] = [
         name: "诗人的钉银之履",
       },
     ],
-    image: "/relics/哀歌覆国的诗人.png",
   },
   {
     id: "宝命长存的莳者",
@@ -3439,6 +3439,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "生命上限提高12%。",
     effect4: "当装备者受到攻击或被我方目标消耗生命值后，暴击率提高8%，持续2回合，该效果最多叠加2层。",
     releaseVersion: "1.2",
+    image: "/relics/宝命长存的莳者.png",
     pieces: [
       {
         slot: "head",
@@ -3453,7 +3454,6 @@ export const relicSeed: RelicSet[] = [
         name: "莳者的天人丝履",
       },
     ],
-    image: "/relics/宝命长存的莳者.png",
   },
   {
     id: "奔狼的都蓝王朝",
@@ -3462,6 +3462,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "我方角色施放追加攻击时，装备者获得一层【功勋】，最多叠加5层，每层【功勋】使装备者追加攻击造成的伤害提高5%，叠满5层时，额外使装备者的暴击伤害提高25%。",
     releaseVersion: "2.3",
+    image: "/relics/奔狼的都蓝王朝.png",
     pieces: [
       {
         slot: "sphere",
@@ -3472,7 +3473,6 @@ export const relicSeed: RelicSet[] = [
         name: "都蓝的器兽缰辔",
       },
     ],
-    image: "/relics/奔狼的都蓝王朝.png",
   },
   {
     id: "不老者的仙舟",
@@ -3481,6 +3481,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的生命上限提高12%。当装备者的速度大于等于120时，我方全体攻击力提高8%。",
     releaseVersion: "1.0",
+    image: "/relics/不老者的仙舟.png",
     pieces: [
       {
         slot: "sphere",
@@ -3491,7 +3492,6 @@ export const relicSeed: RelicSet[] = [
         name: "罗浮仙舟的建木枝蔓",
       },
     ],
-    image: "/relics/不老者的仙舟.png",
   },
   {
     id: "苍穹战线格拉默",
@@ -3500,6 +3500,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的攻击力提高12%。当装备者的速度大于等于135/160时，使装备者造成的伤害提高12%/18%。",
     releaseVersion: "1.5",
+    image: "/relics/苍穹战线格拉默.png",
     pieces: [
       {
         slot: "sphere",
@@ -3510,7 +3511,6 @@ export const relicSeed: RelicSet[] = [
         name: "格拉默的寂静坟碑",
       },
     ],
-    image: "/relics/苍穹战线格拉默.png",
   },
   {
     id: "沉欢醉饮的海隅",
@@ -3519,6 +3519,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的攻击力提高12%。当装备者的攻击力大于等于2400/3600时，使造成的持续伤害额外提高12%/24%。",
     releaseVersion: "3.4",
+    image: "/relics/沉欢醉饮的海隅.png",
     pieces: [
       {
         slot: "sphere",
@@ -3529,7 +3530,6 @@ export const relicSeed: RelicSet[] = [
         name: "酣歌海垠的歌咏步道",
       },
     ],
-    image: "/relics/沉欢醉饮的海隅.png",
   },
   {
     id: "沉陆海域露莎卡",
@@ -3538,6 +3538,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的能量恢复效率提高5.0%，如果装备者不是编队中的第一位角色，使编队中的第一位角色攻击力提高12.0%。",
     releaseVersion: "2.5",
+    image: "/relics/沉陆海域露莎卡.png",
     pieces: [
       {
         slot: "sphere",
@@ -3548,7 +3549,6 @@ export const relicSeed: RelicSet[] = [
         name: "露莎卡的双生航道",
       },
     ],
-    image: "/relics/沉陆海域露莎卡.png",
   },
   {
     id: "晨昏交界的翔鹰",
@@ -3558,6 +3558,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "风属性伤害提高10%。",
     effect4: "当装备者施放终结技后，使其行动提前25%。",
     releaseVersion: "1.0",
+    image: "/relics/晨昏交界的翔鹰.png",
     pieces: [
       {
         slot: "head",
@@ -3572,7 +3573,6 @@ export const relicSeed: RelicSet[] = [
         name: "翔鹰的绒羽绑带",
       },
     ],
-    image: "/relics/晨昏交界的翔鹰.png",
   },
   {
     id: "出云显世与高天神国",
@@ -3581,6 +3581,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的攻击力提高12%。进入战斗时，若至少存在一名与装备者命途相同的队友，装备者的暴击率提高12%。",
     releaseVersion: "2.1",
+    image: "/relics/出云显世与高天神国.png",
     pieces: [
       {
         slot: "sphere",
@@ -3591,7 +3592,6 @@ export const relicSeed: RelicSet[] = [
         name: "出云的终始一刀",
       },
     ],
-    image: "/relics/出云显世与高天神国.png",
   },
   {
     id: "荡除蠹灾的铁骑",
@@ -3601,6 +3601,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "击破特攻提高16%。",
     effect4: "当装备者的击破特攻大于等于150%时，对目标造成的击破伤害无视目标10%防御力。当装备者的击破特攻大于等于250%时，对目标造成的超击破伤害额外无视其15%防御力。",
     releaseVersion: "2.3",
+    image: "/relics/荡除蠹灾的铁骑.png",
     pieces: [
       {
         slot: "head",
@@ -3615,7 +3616,6 @@ export const relicSeed: RelicSet[] = [
         name: "铁骑的行空护胫",
       },
     ],
-    image: "/relics/荡除蠹灾的铁骑.png",
   },
   {
     id: "盗匪荒漠的废土客",
@@ -3625,6 +3625,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "虚数属性伤害提高10%。",
     effect4: "装备者对陷入负面效果的敌方目标造成伤害时暴击率提高10%，对陷入禁锢状态的敌方目标造成伤害时暴击伤害提高20%。",
     releaseVersion: "1.0",
+    image: "/relics/盗匪荒漠的废土客.png",
     pieces: [
       {
         slot: "head",
@@ -3639,7 +3640,6 @@ export const relicSeed: RelicSet[] = [
         name: "废土客的动力腿甲",
       },
     ],
-    image: "/relics/盗匪荒漠的废土客.png",
   },
   {
     id: "盗贼公国塔利亚",
@@ -3648,6 +3648,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的击破特攻提高16%。当装备者的速度大于等于145时，击破特攻额外提高20%。",
     releaseVersion: "1.0",
+    image: "/relics/盗贼公国塔利亚.png",
     pieces: [
       {
         slot: "sphere",
@@ -3658,7 +3659,6 @@ export const relicSeed: RelicSet[] = [
         name: "塔利亚的裸皮电线",
       },
     ],
-    image: "/relics/盗贼公国塔利亚.png",
   },
   {
     id: "恶海逐波的船长",
@@ -3668,6 +3668,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "暴击伤害提高16%。",
     effect4: "装备者成为其他我方目标的技能目标时，获得1层【助力】，最多叠加2层。施放终结技时，若持有2层【助力】，消耗所有【助力】，使装备者攻击力提高48%，持续1回合。",
     releaseVersion: "3.3",
+    image: "/relics/恶海逐波的船长.png",
     pieces: [
       {
         slot: "head",
@@ -3682,7 +3683,6 @@ export const relicSeed: RelicSet[] = [
         name: "船长的踏浪游靴",
       },
     ],
-    image: "/relics/恶海逐波的船长.png",
   },
   {
     id: "繁星璀璨的天才",
@@ -3692,6 +3692,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "量子属性伤害提高10%。",
     effect4: "当装备者对敌方目标造成伤害时，无视其10%的防御力。若目标拥有量子属性弱点，额外无视其10%的防御力。",
     releaseVersion: "1.0",
+    image: "/relics/繁星璀璨的天才.png",
     pieces: [
       {
         slot: "head",
@@ -3706,7 +3707,6 @@ export const relicSeed: RelicSet[] = [
         name: "天才的引力漫步",
       },
     ],
-    image: "/relics/繁星璀璨的天才.png",
   },
   {
     id: "繁星竞技场",
@@ -3715,6 +3715,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的暴击率提高8%。当装备者的当前暴击率大于等于70%时，普攻和战技造成的伤害提高20%。",
     releaseVersion: "1.2",
+    image: "/relics/繁星竞技场.png",
     pieces: [
       {
         slot: "sphere",
@@ -3725,7 +3726,6 @@ export const relicSeed: RelicSet[] = [
         name: "泰科铵的弧光赛道",
       },
     ],
-    image: "/relics/繁星竞技场.png",
   },
   {
     id: "泛银河商业公司",
@@ -3734,6 +3734,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的效果命中提高10%，同时提高装备者等同于当前效果命中25%的攻击力，最多提高25%。",
     releaseVersion: "1.0",
+    image: "/relics/泛银河商业公司.png",
     pieces: [
       {
         slot: "sphere",
@@ -3744,7 +3745,6 @@ export const relicSeed: RelicSet[] = [
         name: "公司的贸易航道",
       },
     ],
-    image: "/relics/泛银河商业公司.png",
   },
   {
     id: "风举云飞的勇烈",
@@ -3754,6 +3754,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "攻击力提高12%。",
     effect4: "使装备者暴击率提高6%，装备者施放追加攻击时，使终结技造成的伤害提高36%，该效果持续1回合。",
     releaseVersion: "2.3",
+    image: "/relics/风举云飞的勇烈.png",
     pieces: [
       {
         slot: "head",
@@ -3768,7 +3769,6 @@ export const relicSeed: RelicSet[] = [
         name: "勇烈的逐猎腿甲",
       },
     ],
-    image: "/relics/风举云飞的勇烈.png",
   },
   {
     id: "骇域漫游的信使",
@@ -3778,6 +3778,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "速度提高6%。",
     effect4: "当装备者对我方目标施放终结技时，我方全体速度提高12%，持续1回合，该效果无法叠加。",
     releaseVersion: "1.2",
+    image: "/relics/骇域漫游的信使.png",
     pieces: [
       {
         slot: "head",
@@ -3792,7 +3793,6 @@ export const relicSeed: RelicSet[] = [
         name: "信使的酷跑板鞋",
       },
     ],
-    image: "/relics/骇域漫游的信使.png",
   },
   {
     id: "寰宇生研院",
@@ -3801,6 +3801,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "进入战斗时，若装备者能量上限大于等于200点，每超过1点使装备者造成的伤害提高0.2%，最多提高32%。",
     releaseVersion: "4.4",
+    image: "/relics/寰宇生研院.png",
     pieces: [
       {
         slot: "sphere",
@@ -3811,7 +3812,6 @@ export const relicSeed: RelicSet[] = [
         name: "生研院的外周管线",
       },
     ],
-    image: "/relics/寰宇生研院.png",
   },
   {
     id: "毁烬焚骨的大公",
@@ -3821,6 +3821,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "追加攻击造成的伤害提高20%。",
     effect4: "装备者对敌方目标施放追加攻击时，根据追加攻击造成伤害的次数，每次造成伤害时使装备者的攻击力提高6%，最多叠加8次，持续3回合。该效果在装备者下一次施放追加攻击时移除。",
     releaseVersion: "1.5",
+    image: "/relics/毁烬焚骨的大公.png",
     pieces: [
       {
         slot: "head",
@@ -3835,7 +3836,6 @@ export const relicSeed: RelicSet[] = [
         name: "大公的绅雅礼靴",
       },
     ],
-    image: "/relics/毁烬焚骨的大公.png",
   },
   {
     id: "机心戏梦的钟表匠",
@@ -3845,6 +3845,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "击破特攻提高16%。",
     effect4: "当装备者对我方目标施放终结技时，我方全体击破特攻提高30%，持续2回合，该效果无法叠加。",
     releaseVersion: "2.0",
+    image: "/relics/机心戏梦的钟表匠.png",
     pieces: [
       {
         slot: "head",
@@ -3859,7 +3860,6 @@ export const relicSeed: RelicSet[] = [
         name: "钟表匠的隐梦革履",
       },
     ],
-    image: "/relics/机心戏梦的钟表匠.png",
   },
   {
     id: "激奏雷电的乐队",
@@ -3869,6 +3869,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "雷属性伤害提高10%。",
     effect4: "当装备者施放战技时，使装备者的攻击力提高20%，持续1回合。",
     releaseVersion: "1.0",
+    image: "/relics/激奏雷电的乐队.png",
     pieces: [
       {
         slot: "head",
@@ -3883,7 +3884,6 @@ export const relicSeed: RelicSet[] = [
         name: "乐队的铆钉短靴",
       },
     ],
-    image: "/relics/激奏雷电的乐队.png",
   },
   {
     id: "街头出身的拳王",
@@ -3893,6 +3893,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "物理属性伤害提高10%。",
     effect4: "当装备者施放攻击或受到攻击后，其在本场战斗中攻击力提高5%，最多叠加5层。",
     releaseVersion: "1.0",
+    image: "/relics/街头出身的拳王.png",
     pieces: [
       {
         slot: "head",
@@ -3907,7 +3908,6 @@ export const relicSeed: RelicSet[] = [
         name: "拳王的弧步战靴",
       },
     ],
-    image: "/relics/街头出身的拳王.png",
   },
   {
     id: "劫火莲灯铸炼宫",
@@ -3916,6 +3916,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的速度提高6%。当装备者击中拥有火属性弱点的敌方目标时，击破特攻提高40%，持续1回合。",
     releaseVersion: "2.3",
+    image: "/relics/劫火莲灯铸炼宫.png",
     pieces: [
       {
         slot: "sphere",
@@ -3926,7 +3927,6 @@ export const relicSeed: RelicSet[] = [
         name: "铸炼宫的焰轮天绸",
       },
     ],
-    image: "/relics/劫火莲灯铸炼宫.png",
   },
   {
     id: "净庭教宗的圣骑士",
@@ -3936,6 +3936,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "防御力提高15%。",
     effect4: "使装备者提供的护盾量提高20%。",
     releaseVersion: "1.0",
+    image: "/relics/净庭教宗的圣骑士.png",
     pieces: [
       {
         slot: "head",
@@ -3950,7 +3951,6 @@ export const relicSeed: RelicSet[] = [
         name: "圣骑的秩序铁靴",
       },
     ],
-    image: "/relics/净庭教宗的圣骑士.png",
   },
   {
     id: "凯歌祝捷的英豪",
@@ -3960,6 +3960,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "攻击力提高12%。",
     effect4: "装备者的忆灵在场时，装备者的速度提高6%，装备者的忆灵攻击时，装备者和忆灵的暴击伤害提高30%，持续2回合。",
     releaseVersion: "3.0",
+    image: "/relics/凯歌祝捷的英豪.png",
     pieces: [
       {
         slot: "head",
@@ -3974,7 +3975,6 @@ export const relicSeed: RelicSet[] = [
         name: "英豪的赴火护胫",
       },
     ],
-    image: "/relics/凯歌祝捷的英豪.png",
   },
   {
     id: "叩问天工的名冶",
@@ -3984,6 +3984,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "生命上限提高12%。",
     effect4: "装备者对防御力降低状态的敌方目标造成的暴击伤害提高28%。装备者对敌方目标施加防御力降低状态后，使我方全体获得【助燃】，持续2回合，该效果无法叠加，持有【助燃】的我方目标造成的伤害提高15%。该效果在装备者施放攻击后可再次触发。",
     releaseVersion: "4.3",
+    image: "/relics/叩问天工的名冶.png",
     pieces: [
       {
         slot: "head",
@@ -3998,7 +3999,6 @@ export const relicSeed: RelicSet[] = [
         name: "名冶的无拘重靴",
       },
     ],
-    image: "/relics/叩问天工的名冶.png",
   },
   {
     id: "烈阳惊雷的女武神",
@@ -4008,6 +4008,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "速度提高6%。",
     effect4: "当装备者及其忆灵为装备者及其忆灵以外的我方目标提供治疗后，使装备者获得【甘霖】，每回合最多触发1次，持续2回合。装备者持有【甘霖】时，速度提高6%，我方全体暴击伤害提高15%，该效果无法叠加。",
     releaseVersion: "3.3",
+    image: "/relics/烈阳惊雷的女武神.png",
     pieces: [
       {
         slot: "head",
@@ -4022,7 +4023,6 @@ export const relicSeed: RelicSet[] = [
         name: "女武神的勋礼马刺",
       },
     ],
-    image: "/relics/烈阳惊雷的女武神.png",
   },
   {
     id: "零号关卡朋克洛德",
@@ -4031,6 +4031,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的欢愉度提高8%。战斗中欢愉度首次达到40%/80%时，使装备者暴击伤害提高20%/32%。",
     releaseVersion: "4.1",
+    image: "/relics/零号关卡朋克洛德.png",
     pieces: [
       {
         slot: "sphere",
@@ -4041,7 +4042,6 @@ export const relicSeed: RelicSet[] = [
         name: "朋克洛德的数据洪流",
       },
     ],
-    image: "/relics/零号关卡朋克洛德.png",
   },
   {
     id: "流星追迹的怪盗",
@@ -4051,6 +4051,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "击破特攻提高16%。",
     effect4: "使装备者的击破特攻提高16%。当装备者击破敌方目标弱点后，恢复3点能量。",
     releaseVersion: "1.0",
+    image: "/relics/流星追迹的怪盗.png",
     pieces: [
       {
         slot: "head",
@@ -4065,7 +4066,6 @@ export const relicSeed: RelicSet[] = [
         name: "怪盗的流星快靴",
       },
     ],
-    image: "/relics/流星追迹的怪盗.png",
   },
   {
     id: "梦想之地匹诺康尼",
@@ -4074,6 +4074,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的能量恢复效率提高5%。使队伍中与装备者属性相同的我方其他角色造成的伤害提高10%。",
     releaseVersion: "1.5",
+    image: "/relics/梦想之地匹诺康尼.png",
     pieces: [
       {
         slot: "sphere",
@@ -4084,7 +4085,6 @@ export const relicSeed: RelicSet[] = [
         name: "匹诺康尼的逐梦轨道",
       },
     ],
-    image: "/relics/梦想之地匹诺康尼.png",
   },
   {
     id: "密林卧雪的猎人",
@@ -4094,6 +4094,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "冰属性伤害提高10%。",
     effect4: "当装备者施放终结技时，暴击伤害提高25%，持续2回合。",
     releaseVersion: "1.0",
+    image: "/relics/密林卧雪的猎人.png",
     pieces: [
       {
         slot: "head",
@@ -4108,7 +4109,6 @@ export const relicSeed: RelicSet[] = [
         name: "雪猎的鹿皮软靴",
       },
     ],
-    image: "/relics/密林卧雪的猎人.png",
   },
   {
     id: "谧宁拾骨地",
@@ -4117,6 +4117,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的生命上限提高12%。当装备者的生命上限大于等于5000点时，使装备者及其忆灵的暴击伤害提高28%。",
     releaseVersion: "3.1",
+    image: "/relics/谧宁拾骨地.png",
     pieces: [
       {
         slot: "sphere",
@@ -4127,7 +4128,6 @@ export const relicSeed: RelicSet[] = [
         name: "哀地里亚的入溟骨链",
       },
     ],
-    image: "/relics/谧宁拾骨地.png",
   },
   {
     id: "奇想蕉乐园",
@@ -4136,6 +4136,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的暴击伤害提高16.0%，当存在装备者召唤的目标时，暴击伤害额外提高32.0%。",
     releaseVersion: "2.5",
+    image: "/relics/奇想蕉乐园.png",
     pieces: [
       {
         slot: "sphere",
@@ -4146,7 +4147,6 @@ export const relicSeed: RelicSet[] = [
         name: "蕉乐园的模因线缆",
       },
     ],
-    image: "/relics/奇想蕉乐园.png",
   },
   {
     id: "千星荟萃之城",
@@ -4155,6 +4155,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "装备者施放追加攻击时，攻击力提高24%，持续2回合。当敌方目标被消灭时，我方全体在本场战斗中暴击伤害提高12%，该效果无法叠加。",
     releaseVersion: "4.1",
+    image: "/relics/千星荟萃之城.png",
     pieces: [
       {
         slot: "sphere",
@@ -4165,7 +4166,6 @@ export const relicSeed: RelicSet[] = [
         name: "千星城的雇员凭证",
       },
     ],
-    image: "/relics/千星荟萃之城.png",
   },
   {
     id: "熔岩锻铸的火匠",
@@ -4175,6 +4175,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "火属性伤害提高10%。",
     effect4: "使装备者战技造成的伤害提高12%，并使施放终结技后的下一次攻击造成的火属性伤害提高12%。",
     releaseVersion: "1.0",
+    image: "/relics/熔岩锻铸的火匠.png",
     pieces: [
       {
         slot: "head",
@@ -4189,7 +4190,6 @@ export const relicSeed: RelicSet[] = [
         name: "火匠的合金义肢",
       },
     ],
-    image: "/relics/熔岩锻铸的火匠.png",
   },
   {
     id: "闪耀功勋的魔法少女",
@@ -4199,6 +4199,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "暴击伤害提高16%。",
     effect4: "装备者及其忆灵造成的欢愉伤害无视目标10%的防御力，我方每累计获得5点笑点，造成的欢愉伤害额外无视目标1%的防御力，最多叠加10层。",
     releaseVersion: "4.0",
+    image: "/relics/闪耀功勋的魔法少女.png",
     pieces: [
       {
         slot: "head",
@@ -4213,7 +4214,6 @@ export const relicSeed: RelicSet[] = [
         name: "魔法少女的缔约长靴",
       },
     ],
-    image: "/relics/闪耀功勋的魔法少女.png",
   },
   {
     id: "生命的翁瓦克",
@@ -4222,6 +4222,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的能量恢复效率提高5%。当装备者的速度大于等于120时，进入战斗时立刻使行动提前40%。",
     releaseVersion: "1.0",
+    image: "/relics/生命的翁瓦克.png",
     pieces: [
       {
         slot: "sphere",
@@ -4232,7 +4233,6 @@ export const relicSeed: RelicSet[] = [
         name: "翁瓦克的环岛海岸",
       },
     ],
-    image: "/relics/生命的翁瓦克.png",
   },
   {
     id: "识海迷坠的学者",
@@ -4242,6 +4242,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "暴击率提高8%。",
     effect4: "战技和终结技造成的伤害提高20%，施放终结技后，下一次施放战技时造成的伤害额外提高25%。",
     releaseVersion: "2.6",
+    image: "/relics/识海迷坠的学者.png",
     pieces: [
       {
         slot: "head",
@@ -4256,7 +4257,6 @@ export const relicSeed: RelicSet[] = [
         name: "学者的绒皮雪靴",
       },
     ],
-    image: "/relics/识海迷坠的学者.png",
   },
   {
     id: "戍卫风雪的铁卫",
@@ -4266,6 +4266,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "受到伤害降低8%。",
     effect4: "回合开始时，如果装备者当前生命值百分比小于等于50%，则回复等同于自身生命上限8%的生命值，并恢复5点能量。",
     releaseVersion: "1.0",
+    image: "/relics/戍卫风雪的铁卫.png",
     pieces: [
       {
         slot: "head",
@@ -4280,7 +4281,6 @@ export const relicSeed: RelicSet[] = [
         name: "铁卫的白银护胫",
       },
     ],
-    image: "/relics/戍卫风雪的铁卫.png",
   },
   {
     id: "死水深潜的先驱",
@@ -4290,6 +4290,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "对受负面状态影响的敌人造成的伤害提高12%。",
     effect4: "暴击率提高4%，装备者对陷入不少于2/3个负面效果的敌方目标造成的暴击伤害提高8%/12%。装备者对敌方目标施加负面效果后，上述效果提高100%，持续1回合。",
     releaseVersion: "2.0",
+    image: "/relics/死水深潜的先驱.png",
     pieces: [
       {
         slot: "head",
@@ -4304,7 +4305,6 @@ export const relicSeed: RelicSet[] = [
         name: "先驱的泊星桩锚",
       },
     ],
-    image: "/relics/死水深潜的先驱.png",
   },
   {
     id: "太空封印站",
@@ -4313,6 +4313,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的攻击力提高12%。当装备者的速度大于等于120时，攻击力额外提高12%。",
     releaseVersion: "1.0",
+    image: "/relics/太空封印站.png",
     pieces: [
       {
         slot: "sphere",
@@ -4323,7 +4324,6 @@ export const relicSeed: RelicSet[] = [
         name: "「黑塔」的漫历轨迹",
       },
     ],
-    image: "/relics/太空封印站.png",
   },
   {
     id: "天国@直播间",
@@ -4332,6 +4332,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的暴击伤害提高16%。若在同一回合内消耗大于等于3点战技点，额外使装备者暴击伤害提高32%，持续3回合。",
     releaseVersion: "3.7",
+    image: "/relics/天国@直播间.png",
     pieces: [
       {
         slot: "sphere",
@@ -4342,7 +4343,6 @@ export const relicSeed: RelicSet[] = [
         name: "直播间的畅聊语流",
       },
     ],
-    image: "/relics/天国@直播间.png",
   },
   {
     id: "停转的萨尔索图",
@@ -4351,6 +4351,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的暴击率提高8%。当装备者当前暴击率大于等于50%时，终结技和追加攻击造成的伤害提高15%。",
     releaseVersion: "1.0",
+    image: "/relics/停转的萨尔索图.png",
     pieces: [
       {
         slot: "sphere",
@@ -4361,7 +4362,6 @@ export const relicSeed: RelicSet[] = [
         name: "萨尔索图的晨昏界线",
       },
     ],
-    image: "/relics/停转的萨尔索图.png",
   },
   {
     id: "无主荒星茨冈尼亚",
@@ -4370,6 +4370,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的暴击率提高4%。当敌方目标被消灭时，装备者暴击伤害提高4%，最多叠加10层。",
     releaseVersion: "2.1",
+    image: "/relics/无主荒星茨冈尼亚.png",
     pieces: [
       {
         slot: "sphere",
@@ -4380,7 +4381,6 @@ export const relicSeed: RelicSet[] = [
         name: "茨冈尼亚的轮回纽结",
       },
     ],
-    image: "/relics/无主荒星茨冈尼亚.png",
   },
   {
     id: "星如我见的领航员",
@@ -4390,6 +4390,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "攻击力提高12%。",
     effect4: "装备者进入战斗时/施放战技时，使战技和终结技造成的伤害提高18%，最多叠加3层，装备者回合开始时/施放终结技后，移除1层该效果。",
     releaseVersion: "4.3",
+    image: "/relics/星如我见的领航员.png",
     pieces: [
       {
         slot: "head",
@@ -4404,7 +4405,6 @@ export const relicSeed: RelicSet[] = [
         name: "领航员的永行魔靴",
       },
     ],
-    image: "/relics/星如我见的领航员.png",
   },
   {
     id: "星体差分机",
@@ -4413,6 +4413,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的暴击伤害提高16%。当装备者的暴击伤害大于等于120%时，进入战斗后装备者的暴击率提高60%，持续到施放首次攻击后结束。",
     releaseVersion: "1.0",
+    image: "/relics/星体差分机.png",
     pieces: [
       {
         slot: "sphere",
@@ -4423,7 +4424,6 @@ export const relicSeed: RelicSet[] = [
         name: "螺丝星的环星孔带",
       },
     ],
-    image: "/relics/星体差分机.png",
   },
   {
     id: "妖精织梦的乐园",
@@ -4432,6 +4432,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "队伍中当前在场的我方目标数量不等于4时，每多/少1名我方目标，使装备者及其忆灵造成的伤害提高9%/12%，最多叠加4/3层。",
     releaseVersion: "3.4",
+    image: "/relics/妖精织梦的乐园.png",
     pieces: [
       {
         slot: "sphere",
@@ -4442,7 +4443,6 @@ export const relicSeed: RelicSet[] = [
         name: "迷路迷境的祈愿笛哨",
       },
     ],
-    image: "/relics/妖精织梦的乐园.png",
   },
   {
     id: "野穗伴行的快枪手",
@@ -4452,6 +4452,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "攻击力提高12%。",
     effect4: "使装备者的速度提高6%，普攻造成的伤害提高10%。",
     releaseVersion: "1.0",
+    image: "/relics/野穗伴行的快枪手.png",
     pieces: [
       {
         slot: "head",
@@ -4466,7 +4467,6 @@ export const relicSeed: RelicSet[] = [
         name: "快枪手的铆钉马靴",
       },
     ],
-    image: "/relics/野穗伴行的快枪手.png",
   },
   {
     id: "应天涉远的卜者",
@@ -4476,6 +4476,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "速度提高6%。",
     effect4: "进入战斗前，若装备者的速度大于等于120/160，使装备者的暴击率提高10%/18%。装备者每场战斗首次施放欢愉技时，使我方全体欢愉度提高10%，该效果无法叠加。",
     releaseVersion: "4.0",
+    image: "/relics/应天涉远的卜者.png",
     pieces: [
       {
         slot: "head",
@@ -4490,7 +4491,6 @@ export const relicSeed: RelicSet[] = [
         name: "卜者的飞腾云履",
       },
     ],
-    image: "/relics/应天涉远的卜者.png",
   },
   {
     id: "永恒之地翁法罗斯",
@@ -4499,6 +4499,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的暴击率提高8%。装备者的忆灵在场时，我方全体速度提高8%，该效果无法叠加。",
     releaseVersion: "3.7",
+    image: "/relics/永恒之地翁法罗斯.png",
     pieces: [
       {
         slot: "sphere",
@@ -4509,7 +4510,6 @@ export const relicSeed: RelicSet[] = [
         name: "翁法罗斯的永恒诗篇",
       },
     ],
-    image: "/relics/永恒之地翁法罗斯.png",
   },
   {
     id: "幽锁深牢的系囚",
@@ -4519,6 +4519,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "攻击力提高12%。",
     effect4: "敌方目标每承受1个持续伤害效果，装备者对其造成伤害时就无视其6%的防御力，最多计入3个持续伤害效果。",
     releaseVersion: "1.5",
+    image: "/relics/幽锁深牢的系囚.png",
     pieces: [
       {
         slot: "head",
@@ -4533,7 +4534,6 @@ export const relicSeed: RelicSet[] = [
         name: "系囚的绝足锁桎",
       },
     ],
-    image: "/relics/幽锁深牢的系囚.png",
   },
   {
     id: "渊思寂虑的巨树",
@@ -4542,6 +4542,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的速度提高6%。当装备者的速度大于等于135/180时，使装备者及其忆灵的治疗量提高12%/20%。",
     releaseVersion: "3.1",
+    image: "/relics/渊思寂虑的巨树.png",
     pieces: [
       {
         slot: "sphere",
@@ -4552,7 +4553,6 @@ export const relicSeed: RelicSet[] = [
         name: "神悟树庭的联识叶路",
       },
     ],
-    image: "/relics/渊思寂虑的巨树.png",
   },
   {
     id: "云无留迹的过客",
@@ -4562,6 +4562,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "治疗量提高10%。",
     effect4: "在战斗开始时，立即为我方恢复1个战技点。",
     releaseVersion: "1.0",
+    image: "/relics/云无留迹的过客.png",
     pieces: [
       {
         slot: "head",
@@ -4576,7 +4577,6 @@ export const relicSeed: RelicSet[] = [
         name: "过客的冥途游履",
       },
     ],
-    image: "/relics/云无留迹的过客.png",
   },
   {
     id: "再创天地的救世主",
@@ -4586,6 +4586,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "暴击率提高8%。",
     effect4: "装备者施放普攻或战技后，若装备者的忆灵在场，使装备者及其忆灵生命上限提高24%，我方全体造成的伤害提高15%，持续至装备者下次施放普攻或战技后。",
     releaseVersion: "3.6",
+    image: "/relics/再创天地的救世主.png",
     pieces: [
       {
         slot: "head",
@@ -4600,7 +4601,6 @@ export const relicSeed: RelicSet[] = [
         name: "救世主的拓荒长靴",
       },
     ],
-    image: "/relics/再创天地的救世主.png",
   },
   {
     id: "折断的龙骨",
@@ -4609,6 +4609,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的效果抵抗提高10%。当装备者的效果抵抗大于等于30%时，我方全体暴击伤害提高10%。",
     releaseVersion: "1.2",
+    image: "/relics/折断的龙骨.png",
     pieces: [
       {
         slot: "sphere",
@@ -4619,7 +4620,6 @@ export const relicSeed: RelicSet[] = [
         name: "伊须磨洲的坼裂缆索",
       },
     ],
-    image: "/relics/折断的龙骨.png",
   },
   {
     id: "重循苦旅的司铎",
@@ -4629,6 +4629,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "速度提高6%。",
     effect4: "对我方单体目标施放战技或终结技时，使技能目标的暴击伤害提高18%，持续2回合，该效果最多叠加2次。",
     releaseVersion: "2.6",
+    image: "/relics/重循苦旅的司铎.png",
     pieces: [
       {
         slot: "head",
@@ -4643,7 +4644,6 @@ export const relicSeed: RelicSet[] = [
         name: "司铎的苦旅短靴",
       },
     ],
-    image: "/relics/重循苦旅的司铎.png",
   },
   {
     id: "筑城者的贝洛伯格",
@@ -4652,6 +4652,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的防御力提高15%。当装备者的效果命中大于等于50%时，防御力额外提高15%。",
     releaseVersion: "1.0",
+    image: "/relics/筑城者的贝洛伯格.png",
     pieces: [
       {
         slot: "sphere",
@@ -4662,7 +4663,6 @@ export const relicSeed: RelicSet[] = [
         name: "贝洛伯格的铁卫防线",
       },
     ],
-    image: "/relics/筑城者的贝洛伯格.png",
   },
   {
     id: "坠星启航地",
@@ -4671,6 +4671,7 @@ export const relicSeed: RelicSet[] = [
     rarity: 5,
     effect2: "使装备者的暴击率提高8%。进入战斗时，若装备者与另一名队友均为开拓同行角色，使装备者的暴击伤害提高32%。",
     releaseVersion: "4.4",
+    image: "/relics/坠星启航地.png",
     pieces: [
       {
         slot: "sphere",
@@ -4681,7 +4682,6 @@ export const relicSeed: RelicSet[] = [
         name: "启航地的梦想银轨",
       },
     ],
-    image: "/relics/坠星启航地.png",
   },
   {
     id: "自匿星芒的隐士",
@@ -4691,6 +4691,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "提供的护盾量提高10%。",
     effect4: "使装备者提供的护盾量提高12%，我方目标持有装备者提供的护盾时，暴击伤害提高15%。",
     releaseVersion: "3.6",
+    image: "/relics/自匿星芒的隐士.png",
     pieces: [
       {
         slot: "head",
@@ -4705,7 +4706,6 @@ export const relicSeed: RelicSet[] = [
         name: "隐士的麂皮软鞋",
       },
     ],
-    image: "/relics/自匿星芒的隐士.png",
   },
 ];
 

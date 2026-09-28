@@ -1,0 +1,54 @@
+# 每 3 天自动从 bilibili 星穹铁道 Wiki 抓取最新数据（角色 / 光锥 / 遗器 /
+# 资讯与卡池时间线），本地化新增图片资产并重新合成 src/data/seed.ts。
+# 有数据变更时提交推送到 main，随后自动触发 CI 与 GitHub Pages 部署工作流。
+# 手动触发：Actions → Update Data → Run workflow。
+# 注意：脚本对 B 站 WAF（HTTP 567）已有指数退避重试；若 GitHub Runner IP
+# 被拦截导致持续失败，可改用 self-hosted runner 或在 Actions 页手动重跑。
+name: Update Data
+
+on:
+  schedule:
+    # 每 3 天 03:00 UTC（北京时间 11:00）；cron 按月内日期取模，跨月时有 1-2 天浮动
+    - cron: '0 3 */3 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: 抓取并更新种子数据（数据源：bilibili wiki）
+        run: npm run update:data
+
+      - name: 检查数据是否变更
+        id: changes
+        run: |
+          if git status --porcelain -- .scrape src/data public/avatars public/cones public/relics | grep -q .; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "数据无变化，跳过提交"
+          fi
+
+      - name: 提交并推送
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .scrape src/data public/avatars public/cones public/relics
+          git commit -m "chore: 自动抓取更新 Wiki 种子数据（bilibili wiki）"
+          git push

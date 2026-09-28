@@ -5,7 +5,8 @@
  */
 const fs = require('fs');
 
-const TODAY = '2026-09-28';
+/** 抓取日（UTC 日期，略保守：只排除实装日期晚于今天的未实装角色） */
+const TODAY = new Date().toISOString().slice(0, 10);
 const wiki = d => d.query.results;
 
 const PATH_MAP = {
@@ -23,6 +24,36 @@ const BODY_MAP = {
   幼女: 'littleGirl', 星: 'star',
 };
 const GENDER_MAP = { 男: 'male', 女: 'female' };
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** 单个 JSON 请求：WAF 拦截（HTTP 567 / 200+HTML）时指数退避重试 */
+async function getJson(url) {
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    let res;
+    try {
+      res = await fetch(url, {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
+        },
+      });
+    } catch (e) {
+      if (attempt === 5) throw e;
+      await sleep(attempt * 15000);
+      continue;
+    }
+    if (res.ok) {
+      const text = await res.text();
+      if (text.startsWith('{')) return JSON.parse(text);
+      // WAF 拦截页返回 200 + HTML 的情况
+    } else if (res.status !== 567 && attempt === 5) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    await sleep(attempt * 15000);
+  }
+  throw new Error(`重试耗尽: ${url}`);
+}
 
 function parseDate(s) {
   const m = /(\d{4})年(\d{2})月(\d{2})日/.exec(s || '');
@@ -71,7 +102,7 @@ async function fetchImages(titles) {
         action: 'query', format: 'json', imlimit: '500', prop: 'images',
         titles: batch.join('|'), ...cont,
       });
-      const res = await fetch('https://wiki.biligame.com/sr/api.php?' + qs).then(r => r.json());
+      const res = await getJson('https://wiki.biligame.com/sr/api.php?' + qs);
       for (const page of Object.values(res.query.pages)) {
         if (page.images) {
           map[page.title] = (map[page.title] || []).concat(page.images);
@@ -81,6 +112,7 @@ async function fetchImages(titles) {
       cont = { imcontinue: res.continue.imcontinue, continue: res.continue['continue'] };
     }
     process.stdout.write(`images ${Math.min(i + 10, titles.length)}/${titles.length}\r`);
+    if (i + 10 < titles.length) await sleep(2500);
   }
   console.log('');
   return map;
@@ -89,6 +121,17 @@ async function fetchImages(titles) {
 async function main() {
   const smw = JSON.parse(fs.readFileSync(__dirname + '/characters_smw.json', 'utf8'));
   const results = wiki(smw);
+
+  // 保留已本地化的站内头像路径（scrape_avatars.cjs 的成果），
+  // 重抓后按 id 回填，避免已下载的头像被重新回退为热链。
+  const previous = fs.existsSync(__dirname + '/characters_seed.json')
+    ? JSON.parse(fs.readFileSync(__dirname + '/characters_seed.json', 'utf8'))
+    : [];
+  const localAvatars = new Map(
+    previous
+      .filter((c) => c.avatar && c.avatar.startsWith('/avatars/'))
+      .map((c) => [c.id, c.avatar]),
+  );
 
   const records = [];
   const skipped = [];
@@ -147,9 +190,11 @@ async function main() {
       releaseDate: r.releaseDate,
       releaseVersion: r.releaseVersion,
       aliases: aliases.length ? aliases : undefined,
-      avatar: file
-        ? `https://wiki.biligame.com/sr/特殊:FilePath/${encodeURIComponent(file)}`
-        : undefined,
+      avatar:
+        localAvatars.get(title) ||
+        (file
+          ? `https://wiki.biligame.com/sr/特殊:FilePath/${encodeURIComponent(file)}`
+          : undefined),
       description: cleanDescription((p['介绍'] || [])[0]) || undefined,
     };
   });

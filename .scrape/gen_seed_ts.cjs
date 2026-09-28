@@ -42,6 +42,7 @@ const relics = load('relics_seed.json');
 const news = load('news_seed.json');
 
 const counts = `角色 ${characters.length} · 光锥 ${lightCones.length} · 遗器 ${relics.length} · 资讯 ${news.length}`;
+const today = new Date().toISOString().slice(0, 10);
 
 const file = `import type { Character, LightCone, NewsEvent, RelicSet } from '../db/types';
 
@@ -50,7 +51,7 @@ const file = `import type { Character, LightCone, NewsEvent, RelicSet } from '..
  *  种子数据文件（由 .scrape 脚本生成，勿直接手改）
  * ============================================================
  *  生成方式：node .scrape/scrape_wiki.cjs && node .scrape/gen_seed_ts.cjs
- *  当前规模：${counts}（抓取日期 2026-09-28，仅含已实装内容）。
+ *  当前规模：${counts}（抓取日期 ${today}，仅含已实装内容）。
  *  页面不写死任何游戏数据，所有数据从这里录入 IndexedDB；
  *  字段与类型说明见 README.md 和 src/db/types.ts。
  *  种子内容变化由启动时的内容指纹自动检测，在「数据管理」中删除过的
