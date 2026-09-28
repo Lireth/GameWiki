@@ -20,6 +20,16 @@ jobs:
       - run: npm run build
       - name: 包体预算检查
         run: npm run check:size
+      - name: 部署资源断言（public 图片资产须随仓库提交，防线上 404）
+        run: |
+          test -f dist/sw.js
+          test -f dist/og.png
+          for dir in avatars cones relics; do
+            if [ -z "$(ls "dist/$dir" 2>/dev/null)" ]; then
+              echo "::error::dist/$dir 为空：public/$dir 未随仓库提交，部署后线上将 404"
+              exit 1
+            fi
+          done
 
   e2e:
     runs-on: ubuntu-latest
