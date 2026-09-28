@@ -4,6 +4,10 @@
    - 其余同源 GET：stale-while-revalidate；
    - 跨域请求（外链图片等）不缓存。
    首次离线访问前需至少成功联网加载过一次。
+   更新流程：新 SW 安装后进入 waiting 等待，不自动接管 —— 避免旧页面仍在
+   运行旧 JS 时新版本 activate 已清理旧缓存，旧 hash 的懒加载 chunk 请求
+   404 落入 ErrorBoundary；由页面更新提示条（PwaUpdateBanner）征得用户同意
+   后发送 SKIP_WAITING 消息接管并刷新（见 main.tsx 的注册逻辑）。
    __BUILD_ID__ 占位符在构建时替换为本次构建时间戳（见 vite.config.ts），
    使每次发布都产生新的缓存名，旧缓存随 activate 阶段清理。 */
 const CACHE_NAME = 'hsr-wiki-__BUILD_ID__';
@@ -20,7 +24,8 @@ self.addEventListener('install', (event) => {
       } catch {
         /* 预缓存失败时退化为运行期 SWR 缓存 */
       }
-      self.skipWaiting();
+      // 不在 install 期 skipWaiting：保持 waiting 状态等待页面确认，
+      // 更新接管时机由下方 message 通道（SKIP_WAITING）控制
     })(),
   );
 });
