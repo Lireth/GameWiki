@@ -1,8 +1,9 @@
 /**
- * 从 biligame 星穹铁道 Wiki SMW 抓取光锥 / 遗器 / 卡池与版本数据，
+ * 从 biligame 星穹铁道 Wiki 抓取光锥 / 遗器 / 卡池与版本数据，
  * 并结合 characters_seed.json 派生资讯事件，产出种子 JSON：
  *   .scrape/light_cones_seed.json / relics_seed.json / news_seed.json
- * 用法：node .scrape/scrape_wiki.cjs
+ * 用法：node .scrape/scrape_wiki.cjs [all|news]
+ *   all（默认）= 抓光锥 + 遗器 + 资讯；news = 仅重新派生资讯事件（含卡池，不重抓光锥/遗器）。
  *
  * 请求策略：整分类单查询大 limit 一次取回（每类 1-2 个请求）；
  * 请求间隔 2.5s；遇 HTTP 567（B 站 WAF 拦截页）按 15s/30s/60s/120s 退避重试。
@@ -248,40 +249,110 @@ function loadJson(file) {
   return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : [];
 }
 
-async function scrapeBanners(characterIndex, coneIndex) {
-  const found = await askCategory(
-    ['卡池', '跃迁', '限定跃迁', '角色活动跃迁'],
-    '?开始时间|?结束时间|?起始时间|?开放时间|?UP五星|?五星UP|?UP角色|?UP光锥|?对应光锥|?实装版本|?版本',
-  );
-  if (!found) {
-    console.log('未找到卡池分类，资讯事件不含卡池');
-    return [];
+/** 跃迁卡池历史页：每页含一个大版本的若干小版本章节，模板记录每期卡池 */
+const BANNER_PAGES = ['跃迁/1.0', '跃迁/2.0', '跃迁/3.0', '跃迁/4.0'];
+
+/** 2024/01/17 12:00 → 2024-01-17（卡池时段只需日期粒度） */
+function parseSlashDate(s) {
+  const m = /(\d{4})\/(\d{1,2})\/(\d{1,2})/.exec(s || '');
+  if (!m) return null;
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${m[1]}-${pad(m[2])}-${pad(m[3])}`;
+}
+
+/** 解析 wikitext 中的 {{跃迁/角色活动跃迁|…}} / {{跃迁/光锥活动跃迁|…}} 模板参数 */
+function parseBannerTemplates(wikitext) {
+  const out = [];
+  const clean = wikitext.replace(/<!--[\s\S]*?-->/g, '');
+  const re = /\{\{跃迁\/(角色活动跃迁|光锥活动跃迁)\s*\|([^{}]*)\}\}/g;
+  for (const m of clean.matchAll(re)) {
+    const params = {};
+    for (const part of m[2].split('|')) {
+      const eq = part.indexOf('=');
+      if (eq === -1) continue;
+      params[part.slice(0, eq).trim()] = part.slice(eq + 1).trim();
+    }
+    out.push({ kind: m[1], params });
   }
-  console.log(`命中分类「${found.category}」`);
+  return out;
+}
+
+/**
+ * 抓取卡池历史：SMW 无卡池分类（旧方案查不到数据），改为解析
+ * 「跃迁/1.0 ~ 4.0」页面的角色/光锥活动跃迁模板。
+ * 每期常规卡池一个 UP；4.x「铭心之萃」（卡池类型=3）一期多 UP，
+ * 按顿号拆分逐个建事件便于跳转；并发多卡池以「卡池编号」区分，
+ * 复刻卡池与首发同样入库，供时间线完整回溯。
+ * 开始时间晚于 TODAY 的未开卡池跳过。
+ */
+async function scrapeBanners(characterIndex, coneIndex) {
+  console.log('抓取卡池历史（跃迁/1.0 ~ 4.0 模板）…');
   const events = [];
-  for (const [title, v] of Object.entries(found.results)) {
-    const p = v.printouts || {};
-    const date = parseDate(firstText(p, ['开始时间', '起始时间', '开放时间']));
-    if (!date) continue;
-    const endDate = parseDate(firstText(p, ['结束时间']));
-    const upNames = [...(p['UP五星'] || []), ...(p['五星UP'] || []), ...(p['UP角色'] || [])]
-      .map((a) => (typeof a === 'object' && a !== null ? a.fulltext || '' : String(a)))
+  const seen = new Set();
+  const unmapped = new Set();
+  const splitUps = (s) =>
+    // 仅按顿号拆分多 UP；UP 名本身可能含全角逗号（如「片刻，留在眼底」），不能一并拆
+    (s || '')
+      .split(/、/)
+      .map((x) => x.trim())
       .filter(Boolean);
-    const upCones = [...(p['UP光锥'] || []), ...(p['对应光锥'] || [])]
-      .map((a) => (typeof a === 'object' && a !== null ? a.fulltext || '' : String(a)))
-      .filter(Boolean);
-    const relatedCharacterId = upNames.map((n) => characterIndex.get(n)).find(Boolean);
-    const relatedLightConeId = upCones.map((n) => coneIndex.get(n)).find(Boolean);
-    events.push({
-      id: `ev-banner-${title}`,
-      type: 'banner',
-      title,
-      date,
-      endDate,
-      version: (p['实装版本'] || p['版本'] || [])[0] || undefined,
-      relatedCharacterId,
-      relatedLightConeId,
-    });
+  for (const page of BANNER_PAGES) {
+    await sleep(2500);
+    const url = `${API}?action=parse&page=${encodeURIComponent(page)}&prop=wikitext&format=json&formatversion=2`;
+    const r = await getJson(url);
+    if (r.error) throw new Error(`解析 ${page} 失败: ${r.error.info}`);
+    for (const { kind, params } of parseBannerTemplates(r.parse.wikitext)) {
+      const date = parseSlashDate(params['开始时间']);
+      if (!date || date > TODAY) continue;
+      const endDate = parseSlashDate(params['结束时间']) || undefined;
+      const version = params['版本'] || undefined;
+      const slot = `${version || 'x'}-${params['编号'] || 'x'}-${params['卡池编号'] || 'x'}`;
+      if (kind === '角色活动跃迁') {
+        const ups = splitUps(params['5星角色']);
+        for (const up of ups) {
+          const relatedCharacterId = characterIndex.get(up);
+          if (!relatedCharacterId) {
+            unmapped.add(`角色「${up}」`);
+            continue;
+          }
+          const id = `ev-banner-c-${slot}-${up}`;
+          if (seen.has(id)) continue;
+          seen.add(id);
+          events.push({
+            id,
+            type: 'banner',
+            title: ups.length > 1 ? `${params['名称'] || '角色活动跃迁'} · ${up}` : params['名称'] || `角色活动跃迁 · ${up}`,
+            date,
+            endDate,
+            version,
+            relatedCharacterId,
+          });
+        }
+      } else {
+        for (const upCone of splitUps(params['5星光锥'])) {
+          const relatedLightConeId = coneIndex.get(upCone);
+          if (!relatedLightConeId) {
+            unmapped.add(`光锥「${upCone}」`);
+            continue;
+          }
+          const id = `ev-banner-lc-${slot}-${upCone}`;
+          if (seen.has(id)) continue;
+          seen.add(id);
+          events.push({
+            id,
+            type: 'banner',
+            title: `光锥活动跃迁 · ${upCone}`,
+            date,
+            endDate,
+            version,
+            relatedLightConeId,
+          });
+        }
+      }
+    }
+  }
+  if (unmapped.size) {
+    console.log(`未能关联到种子数据的 UP（已跳过该期）：${[...unmapped].join('、')}`);
   }
   return events;
 }
@@ -290,18 +361,25 @@ async function scrapeNews() {
   console.log('派生资讯事件…');
   const characters = loadJson('characters_seed.json');
   const cones = loadJson('light_cones_seed.json');
-  const characterIndex = new Map();
-  for (const c of characters) {
-    characterIndex.set(c.name, c.id);
-    for (const alias of c.aliases || []) characterIndex.set(alias, c.id);
-  }
-  const coneIndex = new Map();
-  for (const lc of cones) {
-    coneIndex.set(lc.name, lc.id);
-    for (const alias of lc.aliases || []) coneIndex.set(alias, lc.id);
-  }
 
   const events = [];
+
+  // 名称索引：本名两遍优先，别名不覆盖已有关键字（避免「银狼LV.999」的
+  // 别名「银狼」抢走本体的映射）
+  const characterIndex = new Map();
+  for (const c of characters) characterIndex.set(c.name, c.id);
+  for (const c of characters) {
+    for (const alias of c.aliases || []) {
+      if (!characterIndex.has(alias)) characterIndex.set(alias, c.id);
+    }
+  }
+  const coneIndex = new Map();
+  for (const lc of cones) coneIndex.set(lc.name, lc.id);
+  for (const lc of cones) {
+    for (const alias of lc.aliases || []) {
+      if (!coneIndex.has(alias)) coneIndex.set(alias, lc.id);
+    }
+  }
 
   // 版本更新：以该版本最早实装日期近似版本上线日（Wiki 无版本结构化数据时）
   const versionDates = new Map();
@@ -316,9 +394,6 @@ async function scrapeNews() {
   try {
     await sleep(2500);
     banners = await scrapeBanners(characterIndex, coneIndex);
-    for (const b of banners) {
-      if (b.version && !versionDates.has(b.version)) continue;
-    }
   } catch (e) {
     console.log(`卡池抓取失败（资讯事件不含卡池）：${e.message}`);
   }
@@ -359,6 +434,13 @@ async function scrapeNews() {
 }
 
 (async () => {
+  const mode = process.argv[2] || 'all';
+  if (mode === 'news') {
+    // 仅重新派生资讯事件（含卡池抓取），不重抓光锥 / 遗器
+    await scrapeNews();
+    console.log('完成。下一步：node .scrape/gen_seed_ts.cjs');
+    return;
+  }
   await scrapeLightCones();
   await sleep(2500);
   await scrapeRelics();
