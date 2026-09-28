@@ -18,9 +18,9 @@ export function LightConeCard({ lightCone }: { lightCone: LightCone }) {
     <Link to={lightConeLink(lightCone.id)} className="group relative block border border-space-600/50 bg-space-850/70 transition duration-200 hover:-translate-y-0.5 hover:border-gold-500/50 hover:bg-space-800/80 hover:shadow-[0_8px_28px_-12px_rgba(233,180,95,0.35)]">
       <CornerTicks className="opacity-0 transition group-hover:opacity-100" />
 
-      {/* 头图：无图片数据时以命途色渐变 + 菱形轮廓占位 */}
+      {/* 头图：与光锥立绘素材同比例（1:1），无图片时以命途色渐变 + 菱形轮廓占位 */}
       <div
-        className="relative flex h-20 items-center justify-center overflow-hidden"
+        className="relative flex aspect-square items-center justify-center overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${path.color}22, transparent 65%)`,
         }}
@@ -36,7 +36,7 @@ export function LightConeCard({ lightCone }: { lightCone: LightCone }) {
           />
         ) : (
           <span
-            className="size-9 rotate-45 border-2 transition group-hover:scale-110"
+            className="size-12 rotate-45 border-2 transition group-hover:scale-110"
             style={{ borderColor: `${path.color}88` }}
           />
         )}

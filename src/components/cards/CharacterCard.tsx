@@ -19,9 +19,9 @@ export function CharacterCard({ character }: { character: Character }) {
     <Link to={characterLink(character.id)} className="group relative block border border-space-600/50 bg-space-850/70 transition duration-200 hover:-translate-y-0.5 hover:border-gold-500/50 hover:bg-space-800/80 hover:shadow-[0_8px_28px_-12px_rgba(233,180,95,0.35)]">
       <CornerTicks className="opacity-0 transition group-hover:opacity-100" />
 
-      {/* 头图：无图片数据时以属性色渐变 + 名称首字占位 */}
+      {/* 头图：与头像素材同比例（160×188 竖版半身像），无图片时以属性色渐变 + 名称首字占位 */}
       <div
-        className="relative flex h-20 items-center justify-center overflow-hidden"
+        className="relative flex aspect-[160/188] items-center justify-center overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${element.color}2b, transparent 65%)`,
         }}
@@ -37,7 +37,7 @@ export function CharacterCard({ character }: { character: Character }) {
           />
         ) : (
           <span
-            className="font-display text-4xl font-bold"
+            className="font-display text-6xl font-bold"
             style={{ color: `${element.color}d0` }}
           >
             {character.name.slice(0, 1)}

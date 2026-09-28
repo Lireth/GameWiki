@@ -21,9 +21,9 @@ export function RelicCard({ relic }: { relic: RelicSet }) {
     >
       <CornerTicks className="opacity-0 transition group-hover:opacity-100" />
 
-      {/* 头图：无图片数据时以类别色渐变 + 菱形占位 */}
+      {/* 头图：与遗器套装图标素材同比例（1:1），无图片时以类别色渐变 + 菱形占位 */}
       <div
-        className="relative flex h-20 items-center justify-center overflow-hidden"
+        className="relative flex aspect-square items-center justify-center overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${category.color}22, transparent 65%)`,
         }}
@@ -39,7 +39,7 @@ export function RelicCard({ relic }: { relic: RelicSet }) {
           />
         ) : (
           <span
-            className="size-9 rotate-45 border-2 transition group-hover:scale-110"
+            className="size-12 rotate-45 border-2 transition group-hover:scale-110"
             style={{ borderColor: `${category.color}88` }}
           />
         )}
