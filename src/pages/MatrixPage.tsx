@@ -2,47 +2,17 @@ import { Fragment, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeftIcon, ChevronRightIcon } from '../components/icons';
 import { EmptyState, LoadingState } from '../components/ui/EmptyState';
-import {
-  FacetChip,
-  CopyLinkButton,
-  FilterRow,
-  VersionFacetRow,
-} from '../components/ui/FilterPanel';
 import { PageHeader } from '../components/ui/PageHeader';
 import { Panel } from '../components/ui/Panel';
 import type { Character } from '../db/types';
-import { ELEMENT_IDS, GENDERS, PATH_IDS, RARITIES } from '../db/types';
-import {
-  useBootstrapStatus,
-  useCharacters,
-  useFacetFilter,
-} from '../hooks/useWikiData';
+import { ELEMENT_IDS, PATH_IDS } from '../db/types';
+import { useBootstrapStatus, useCharacters } from '../hooks/useWikiData';
 import { useEntityImage } from '../hooks/useEntityImage';
-import { ELEMENT_META, PATH_META, RARITY_META, buildVersionGroups } from '../lib/meta';
+import { ELEMENT_META, PATH_META, RARITY_META } from '../lib/meta';
 import { characterLink } from '../lib/links';
 import { useDocumentTitle } from '../hooks/useDocumentTitle';
 
 const CELL_KEY_SEPARATOR = '|';
-
-type FacetKey = 'rarity' | 'gender' | 'version';
-
-const FACET_KEYS: FacetKey[] = ['rarity', 'gender', 'version'];
-
-function facetValue(character: Character, key: FacetKey): string {
-  switch (key) {
-    case 'rarity':
-      return String(character.rarity);
-    case 'gender':
-      return character.gender;
-    case 'version':
-      return character.releaseVersion;
-  }
-}
-
-/** 矩阵页无搜索框，关键词始终命中 */
-function matchesKeyword(): boolean {
-  return true;
-}
 
 /** 按「属性 | 命途」分桶，桶内按实装日期从新到旧排列 */
 function useMatrixCells(characters: Character[]) {
@@ -170,101 +140,38 @@ function Legend() {
 export function MatrixPage() {
   useDocumentTitle(
     '命途 × 属性矩阵',
-    '命途 × 战斗属性矩阵：每格展示对应组合下的角色，支持按稀有度、性别与实装版本筛选。',
+    '命途 × 战斗属性矩阵：每格展示对应组合下的角色。',
   );
   const characters = useCharacters();
   const dataReady = useBootstrapStatus() === 'ok';
-  const {
-    facets,
-    toggleFacet,
-    clearFilters,
-    countOf,
-    allCount,
-    matched,
-    hasAnyFilter,
-  } = useFacetFilter(characters, FACET_KEYS, facetValue, matchesKeyword);
-  const cells = useMatrixCells(matched);
+  const cells = useMatrixCells(characters);
   const hasData = characters.length > 0;
 
-  /** 实装版本分组：常显配置 + 数据中的新版本 + URL 残留的已选版本（与图鉴列表页一致） */
-  const versionGroups = useMemo(
-    () => buildVersionGroups(characters.map((c) => c.releaseVersion), facets.version),
-    [characters, facets.version],
-  );
-
-  /** 各命途 / 属性下的筛选后角色数（表头统计） */
+  /** 各命途 / 属性下的角色数（表头统计） */
   const pathCounts = useMemo(() => {
     const map = new Map<string, number>();
-    for (const character of matched) {
+    for (const character of characters) {
       map.set(character.path, (map.get(character.path) ?? 0) + 1);
     }
     return map;
-  }, [matched]);
+  }, [characters]);
   const elementCounts = useMemo(() => {
     const map = new Map<string, number>();
-    for (const character of matched) {
+    for (const character of characters) {
       map.set(character.element, (map.get(character.element) ?? 0) + 1);
     }
     return map;
-  }, [matched]);
+  }, [characters]);
 
   return (
     <div>
       <PageHeader
         title="命途 × 战斗属性矩阵"
-        description="每个单元格展示对应「战斗属性 × 命途」组合下的角色，点击头像可查看详情；同格多角色时可用左右按钮切换。支持按稀有度、性别与实装版本筛选。"
+        description="每个单元格展示对应「战斗属性 × 命途」组合下的角色，点击头像可查看详情；同格多角色时可用左右按钮切换。"
       />
 
       {hasData ? (
         <>
-          {/* 筛选面板：稀有度 / 性别 / 实装版本（多选） */}
-          <div className="mb-3 flex items-center justify-end">
-            <CopyLinkButton />
-          </div>
-          <Panel className="mb-6 p-0">
-            <FilterRow label="查看全部">
-              <FacetChip
-                active={!hasAnyFilter}
-                count={allCount}
-                onClick={clearFilters}
-              >
-                查看全部
-              </FacetChip>
-            </FilterRow>
-            <FilterRow label="稀有度">
-              {RARITIES.map((r) => (
-                <FacetChip
-                  key={r}
-                  active={facets.rarity.includes(String(r))}
-                  count={countOf('rarity', String(r))}
-                  color={RARITY_META[r].color}
-                  ariaLabel={`${r}星`}
-                  onClick={() => toggleFacet('rarity', String(r))}
-                >
-                  {r}★
-                </FacetChip>
-              ))}
-            </FilterRow>
-            <FilterRow label="性别">
-              {GENDERS.map((gender) => (
-                <FacetChip
-                  key={gender}
-                  active={facets.gender.includes(gender)}
-                  count={countOf('gender', gender)}
-                  onClick={() => toggleFacet('gender', gender)}
-                >
-                  {gender === 'female' ? '女' : '男'}
-                </FacetChip>
-              ))}
-            </FilterRow>
-            <VersionFacetRow
-              groups={versionGroups}
-              selected={facets.version}
-              countOf={(value) => countOf('version', value)}
-              onToggle={(value) => toggleFacet('version', value)}
-            />
-          </Panel>
-
           {/* 桌面端：完整二维矩阵，所有格子统一比例 */}
           <div className="hidden overflow-x-auto pb-2 md:block">
             <div className="min-w-[1080px]">
@@ -376,12 +283,6 @@ export function MatrixPage() {
           </div>
 
           <Legend />
-
-          {matched.length === 0 && (
-            <p className="mt-6 text-center text-sm text-slate-500">
-              当前筛选条件下没有角色，试试放宽筛选。
-            </p>
-          )}
         </>
       ) : dataReady ? (
         <EmptyState
