@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { to: '/relics', label: '遗器图鉴', end: false },
   { to: '/matrix', label: '命途矩阵', end: false },
   { to: '/news', label: '资讯日历', end: false },
+  { to: '/banners', label: '卡池', end: false },
   { to: '/versions', label: '版本', end: false },
   { to: '/favorites', label: '收藏', end: false },
 ];

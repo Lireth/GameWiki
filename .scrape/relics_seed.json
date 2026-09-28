@@ -1,0 +1,1242 @@
+[
+  {
+    "id": "哀歌覆国的诗人",
+    "name": "哀歌覆国的诗人",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "量子属性伤害提高10%。",
+    "effect4": "使装备者的速度降低8%。进入战斗前，若装备者的速度小于110/95，使装备者的暴击率提高20%/32%。该效果同时对装备者的忆灵生效。",
+    "releaseVersion": "3.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "诗人的莳萝花冠"
+      },
+      {
+        "slot": "hands",
+        "name": "诗人的贵金手镯"
+      },
+      {
+        "slot": "feet",
+        "name": "诗人的钉银之履"
+      }
+    ]
+  },
+  {
+    "id": "宝命长存的莳者",
+    "name": "宝命长存的莳者",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "生命上限提高12%。",
+    "effect4": "当装备者受到攻击或被我方目标消耗生命值后，暴击率提高8%，持续2回合，该效果最多叠加2层。",
+    "releaseVersion": "1.2",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "莳者的复明义眼"
+      },
+      {
+        "slot": "hands",
+        "name": "莳者的机巧木手"
+      },
+      {
+        "slot": "feet",
+        "name": "莳者的天人丝履"
+      }
+    ]
+  },
+  {
+    "id": "奔狼的都蓝王朝",
+    "name": "奔狼的都蓝王朝",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "我方角色施放追加攻击时，装备者获得一层【功勋】，最多叠加5层，每层【功勋】使装备者追加攻击造成的伤害提高5%，叠满5层时，额外使装备者的暴击伤害提高25%。",
+    "releaseVersion": "2.3",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "都蓝的穹窿金帐"
+      },
+      {
+        "slot": "rope",
+        "name": "都蓝的器兽缰辔"
+      }
+    ]
+  },
+  {
+    "id": "不老者的仙舟",
+    "name": "不老者的仙舟",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的生命上限提高12%。当装备者的速度大于等于120时，我方全体攻击力提高8%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "罗浮仙舟的天外楼船"
+      },
+      {
+        "slot": "rope",
+        "name": "罗浮仙舟的建木枝蔓"
+      }
+    ]
+  },
+  {
+    "id": "苍穹战线格拉默",
+    "name": "苍穹战线格拉默",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的攻击力提高12%。当装备者的速度大于等于135/160时，使装备者造成的伤害提高12%/18%。",
+    "releaseVersion": "1.5",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "格拉默的铁骑兵团"
+      },
+      {
+        "slot": "rope",
+        "name": "格拉默的寂静坟碑"
+      }
+    ]
+  },
+  {
+    "id": "沉欢醉饮的海隅",
+    "name": "沉欢醉饮的海隅",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的攻击力提高12%。当装备者的攻击力大于等于2400/3600时，使造成的持续伤害额外提高12%/24%。",
+    "releaseVersion": "3.4",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "酣歌海垠的礁屿灯塔"
+      },
+      {
+        "slot": "rope",
+        "name": "酣歌海垠的歌咏步道"
+      }
+    ]
+  },
+  {
+    "id": "沉陆海域露莎卡",
+    "name": "沉陆海域露莎卡",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的能量恢复效率提高5.0%，如果装备者不是编队中的第一位角色，使编队中的第一位角色攻击力提高12.0%。",
+    "releaseVersion": "2.5",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "露莎卡的水朽苍都"
+      },
+      {
+        "slot": "rope",
+        "name": "露莎卡的双生航道"
+      }
+    ]
+  },
+  {
+    "id": "晨昏交界的翔鹰",
+    "name": "晨昏交界的翔鹰",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "风属性伤害提高10%。",
+    "effect4": "当装备者施放终结技后，使其行动提前25%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "翔鹰的长喙头盔"
+      },
+      {
+        "slot": "hands",
+        "name": "翔鹰的鹰击指环"
+      },
+      {
+        "slot": "feet",
+        "name": "翔鹰的绒羽绑带"
+      }
+    ]
+  },
+  {
+    "id": "出云显世与高天神国",
+    "name": "出云显世与高天神国",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的攻击力提高12%。进入战斗时，若至少存在一名与装备者命途相同的队友，装备者的暴击率提高12%。",
+    "releaseVersion": "2.1",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "出云的祸津众神"
+      },
+      {
+        "slot": "rope",
+        "name": "出云的终始一刀"
+      }
+    ]
+  },
+  {
+    "id": "荡除蠹灾的铁骑",
+    "name": "荡除蠹灾的铁骑",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "击破特攻提高16%。",
+    "effect4": "当装备者的击破特攻大于等于150%时，对目标造成的击破伤害无视目标10%防御力。当装备者的击破特攻大于等于250%时，对目标造成的超击破伤害额外无视其15%防御力。",
+    "releaseVersion": "2.3",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "铁骑的索敌战盔"
+      },
+      {
+        "slot": "hands",
+        "name": "铁骑的摧坚铁腕"
+      },
+      {
+        "slot": "feet",
+        "name": "铁骑的行空护胫"
+      }
+    ]
+  },
+  {
+    "id": "盗匪荒漠的废土客",
+    "name": "盗匪荒漠的废土客",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "虚数属性伤害提高10%。",
+    "effect4": "装备者对陷入负面效果的敌方目标造成伤害时暴击率提高10%，对陷入禁锢状态的敌方目标造成伤害时暴击伤害提高20%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "废土客的呼吸面罩"
+      },
+      {
+        "slot": "hands",
+        "name": "废土客的荒漠终端"
+      },
+      {
+        "slot": "feet",
+        "name": "废土客的动力腿甲"
+      }
+    ]
+  },
+  {
+    "id": "盗贼公国塔利亚",
+    "name": "盗贼公国塔利亚",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的击破特攻提高16%。当装备者的速度大于等于145时，击破特攻额外提高20%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "塔利亚的钉壳小镇"
+      },
+      {
+        "slot": "rope",
+        "name": "塔利亚的裸皮电线"
+      }
+    ]
+  },
+  {
+    "id": "恶海逐波的船长",
+    "name": "恶海逐波的船长",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "暴击伤害提高16%。",
+    "effect4": "装备者成为其他我方目标的技能目标时，获得1层【助力】，最多叠加2层。施放终结技时，若持有2层【助力】，消耗所有【助力】，使装备者攻击力提高48%，持续1回合。",
+    "releaseVersion": "3.3",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "船长的领航笠帽"
+      },
+      {
+        "slot": "hands",
+        "name": "船长的捕光星盘"
+      },
+      {
+        "slot": "feet",
+        "name": "船长的踏浪游靴"
+      }
+    ]
+  },
+  {
+    "id": "繁星璀璨的天才",
+    "name": "繁星璀璨的天才",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "量子属性伤害提高10%。",
+    "effect4": "当装备者对敌方目标造成伤害时，无视其10%的防御力。若目标拥有量子属性弱点，额外无视其10%的防御力。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "天才的超距遥感"
+      },
+      {
+        "slot": "hands",
+        "name": "天才的频变捕手"
+      },
+      {
+        "slot": "feet",
+        "name": "天才的引力漫步"
+      }
+    ]
+  },
+  {
+    "id": "繁星竞技场",
+    "name": "繁星竞技场",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的暴击率提高8%。当装备者的当前暴击率大于等于70%时，普攻和战技造成的伤害提高20%。",
+    "releaseVersion": "1.2",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "泰科铵的镭射球场"
+      },
+      {
+        "slot": "rope",
+        "name": "泰科铵的弧光赛道"
+      }
+    ]
+  },
+  {
+    "id": "泛银河商业公司",
+    "name": "泛银河商业公司",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的效果命中提高10%，同时提高装备者等同于当前效果命中25%的攻击力，最多提高25%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "公司的巨构总部"
+      },
+      {
+        "slot": "rope",
+        "name": "公司的贸易航道"
+      }
+    ]
+  },
+  {
+    "id": "风举云飞的勇烈",
+    "name": "风举云飞的勇烈",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "攻击力提高12%。",
+    "effect4": "使装备者暴击率提高6%，装备者施放追加攻击时，使终结技造成的伤害提高36%，该效果持续1回合。",
+    "releaseVersion": "2.3",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "勇烈的玄枵面甲"
+      },
+      {
+        "slot": "hands",
+        "name": "勇烈的钩爪腕甲"
+      },
+      {
+        "slot": "feet",
+        "name": "勇烈的逐猎腿甲"
+      }
+    ]
+  },
+  {
+    "id": "骇域漫游的信使",
+    "name": "骇域漫游的信使",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "速度提高6%。",
+    "effect4": "当装备者对我方目标施放终结技时，我方全体速度提高12%，持续1回合，该效果无法叠加。",
+    "releaseVersion": "1.2",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "信使的全息目镜"
+      },
+      {
+        "slot": "hands",
+        "name": "信使的百变义手"
+      },
+      {
+        "slot": "feet",
+        "name": "信使的酷跑板鞋"
+      }
+    ]
+  },
+  {
+    "id": "寰宇生研院",
+    "name": "寰宇生研院",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "进入战斗时，若装备者能量上限大于等于200点，每超过1点使装备者造成的伤害提高0.2%，最多提高32%。",
+    "releaseVersion": "4.4",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "生研院的中心突触"
+      },
+      {
+        "slot": "rope",
+        "name": "生研院的外周管线"
+      }
+    ]
+  },
+  {
+    "id": "毁烬焚骨的大公",
+    "name": "毁烬焚骨的大公",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "追加攻击造成的伤害提高20%。",
+    "effect4": "装备者对敌方目标施放追加攻击时，根据追加攻击造成伤害的次数，每次造成伤害时使装备者的攻击力提高6%，最多叠加8次，持续3回合。该效果在装备者下一次施放追加攻击时移除。",
+    "releaseVersion": "1.5",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "大公的冥焰冠冕"
+      },
+      {
+        "slot": "hands",
+        "name": "大公的绒火指套"
+      },
+      {
+        "slot": "feet",
+        "name": "大公的绅雅礼靴"
+      }
+    ]
+  },
+  {
+    "id": "机心戏梦的钟表匠",
+    "name": "机心戏梦的钟表匠",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "击破特攻提高16%。",
+    "effect4": "当装备者对我方目标施放终结技时，我方全体击破特攻提高30%，持续2回合，该效果无法叠加。",
+    "releaseVersion": "2.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "钟表匠的极目透镜"
+      },
+      {
+        "slot": "hands",
+        "name": "钟表匠的交运腕表"
+      },
+      {
+        "slot": "feet",
+        "name": "钟表匠的隐梦革履"
+      }
+    ]
+  },
+  {
+    "id": "激奏雷电的乐队",
+    "name": "激奏雷电的乐队",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "雷属性伤害提高10%。",
+    "effect4": "当装备者施放战技时，使装备者的攻击力提高20%，持续1回合。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "乐队的偏光墨镜"
+      },
+      {
+        "slot": "hands",
+        "name": "乐队的巡演手绳"
+      },
+      {
+        "slot": "feet",
+        "name": "乐队的铆钉短靴"
+      }
+    ]
+  },
+  {
+    "id": "街头出身的拳王",
+    "name": "街头出身的拳王",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "物理属性伤害提高10%。",
+    "effect4": "当装备者施放攻击或受到攻击后，其在本场战斗中攻击力提高5%，最多叠加5层。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "拳王的冠军护头"
+      },
+      {
+        "slot": "hands",
+        "name": "拳王的重炮拳套"
+      },
+      {
+        "slot": "feet",
+        "name": "拳王的弧步战靴"
+      }
+    ]
+  },
+  {
+    "id": "劫火莲灯铸炼宫",
+    "name": "劫火莲灯铸炼宫",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的速度提高6%。当装备者击中拥有火属性弱点的敌方目标时，击破特攻提高40%，持续1回合。",
+    "releaseVersion": "2.3",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "铸炼宫的莲华灯芯"
+      },
+      {
+        "slot": "rope",
+        "name": "铸炼宫的焰轮天绸"
+      }
+    ]
+  },
+  {
+    "id": "净庭教宗的圣骑士",
+    "name": "净庭教宗的圣骑士",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "防御力提高15%。",
+    "effect4": "使装备者提供的护盾量提高20%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "圣骑的宽恕盔面"
+      },
+      {
+        "slot": "hands",
+        "name": "圣骑的沉默誓环"
+      },
+      {
+        "slot": "feet",
+        "name": "圣骑的秩序铁靴"
+      }
+    ]
+  },
+  {
+    "id": "凯歌祝捷的英豪",
+    "name": "凯歌祝捷的英豪",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "攻击力提高12%。",
+    "effect4": "装备者的忆灵在场时，装备者的速度提高6%，装备者的忆灵攻击时，装备者和忆灵的暴击伤害提高30%，持续2回合。",
+    "releaseVersion": "3.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "英豪的冠军桂冠"
+      },
+      {
+        "slot": "hands",
+        "name": "英豪的鉴金腕铠"
+      },
+      {
+        "slot": "feet",
+        "name": "英豪的赴火护胫"
+      }
+    ]
+  },
+  {
+    "id": "叩问天工的名冶",
+    "name": "叩问天工的名冶",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "生命上限提高12%。",
+    "effect4": "装备者对防御力降低状态的敌方目标造成的暴击伤害提高28%。装备者对敌方目标施加防御力降低状态后，使我方全体获得【助燃】，持续2回合，该效果无法叠加，持有【助燃】的我方目标造成的伤害提高15%。该效果在装备者施放攻击后可再次触发。",
+    "releaseVersion": "4.3",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "名冶的火兽面罩"
+      },
+      {
+        "slot": "hands",
+        "name": "名冶的镔铁护手"
+      },
+      {
+        "slot": "feet",
+        "name": "名冶的无拘重靴"
+      }
+    ]
+  },
+  {
+    "id": "烈阳惊雷的女武神",
+    "name": "烈阳惊雷的女武神",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "速度提高6%。",
+    "effect4": "当装备者及其忆灵为装备者及其忆灵以外的我方目标提供治疗后，使装备者获得【甘霖】，每回合最多触发1次，持续2回合。装备者持有【甘霖】时，速度提高6%，我方全体暴击伤害提高15%，该效果无法叠加。",
+    "releaseVersion": "3.3",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "女武神的翱翔翼盔"
+      },
+      {
+        "slot": "hands",
+        "name": "女武神的骑枪手铠"
+      },
+      {
+        "slot": "feet",
+        "name": "女武神的勋礼马刺"
+      }
+    ]
+  },
+  {
+    "id": "零号关卡朋克洛德",
+    "name": "零号关卡朋克洛德",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的欢愉度提高8%。战斗中欢愉度首次达到40%/80%时，使装备者暴击伤害提高20%/32%。",
+    "releaseVersion": "4.1",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "朋克洛德的虹霓都市"
+      },
+      {
+        "slot": "rope",
+        "name": "朋克洛德的数据洪流"
+      }
+    ]
+  },
+  {
+    "id": "流星追迹的怪盗",
+    "name": "流星追迹的怪盗",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "击破特攻提高16%。",
+    "effect4": "使装备者的击破特攻提高16%。当装备者击破敌方目标弱点后，恢复3点能量。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "怪盗的千人假面"
+      },
+      {
+        "slot": "hands",
+        "name": "怪盗的绘纹手套"
+      },
+      {
+        "slot": "feet",
+        "name": "怪盗的流星快靴"
+      }
+    ]
+  },
+  {
+    "id": "梦想之地匹诺康尼",
+    "name": "梦想之地匹诺康尼",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的能量恢复效率提高5%。使队伍中与装备者属性相同的我方其他角色造成的伤害提高10%。",
+    "releaseVersion": "1.5",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "匹诺康尼的堂皇酒店"
+      },
+      {
+        "slot": "rope",
+        "name": "匹诺康尼的逐梦轨道"
+      }
+    ]
+  },
+  {
+    "id": "密林卧雪的猎人",
+    "name": "密林卧雪的猎人",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "冰属性伤害提高10%。",
+    "effect4": "当装备者施放终结技时，暴击伤害提高25%，持续2回合。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "雪猎的荒神兜帽"
+      },
+      {
+        "slot": "hands",
+        "name": "雪猎的巨蜥手套"
+      },
+      {
+        "slot": "feet",
+        "name": "雪猎的鹿皮软靴"
+      }
+    ]
+  },
+  {
+    "id": "谧宁拾骨地",
+    "name": "谧宁拾骨地",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的生命上限提高12%。当装备者的生命上限大于等于5000点时，使装备者及其忆灵的暴击伤害提高28%。",
+    "releaseVersion": "3.1",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "哀地里亚的殁名祭碑"
+      },
+      {
+        "slot": "rope",
+        "name": "哀地里亚的入溟骨链"
+      }
+    ]
+  },
+  {
+    "id": "奇想蕉乐园",
+    "name": "奇想蕉乐园",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的暴击伤害提高16.0%，当存在装备者召唤的目标时，暴击伤害额外提高32.0%。",
+    "releaseVersion": "2.5",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "蕉乐园的蕉芯广场"
+      },
+      {
+        "slot": "rope",
+        "name": "蕉乐园的模因线缆"
+      }
+    ]
+  },
+  {
+    "id": "千星荟萃之城",
+    "name": "千星荟萃之城",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "装备者施放追加攻击时，攻击力提高24%，持续2回合。当敌方目标被消灭时，我方全体在本场战斗中暴击伤害提高12%，该效果无法叠加。",
+    "releaseVersion": "4.1",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "千星城的传媒总部"
+      },
+      {
+        "slot": "rope",
+        "name": "千星城的雇员凭证"
+      }
+    ]
+  },
+  {
+    "id": "熔岩锻铸的火匠",
+    "name": "熔岩锻铸的火匠",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "火属性伤害提高10%。",
+    "effect4": "使装备者战技造成的伤害提高12%，并使施放终结技后的下一次攻击造成的火属性伤害提高12%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "火匠的黑耀目镜"
+      },
+      {
+        "slot": "hands",
+        "name": "火匠的御火戒指"
+      },
+      {
+        "slot": "feet",
+        "name": "火匠的合金义肢"
+      }
+    ]
+  },
+  {
+    "id": "闪耀功勋的魔法少女",
+    "name": "闪耀功勋的魔法少女",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "暴击伤害提高16%。",
+    "effect4": "装备者及其忆灵造成的欢愉伤害无视目标10%的防御力，我方每累计获得5点笑点，造成的欢愉伤害额外无视目标1%的防御力，最多叠加10层。",
+    "releaseVersion": "4.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "魔法少女的闪耀勋章"
+      },
+      {
+        "slot": "hands",
+        "name": "魔法少女的守护手套"
+      },
+      {
+        "slot": "feet",
+        "name": "魔法少女的缔约长靴"
+      }
+    ]
+  },
+  {
+    "id": "生命的翁瓦克",
+    "name": "生命的翁瓦克",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的能量恢复效率提高5%。当装备者的速度大于等于120时，进入战斗时立刻使行动提前40%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "翁瓦克的诞生之岛"
+      },
+      {
+        "slot": "rope",
+        "name": "翁瓦克的环岛海岸"
+      }
+    ]
+  },
+  {
+    "id": "识海迷坠的学者",
+    "name": "识海迷坠的学者",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "暴击率提高8%。",
+    "effect4": "战技和终结技造成的伤害提高20%，施放终结技后，下一次施放战技时造成的伤害额外提高25%。",
+    "releaseVersion": "2.6",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "学者的银边视镜"
+      },
+      {
+        "slot": "hands",
+        "name": "学者的辅助指节"
+      },
+      {
+        "slot": "feet",
+        "name": "学者的绒皮雪靴"
+      }
+    ]
+  },
+  {
+    "id": "戍卫风雪的铁卫",
+    "name": "戍卫风雪的铁卫",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "受到伤害降低8%。",
+    "effect4": "回合开始时，如果装备者当前生命值百分比小于等于50%，则回复等同于自身生命上限8%的生命值，并恢复5点能量。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "铁卫的铸铁面盔"
+      },
+      {
+        "slot": "hands",
+        "name": "铁卫的银鳞手甲"
+      },
+      {
+        "slot": "feet",
+        "name": "铁卫的白银护胫"
+      }
+    ]
+  },
+  {
+    "id": "死水深潜的先驱",
+    "name": "死水深潜的先驱",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "对受负面状态影响的敌人造成的伤害提高12%。",
+    "effect4": "暴击率提高4%，装备者对陷入不少于2/3个负面效果的敌方目标造成的暴击伤害提高8%/12%。装备者对敌方目标施加负面效果后，上述效果提高100%，持续1回合。",
+    "releaseVersion": "2.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "先驱的绝热围壳"
+      },
+      {
+        "slot": "hands",
+        "name": "先驱的虚极罗盘"
+      },
+      {
+        "slot": "feet",
+        "name": "先驱的泊星桩锚"
+      }
+    ]
+  },
+  {
+    "id": "太空封印站",
+    "name": "太空封印站",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的攻击力提高12%。当装备者的速度大于等于120时，攻击力额外提高12%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "「黑塔」的空间站点"
+      },
+      {
+        "slot": "rope",
+        "name": "「黑塔」的漫历轨迹"
+      }
+    ]
+  },
+  {
+    "id": "天国@直播间",
+    "name": "天国@直播间",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的暴击伤害提高16%。若在同一回合内消耗大于等于3点战技点，额外使装备者暴击伤害提高32%，持续3回合。",
+    "releaseVersion": "3.7",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "直播间的千窗万面"
+      },
+      {
+        "slot": "rope",
+        "name": "直播间的畅聊语流"
+      }
+    ]
+  },
+  {
+    "id": "停转的萨尔索图",
+    "name": "停转的萨尔索图",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的暴击率提高8%。当装备者当前暴击率大于等于50%时，终结技和追加攻击造成的伤害提高15%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "萨尔索图的移动城市"
+      },
+      {
+        "slot": "rope",
+        "name": "萨尔索图的晨昏界线"
+      }
+    ]
+  },
+  {
+    "id": "无主荒星茨冈尼亚",
+    "name": "无主荒星茨冈尼亚",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的暴击率提高4%。当敌方目标被消灭时，装备者暴击伤害提高4%，最多叠加10层。",
+    "releaseVersion": "2.1",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "茨冈尼亚的母神卧榻"
+      },
+      {
+        "slot": "rope",
+        "name": "茨冈尼亚的轮回纽结"
+      }
+    ]
+  },
+  {
+    "id": "星如我见的领航员",
+    "name": "星如我见的领航员",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "攻击力提高12%。",
+    "effect4": "装备者进入战斗时/施放战技时，使战技和终结技造成的伤害提高18%，最多叠加3层，装备者回合开始时/施放终结技后，移除1层该效果。",
+    "releaseVersion": "4.3",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "领航员的深空之镜"
+      },
+      {
+        "slot": "hands",
+        "name": "领航员的游戏之骰"
+      },
+      {
+        "slot": "feet",
+        "name": "领航员的永行魔靴"
+      }
+    ]
+  },
+  {
+    "id": "星体差分机",
+    "name": "星体差分机",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的暴击伤害提高16%。当装备者的暴击伤害大于等于120%时，进入战斗后装备者的暴击率提高60%，持续到施放首次攻击后结束。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "螺丝星的机械烈阳"
+      },
+      {
+        "slot": "rope",
+        "name": "螺丝星的环星孔带"
+      }
+    ]
+  },
+  {
+    "id": "妖精织梦的乐园",
+    "name": "妖精织梦的乐园",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "队伍中当前在场的我方目标数量不等于4时，每多/少1名我方目标，使装备者及其忆灵造成的伤害提高9%/12%，最多叠加4/3层。",
+    "releaseVersion": "3.4",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "迷路迷境的恬梦树屋"
+      },
+      {
+        "slot": "rope",
+        "name": "迷路迷境的祈愿笛哨"
+      }
+    ]
+  },
+  {
+    "id": "野穗伴行的快枪手",
+    "name": "野穗伴行的快枪手",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "攻击力提高12%。",
+    "effect4": "使装备者的速度提高6%，普攻造成的伤害提高10%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "快枪手的野穗毡帽"
+      },
+      {
+        "slot": "hands",
+        "name": "快枪手的粗革手套"
+      },
+      {
+        "slot": "feet",
+        "name": "快枪手的铆钉马靴"
+      }
+    ]
+  },
+  {
+    "id": "应天涉远的卜者",
+    "name": "应天涉远的卜者",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "速度提高6%。",
+    "effect4": "进入战斗前，若装备者的速度大于等于120/160，使装备者的暴击率提高10%/18%。装备者每场战斗首次施放欢愉技时，使我方全体欢愉度提高10%，该效果无法叠加。",
+    "releaseVersion": "4.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "卜者的演算玉兆"
+      },
+      {
+        "slot": "hands",
+        "name": "卜者的机巧义手"
+      },
+      {
+        "slot": "feet",
+        "name": "卜者的飞腾云履"
+      }
+    ]
+  },
+  {
+    "id": "永恒之地翁法罗斯",
+    "name": "永恒之地翁法罗斯",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的暴击率提高8%。装备者的忆灵在场时，我方全体速度提高8%，该效果无法叠加。",
+    "releaseVersion": "3.7",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "翁法罗斯的西风尽途"
+      },
+      {
+        "slot": "rope",
+        "name": "翁法罗斯的永恒诗篇"
+      }
+    ]
+  },
+  {
+    "id": "幽锁深牢的系囚",
+    "name": "幽锁深牢的系囚",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "攻击力提高12%。",
+    "effect4": "敌方目标每承受1个持续伤害效果，装备者对其造成伤害时就无视其6%的防御力，最多计入3个持续伤害效果。",
+    "releaseVersion": "1.5",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "系囚的合啮拘笼"
+      },
+      {
+        "slot": "hands",
+        "name": "系囚的铅石梏铐"
+      },
+      {
+        "slot": "feet",
+        "name": "系囚的绝足锁桎"
+      }
+    ]
+  },
+  {
+    "id": "渊思寂虑的巨树",
+    "name": "渊思寂虑的巨树",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的速度提高6%。当装备者的速度大于等于135/180时，使装备者及其忆灵的治疗量提高12%/20%。",
+    "releaseVersion": "3.1",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "神悟树庭的沉思巨桹"
+      },
+      {
+        "slot": "rope",
+        "name": "神悟树庭的联识叶路"
+      }
+    ]
+  },
+  {
+    "id": "云无留迹的过客",
+    "name": "云无留迹的过客",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "治疗量提高10%。",
+    "effect4": "在战斗开始时，立即为我方恢复1个战技点。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "过客的逢春木簪"
+      },
+      {
+        "slot": "hands",
+        "name": "过客的游龙臂鞲"
+      },
+      {
+        "slot": "feet",
+        "name": "过客的冥途游履"
+      }
+    ]
+  },
+  {
+    "id": "再创天地的救世主",
+    "name": "再创天地的救世主",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "暴击率提高8%。",
+    "effect4": "装备者施放普攻或战技后，若装备者的忆灵在场，使装备者及其忆灵生命上限提高24%，我方全体造成的伤害提高15%，持续至装备者下次施放普攻或战技后。",
+    "releaseVersion": "3.6",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "救世主的登程风帽"
+      },
+      {
+        "slot": "hands",
+        "name": "救世主的执剑护手"
+      },
+      {
+        "slot": "feet",
+        "name": "救世主的拓荒长靴"
+      }
+    ]
+  },
+  {
+    "id": "折断的龙骨",
+    "name": "折断的龙骨",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的效果抵抗提高10%。当装备者的效果抵抗大于等于30%时，我方全体暴击伤害提高10%。",
+    "releaseVersion": "1.2",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "伊须磨洲的残船鲸落"
+      },
+      {
+        "slot": "rope",
+        "name": "伊须磨洲的坼裂缆索"
+      }
+    ]
+  },
+  {
+    "id": "重循苦旅的司铎",
+    "name": "重循苦旅的司铎",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "速度提高6%。",
+    "effect4": "对我方单体目标施放战技或终结技时，使技能目标的暴击伤害提高18%，持续2回合，该效果最多叠加2次。",
+    "releaseVersion": "2.6",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "司铎的律音耳坠"
+      },
+      {
+        "slot": "hands",
+        "name": "司铎的授邀手套"
+      },
+      {
+        "slot": "feet",
+        "name": "司铎的苦旅短靴"
+      }
+    ]
+  },
+  {
+    "id": "筑城者的贝洛伯格",
+    "name": "筑城者的贝洛伯格",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的防御力提高15%。当装备者的效果命中大于等于50%时，防御力额外提高15%。",
+    "releaseVersion": "1.0",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "贝洛伯格的存护堡垒"
+      },
+      {
+        "slot": "rope",
+        "name": "贝洛伯格的铁卫防线"
+      }
+    ]
+  },
+  {
+    "id": "坠星启航地",
+    "name": "坠星启航地",
+    "category": "planar",
+    "rarity": 5,
+    "effect2": "使装备者的暴击率提高8%。进入战斗时，若装备者与另一名队友均为开拓同行角色，使装备者的暴击伤害提高32%。",
+    "releaseVersion": "4.4",
+    "pieces": [
+      {
+        "slot": "sphere",
+        "name": "启航地的搁浅列车"
+      },
+      {
+        "slot": "rope",
+        "name": "启航地的梦想银轨"
+      }
+    ]
+  },
+  {
+    "id": "自匿星芒的隐士",
+    "name": "自匿星芒的隐士",
+    "category": "cavern",
+    "rarity": 5,
+    "effect2": "提供的护盾量提高10%。",
+    "effect4": "使装备者提供的护盾量提高12%，我方目标持有装备者提供的护盾时，暴击伤害提高15%。",
+    "releaseVersion": "3.6",
+    "pieces": [
+      {
+        "slot": "head",
+        "name": "隐士的宽檐呢帽"
+      },
+      {
+        "slot": "hands",
+        "name": "隐士的简雅腕表"
+      },
+      {
+        "slot": "feet",
+        "name": "隐士的麂皮软鞋"
+      }
+    ]
+  }
+]

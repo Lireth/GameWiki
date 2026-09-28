@@ -38,6 +38,9 @@ const MatrixPage = lazy(() =>
 const NewsPage = lazy(() =>
   import('./pages/NewsPage').then((m) => ({ default: m.NewsPage })),
 );
+const BannersPage = lazy(() =>
+  import('./pages/BannersPage').then((m) => ({ default: m.BannersPage })),
+);
 const AdminPage = lazy(() =>
   import('./pages/AdminPage').then((m) => ({ default: m.AdminPage })),
 );
@@ -75,6 +78,7 @@ export default function App() {
           <Route path="relics/:id" element={<RelicDetailPage />} />
           <Route path="matrix" element={<MatrixPage />} />
           <Route path="news" element={<NewsPage />} />
+          <Route path="banners" element={<BannersPage />} />
           <Route path="versions" element={<VersionIndexPage />} />
           <Route path="versions/:version" element={<VersionDetailPage />} />
           <Route path="versions/:version/compare" element={<VersionComparePage />} />

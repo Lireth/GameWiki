@@ -10,6 +10,7 @@
 - **Dexie 4（IndexedDB）**：本地数据存储，配合 `dexie-react-hooks` 实时响应数据变化
 - **@fontsource/rajdhani**：本地打包的英文/数字展示字体（中文回退系统字体）
 - **Vitest + fake-indexeddb**：单元 / 数据层集成 / 组件与 hooks 测试（`npm test`）
+- **Playwright**：浏览器端 E2E 冒烟测试（`e2e/`，覆盖图鉴浏览、收藏、管理页增删与备份导入导出，`npm run e2e`）
 - **ESLint（typescript-eslint + react-hooks 规则）**：静态检查（`npm lint`），GitHub Actions CI 上随测试与构建一并执行
 - **PWA**：manifest + Service Worker（`public/sw.js`，页面导航网络优先 + 离线回退应用壳，静态资源 stale-while-revalidate），支持安装与离线访问
 
@@ -26,6 +27,7 @@
 | `/relics/:id` | 遗器详情 | 类别 / 稀有度 / 二件套与四件套效果 / 套装部件 |
 | `/matrix` | 命途 × 属性矩阵 | 横轴命途、纵轴战斗属性；支持稀有度/性别/版本筛选，表头显示计数；桌面端为完整二维矩阵（可横向滚动），移动端按属性分组堆叠展示；单元格内按实装日期从新到旧排列 |
 | `/news` | 资讯日历 | 年月日历视图，支持月份切换、类型筛选（版本/角色/光锥/活动/卡池/活动结束）、本月事件列表；点击日期（或「+N 项」）可查看当日全部事件；年月、日与类型同步到 URL |
+| `/banners` | 卡池时间线 | 按版本分组回溯跃迁卡池，UP 角色 / 光锥与开放时段可跳转（聚合「跃迁卡池」类型资讯事件） |
 | `/versions` | 版本索引 | 按大版本分组列出全部收录版本及各表条目数 |
 | `/versions/:version` | 版本详情 | 聚合实装于该版本的角色、光锥、遗器与资讯事件（从日历版本标签、详情页实装版本字段进入） |
 | `/favorites` | 我的收藏 | 聚合展示三类收藏条目（收藏存于 IndexedDB，随导出备份） |
@@ -39,17 +41,21 @@ npm install
 npm run dev        # 开发：http://localhost:5173
 npm run build      # 类型检查 + 生产构建（输出 dist/）
 npm run preview    # 预览生产构建
-npm test           # 运行单元测试（Vitest，覆盖日期工具 / 分面计数 / 版本分组等纯逻辑与组件、hooks、收藏存储）
+npm test           # 运行单元测试（Vitest，覆盖日期工具 / 分面计数 / 版本分组等纯逻辑与组件、hooks、收藏存储、种子数据质量门禁）
+npm run e2e        # 浏览器端 E2E 冒烟测试（首次需 npx playwright install chromium）
 npm run lint       # ESLint 静态检查
 ```
 
 ## 如何录入数据
 
-**页面代码不包含任何游戏数据**，全部数据存放在浏览器 IndexedDB 中，并通过种子文件录入：
+**页面代码不包含任何游戏数据**，全部数据存放在浏览器 IndexedDB 中。种子数据由 `.scrape` 管线从 biligame 星穹铁道 Wiki（SMW 数据）生成，当前规模：角色 93 · 光锥 170 · 遗器 60 · 资讯 294（抓取日期 2026-09-28，仅含已实装内容）。
 
-1. 打开 [`src/data/seed.ts`](src/data/seed.ts)，往 `characterSeed` / `lightConeSeed` / `relicSeed` / `newsEventSeed` 数组中添加条目 —— 种子内容变化会被启动时的内容指纹自动检测，无需手动递增版本号；
-2. 启动应用后，`src/db/bootstrap.ts` 会自动同步：对应表为空时全量写入种子数据；表非空但种子内容变化时按 `id` 增量更新（不会删除表中额外条目）；在「数据管理」中删除过的条目有删除墓碑保护，不会被种子更新复活；
-3. 页面通过 `dexie-react-hooks` 的 `useLiveQuery` 实时读取，无需刷新即可看到新数据。
+数据更新方式：
+
+- **Wiki 抓取**：`node .scrape/scrape_wiki.cjs` 抓取光锥 / 遗器 / 卡池并派生资讯事件，再运行 `node .scrape/gen_seed_ts.cjs` 重新生成 `src/data/seed.ts`（生成文件，勿直接手改）；
+- **手工补充**：直接编辑 `.scrape/*.json` 后运行生成脚本，或在应用内「数据管理」页面录入；
+- 种子内容变化由启动时的内容指纹自动检测（无需手动递增版本号），`src/db/bootstrap.ts` 按 `id` 增量更新且不删除表中额外条目；在「数据管理」中删除过的条目有删除墓碑保护，不会被种子更新复活；
+- 页面通过 `dexie-react-hooks` 的 `useLiveQuery` 实时读取，无需刷新即可看到新数据。
 
 手工录入的数据与收藏可通过页脚的「导出数据 / 导入数据」按钮备份与恢复（JSON 文件含 schema 版本号，数据按 `id` 合并导入，收藏取并集）。收藏保存在 IndexedDB（meta 表）中，旧版本存于 localStorage 的收藏会在启动时自动迁移；业务表不再引用的孤儿图片也会在启动时自动回收。
 
@@ -74,7 +80,7 @@ npm run lint       # ESLint 静态检查
 
 ```
 src/
-├── data/seed.ts        # 种子数据（与页面代码分离，按需动态加载不进主包）
+├── data/seed.ts        # 种子数据（由 .scrape 脚本生成；与页面代码分离，动态加载不进主包）
 ├── db/                 # Dexie 数据库、类型定义、初始化逻辑
 ├── hooks/              # useLiveQuery 数据查询 hooks
 ├── lib/                # 分类元数据（命途/属性/稀有度/事件类型）、日期工具
@@ -86,8 +92,10 @@ src/
 └── pages/              # 各路由页面
 ```
 
+`.scrape/` 目录为数据抓取与种子生成脚本（`scrape_wiki.cjs` / `gen_seed_ts.cjs`，需 Node 18+）。
+
 ## 后续可扩展
 
 - 将 `useLiveQuery` 查询替换为远程 API（数据层已与页面解耦，只需改 `src/hooks/useWikiData.ts`）
-- 增加角色/光锥技能、关卡等更多图鉴模块
-- 日历事件与卡池详情页联动
+- 增加角色/光锥技能、星魂等更多图鉴模块
+- 卡池起止日期的精确抓取（Wiki 暂无结构化卡池日期字段；`/banners` 页面已就绪，数据补齐后自动展示）

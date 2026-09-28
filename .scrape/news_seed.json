@@ -1,0 +1,2323 @@
+[
+  {
+    "id": "ev-char-阿兰",
+    "type": "character",
+    "title": "阿兰 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "阿兰"
+  },
+  {
+    "id": "ev-char-艾丝妲",
+    "type": "character",
+    "title": "艾丝妲 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "艾丝妲"
+  },
+  {
+    "id": "ev-char-白露",
+    "type": "character",
+    "title": "白露 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "白露"
+  },
+  {
+    "id": "ev-char-布洛妮娅",
+    "type": "character",
+    "title": "布洛妮娅 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "布洛妮娅"
+  },
+  {
+    "id": "ev-char-丹恒",
+    "type": "character",
+    "title": "丹恒 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "丹恒"
+  },
+  {
+    "id": "ev-char-黑塔",
+    "type": "character",
+    "title": "黑塔 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "黑塔"
+  },
+  {
+    "id": "ev-char-虎克",
+    "type": "character",
+    "title": "虎克 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "虎克"
+  },
+  {
+    "id": "ev-char-姬子",
+    "type": "character",
+    "title": "姬子 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "姬子"
+  },
+  {
+    "id": "ev-char-杰帕德",
+    "type": "character",
+    "title": "杰帕德 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "杰帕德"
+  },
+  {
+    "id": "ev-char-开拓者•存护",
+    "type": "character",
+    "title": "开拓者•存护 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "开拓者•存护"
+  },
+  {
+    "id": "ev-char-开拓者•毁灭",
+    "type": "character",
+    "title": "开拓者•毁灭 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "开拓者•毁灭"
+  },
+  {
+    "id": "ev-char-克拉拉",
+    "type": "character",
+    "title": "克拉拉 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "克拉拉"
+  },
+  {
+    "id": "ev-char-娜塔莎",
+    "type": "character",
+    "title": "娜塔莎 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "娜塔莎"
+  },
+  {
+    "id": "ev-char-佩拉",
+    "type": "character",
+    "title": "佩拉 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "佩拉"
+  },
+  {
+    "id": "ev-char-青雀",
+    "type": "character",
+    "title": "青雀 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "青雀"
+  },
+  {
+    "id": "ev-char-三月七•存护",
+    "type": "character",
+    "title": "三月七•存护 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "三月七•存护"
+  },
+  {
+    "id": "ev-char-桑博",
+    "type": "character",
+    "title": "桑博 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "桑博"
+  },
+  {
+    "id": "ev-char-素裳",
+    "type": "character",
+    "title": "素裳 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "素裳"
+  },
+  {
+    "id": "ev-char-停云",
+    "type": "character",
+    "title": "停云 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "停云"
+  },
+  {
+    "id": "ev-char-瓦尔特",
+    "type": "character",
+    "title": "瓦尔特 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "瓦尔特"
+  },
+  {
+    "id": "ev-char-希儿",
+    "type": "character",
+    "title": "希儿 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "希儿"
+  },
+  {
+    "id": "ev-char-希露瓦",
+    "type": "character",
+    "title": "希露瓦 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "希露瓦"
+  },
+  {
+    "id": "ev-char-彦卿",
+    "type": "character",
+    "title": "彦卿 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedCharacterId": "彦卿"
+  },
+  {
+    "id": "ev-cone-「我」的诞生",
+    "type": "lightcone",
+    "title": "「我」的诞生 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "「我」的诞生"
+  },
+  {
+    "id": "ev-cone-别让世界静下来",
+    "type": "lightcone",
+    "title": "别让世界静下来 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "别让世界静下来"
+  },
+  {
+    "id": "ev-cone-蕃息",
+    "type": "lightcone",
+    "title": "蕃息 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "蕃息"
+  },
+  {
+    "id": "ev-cone-春水初生",
+    "type": "lightcone",
+    "title": "春水初生 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "春水初生"
+  },
+  {
+    "id": "ev-cone-此时恰好",
+    "type": "lightcone",
+    "title": "此时恰好 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "此时恰好"
+  },
+  {
+    "id": "ev-cone-但战斗还未结束",
+    "type": "lightcone",
+    "title": "但战斗还未结束 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "但战斗还未结束"
+  },
+  {
+    "id": "ev-cone-等价交换",
+    "type": "lightcone",
+    "title": "等价交换 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "等价交换"
+  },
+  {
+    "id": "ev-cone-点个关注吧！",
+    "type": "lightcone",
+    "title": "点个关注吧！ 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "点个关注吧！"
+  },
+  {
+    "id": "ev-cone-调和",
+    "type": "lightcone",
+    "title": "调和 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "调和"
+  },
+  {
+    "id": "ev-cone-锋镝",
+    "type": "lightcone",
+    "title": "锋镝 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "锋镝"
+  },
+  {
+    "id": "ev-cone-过往未来",
+    "type": "lightcone",
+    "title": "过往未来 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "过往未来"
+  },
+  {
+    "id": "ev-cone-后会有期",
+    "type": "lightcone",
+    "title": "后会有期 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "后会有期"
+  },
+  {
+    "id": "ev-cone-琥珀",
+    "type": "lightcone",
+    "title": "琥珀 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "琥珀"
+  },
+  {
+    "id": "ev-cone-记一位星神的陨落",
+    "type": "lightcone",
+    "title": "记一位星神的陨落 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "记一位星神的陨落"
+  },
+  {
+    "id": "ev-cone-记忆的质料",
+    "type": "lightcone",
+    "title": "记忆的质料 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "记忆的质料"
+  },
+  {
+    "id": "ev-cone-记忆中的模样",
+    "type": "lightcone",
+    "title": "记忆中的模样 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "记忆中的模样"
+  },
+  {
+    "id": "ev-cone-嘉果",
+    "type": "lightcone",
+    "title": "嘉果 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "嘉果"
+  },
+  {
+    "id": "ev-cone-今日亦是和平的一日",
+    "type": "lightcone",
+    "title": "今日亦是和平的一日 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "今日亦是和平的一日"
+  },
+  {
+    "id": "ev-cone-俱殁",
+    "type": "lightcone",
+    "title": "俱殁 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "俱殁"
+  },
+  {
+    "id": "ev-cone-决心如汗珠般闪耀",
+    "type": "lightcone",
+    "title": "决心如汗珠般闪耀 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "决心如汗珠般闪耀"
+  },
+  {
+    "id": "ev-cone-开疆",
+    "type": "lightcone",
+    "title": "开疆 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "开疆"
+  },
+  {
+    "id": "ev-cone-朗道的选择",
+    "type": "lightcone",
+    "title": "朗道的选择 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "朗道的选择"
+  },
+  {
+    "id": "ev-cone-乐圮",
+    "type": "lightcone",
+    "title": "乐圮 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "乐圮"
+  },
+  {
+    "id": "ev-cone-离弦",
+    "type": "lightcone",
+    "title": "离弦 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "离弦"
+  },
+  {
+    "id": "ev-cone-猎物的视线",
+    "type": "lightcone",
+    "title": "猎物的视线 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "猎物的视线"
+  },
+  {
+    "id": "ev-cone-灵钥",
+    "type": "lightcone",
+    "title": "灵钥 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "灵钥"
+  },
+  {
+    "id": "ev-cone-镂月裁云之意",
+    "type": "lightcone",
+    "title": "镂月裁云之意 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "镂月裁云之意"
+  },
+  {
+    "id": "ev-cone-轮契",
+    "type": "lightcone",
+    "title": "轮契 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "轮契"
+  },
+  {
+    "id": "ev-cone-论剑",
+    "type": "lightcone",
+    "title": "论剑 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "论剑"
+  },
+  {
+    "id": "ev-cone-秘密誓心",
+    "type": "lightcone",
+    "title": "秘密誓心 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "秘密誓心"
+  },
+  {
+    "id": "ev-cone-匿影",
+    "type": "lightcone",
+    "title": "匿影 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "匿影"
+  },
+  {
+    "id": "ev-cone-暖夜不会漫长",
+    "type": "lightcone",
+    "title": "暖夜不会漫长 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "暖夜不会漫长"
+  },
+  {
+    "id": "ev-cone-齐颂",
+    "type": "lightcone",
+    "title": "齐颂 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "齐颂"
+  },
+  {
+    "id": "ev-cone-如泥酣眠",
+    "type": "lightcone",
+    "title": "如泥酣眠 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "如泥酣眠"
+  },
+  {
+    "id": "ev-cone-睿见",
+    "type": "lightcone",
+    "title": "睿见 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "睿见"
+  },
+  {
+    "id": "ev-cone-时节不居",
+    "type": "lightcone",
+    "title": "时节不居 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "时节不居"
+  },
+  {
+    "id": "ev-cone-戍御",
+    "type": "lightcone",
+    "title": "戍御 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "戍御"
+  },
+  {
+    "id": "ev-cone-天才们的休憩",
+    "type": "lightcone",
+    "title": "天才们的休憩 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "天才们的休憩"
+  },
+  {
+    "id": "ev-cone-天倾",
+    "type": "lightcone",
+    "title": "天倾 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "天倾"
+  },
+  {
+    "id": "ev-cone-同一种心情",
+    "type": "lightcone",
+    "title": "同一种心情 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "同一种心情"
+  },
+  {
+    "id": "ev-cone-晚安与睡颜",
+    "type": "lightcone",
+    "title": "晚安与睡颜 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "晚安与睡颜"
+  },
+  {
+    "id": "ev-cone-汪！散步时间！",
+    "type": "lightcone",
+    "title": "汪！散步时间！ 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "汪！散步时间！"
+  },
+  {
+    "id": "ev-cone-唯有沉默",
+    "type": "lightcone",
+    "title": "唯有沉默 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "唯有沉默"
+  },
+  {
+    "id": "ev-cone-我们是地火",
+    "type": "lightcone",
+    "title": "我们是地火 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "我们是地火"
+  },
+  {
+    "id": "ev-cone-无处可逃",
+    "type": "lightcone",
+    "title": "无处可逃 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "无处可逃"
+  },
+  {
+    "id": "ev-cone-无可取代的东西",
+    "type": "lightcone",
+    "title": "无可取代的东西 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "无可取代的东西"
+  },
+  {
+    "id": "ev-cone-舞！舞！舞！",
+    "type": "lightcone",
+    "title": "舞！舞！舞！ 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "舞！舞！舞！"
+  },
+  {
+    "id": "ev-cone-物穰",
+    "type": "lightcone",
+    "title": "物穰 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "物穰"
+  },
+  {
+    "id": "ev-cone-相抗",
+    "type": "lightcone",
+    "title": "相抗 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "相抗"
+  },
+  {
+    "id": "ev-cone-星海巡航",
+    "type": "lightcone",
+    "title": "星海巡航 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "星海巡航"
+  },
+  {
+    "id": "ev-cone-延长记号",
+    "type": "lightcone",
+    "title": "延长记号 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "延长记号"
+  },
+  {
+    "id": "ev-cone-鼹鼠党欢迎你",
+    "type": "lightcone",
+    "title": "鼹鼠党欢迎你 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "鼹鼠党欢迎你"
+  },
+  {
+    "id": "ev-cone-一场术后对话",
+    "type": "lightcone",
+    "title": "一场术后对话 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "一场术后对话"
+  },
+  {
+    "id": "ev-cone-以世界之名",
+    "type": "lightcone",
+    "title": "以世界之名 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "以世界之名"
+  },
+  {
+    "id": "ev-cone-银河铁道之夜",
+    "type": "lightcone",
+    "title": "银河铁道之夜 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "银河铁道之夜"
+  },
+  {
+    "id": "ev-cone-幽邃",
+    "type": "lightcone",
+    "title": "幽邃 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "幽邃"
+  },
+  {
+    "id": "ev-cone-于夜色中",
+    "type": "lightcone",
+    "title": "于夜色中 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "于夜色中"
+  },
+  {
+    "id": "ev-cone-余生的第一天",
+    "type": "lightcone",
+    "title": "余生的第一天 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "余生的第一天"
+  },
+  {
+    "id": "ev-cone-与行星相会",
+    "type": "lightcone",
+    "title": "与行星相会 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "与行星相会"
+  },
+  {
+    "id": "ev-cone-宇宙市场趋势",
+    "type": "lightcone",
+    "title": "宇宙市场趋势 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "宇宙市场趋势"
+  },
+  {
+    "id": "ev-cone-渊环",
+    "type": "lightcone",
+    "title": "渊环 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "渊环"
+  },
+  {
+    "id": "ev-cone-在蓝天下",
+    "type": "lightcone",
+    "title": "在蓝天下 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "在蓝天下"
+  },
+  {
+    "id": "ev-cone-早餐的仪式感",
+    "type": "lightcone",
+    "title": "早餐的仪式感 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "早餐的仪式感"
+  },
+  {
+    "id": "ev-cone-这就是我啦！",
+    "type": "lightcone",
+    "title": "这就是我啦！ 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "这就是我啦！"
+  },
+  {
+    "id": "ev-cone-制胜的瞬间",
+    "type": "lightcone",
+    "title": "制胜的瞬间 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "制胜的瞬间"
+  },
+  {
+    "id": "ev-cone-智库",
+    "type": "lightcone",
+    "title": "智库 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "智库"
+  },
+  {
+    "id": "ev-cone-重返幽冥",
+    "type": "lightcone",
+    "title": "重返幽冥 实装",
+    "date": "2023-04-26",
+    "version": "1.0",
+    "relatedLightConeId": "重返幽冥"
+  },
+  {
+    "id": "ev-version-1.0",
+    "type": "version",
+    "title": "v1.0 版本更新",
+    "date": "2023-04-26",
+    "version": "1.0"
+  },
+  {
+    "id": "ev-char-景元",
+    "type": "character",
+    "title": "景元 实装",
+    "date": "2023-05-17",
+    "version": "1.0",
+    "relatedCharacterId": "景元"
+  },
+  {
+    "id": "ev-cone-拂晓之前",
+    "type": "lightcone",
+    "title": "拂晓之前 实装",
+    "date": "2023-05-17",
+    "version": "1.0",
+    "relatedLightConeId": "拂晓之前"
+  },
+  {
+    "id": "ev-char-银狼",
+    "type": "character",
+    "title": "银狼 实装",
+    "date": "2023-06-07",
+    "version": "1.1",
+    "relatedCharacterId": "银狼"
+  },
+  {
+    "id": "ev-cone-新手任务开始前",
+    "type": "lightcone",
+    "title": "新手任务开始前 实装",
+    "date": "2023-06-07",
+    "version": "1.1",
+    "relatedLightConeId": "新手任务开始前"
+  },
+  {
+    "id": "ev-cone-雨一直下",
+    "type": "lightcone",
+    "title": "雨一直下 实装",
+    "date": "2023-06-07",
+    "version": "1.1",
+    "relatedLightConeId": "雨一直下"
+  },
+  {
+    "id": "ev-version-1.1",
+    "type": "version",
+    "title": "v1.1 版本更新",
+    "date": "2023-06-07",
+    "version": "1.1"
+  },
+  {
+    "id": "ev-char-罗刹",
+    "type": "character",
+    "title": "罗刹 实装",
+    "date": "2023-06-28",
+    "version": "1.1",
+    "relatedCharacterId": "罗刹"
+  },
+  {
+    "id": "ev-char-驭空",
+    "type": "character",
+    "title": "驭空 实装",
+    "date": "2023-06-28",
+    "version": "1.1",
+    "relatedCharacterId": "驭空"
+  },
+  {
+    "id": "ev-cone-棺的回响",
+    "type": "lightcone",
+    "title": "棺的回响 实装",
+    "date": "2023-06-28",
+    "version": "1.1",
+    "relatedLightConeId": "棺的回响"
+  },
+  {
+    "id": "ev-char-刃",
+    "type": "character",
+    "title": "刃 实装",
+    "date": "2023-07-19",
+    "version": "1.2",
+    "relatedCharacterId": "刃"
+  },
+  {
+    "id": "ev-cone-到不了的彼岸",
+    "type": "lightcone",
+    "title": "到不了的彼岸 实装",
+    "date": "2023-07-19",
+    "version": "1.2",
+    "relatedLightConeId": "到不了的彼岸"
+  },
+  {
+    "id": "ev-version-1.2",
+    "type": "version",
+    "title": "v1.2 版本更新",
+    "date": "2023-07-19",
+    "version": "1.2"
+  },
+  {
+    "id": "ev-char-卡芙卡",
+    "type": "character",
+    "title": "卡芙卡 实装",
+    "date": "2023-08-09",
+    "version": "1.2",
+    "relatedCharacterId": "卡芙卡"
+  },
+  {
+    "id": "ev-char-卢卡",
+    "type": "character",
+    "title": "卢卡 实装",
+    "date": "2023-08-09",
+    "version": "1.2",
+    "relatedCharacterId": "卢卡"
+  },
+  {
+    "id": "ev-cone-只需等待",
+    "type": "lightcone",
+    "title": "只需等待 实装",
+    "date": "2023-08-09",
+    "version": "1.2",
+    "relatedLightConeId": "只需等待"
+  },
+  {
+    "id": "ev-char-丹恒•饮月",
+    "type": "character",
+    "title": "丹恒•饮月 实装",
+    "date": "2023-08-30",
+    "version": "1.3",
+    "relatedCharacterId": "丹恒•饮月"
+  },
+  {
+    "id": "ev-cone-比阳光更明亮的",
+    "type": "lightcone",
+    "title": "比阳光更明亮的 实装",
+    "date": "2023-08-30",
+    "version": "1.3",
+    "relatedLightConeId": "比阳光更明亮的"
+  },
+  {
+    "id": "ev-cone-孤独的疗愈",
+    "type": "lightcone",
+    "title": "孤独的疗愈 实装",
+    "date": "2023-08-30",
+    "version": "1.3",
+    "relatedLightConeId": "孤独的疗愈"
+  },
+  {
+    "id": "ev-version-1.3",
+    "type": "version",
+    "title": "v1.3 版本更新",
+    "date": "2023-08-30",
+    "version": "1.3"
+  },
+  {
+    "id": "ev-char-符玄",
+    "type": "character",
+    "title": "符玄 实装",
+    "date": "2023-09-20",
+    "version": "1.3",
+    "relatedCharacterId": "符玄"
+  },
+  {
+    "id": "ev-char-玲可",
+    "type": "character",
+    "title": "玲可 实装",
+    "date": "2023-09-20",
+    "version": "1.3",
+    "relatedCharacterId": "玲可"
+  },
+  {
+    "id": "ev-cone-她已闭上双眼",
+    "type": "lightcone",
+    "title": "她已闭上双眼 实装",
+    "date": "2023-09-20",
+    "version": "1.3",
+    "relatedLightConeId": "她已闭上双眼"
+  },
+  {
+    "id": "ev-char-镜流",
+    "type": "character",
+    "title": "镜流 实装",
+    "date": "2023-10-11",
+    "version": "1.4",
+    "relatedCharacterId": "镜流"
+  },
+  {
+    "id": "ev-cone-此身为剑",
+    "type": "lightcone",
+    "title": "此身为剑 实装",
+    "date": "2023-10-11",
+    "version": "1.4",
+    "relatedLightConeId": "此身为剑"
+  },
+  {
+    "id": "ev-version-1.4",
+    "type": "version",
+    "title": "v1.4 版本更新",
+    "date": "2023-10-11",
+    "version": "1.4"
+  },
+  {
+    "id": "ev-char-桂乃芬",
+    "type": "character",
+    "title": "桂乃芬 实装",
+    "date": "2023-10-27",
+    "version": "1.4",
+    "relatedCharacterId": "桂乃芬"
+  },
+  {
+    "id": "ev-char-托帕&账账",
+    "type": "character",
+    "title": "托帕&账账 实装",
+    "date": "2023-10-27",
+    "version": "1.4",
+    "relatedCharacterId": "托帕&账账"
+  },
+  {
+    "id": "ev-cone-烦恼着，幸福着",
+    "type": "lightcone",
+    "title": "烦恼着，幸福着 实装",
+    "date": "2023-10-27",
+    "version": "1.4",
+    "relatedLightConeId": "烦恼着，幸福着"
+  },
+  {
+    "id": "ev-char-藿藿",
+    "type": "character",
+    "title": "藿藿 实装",
+    "date": "2023-11-15",
+    "version": "1.5",
+    "relatedCharacterId": "藿藿"
+  },
+  {
+    "id": "ev-cone-嘿，我在这儿",
+    "type": "lightcone",
+    "title": "嘿，我在这儿 实装",
+    "date": "2023-11-15",
+    "version": "1.5",
+    "relatedLightConeId": "嘿，我在这儿"
+  },
+  {
+    "id": "ev-cone-惊魂夜",
+    "type": "lightcone",
+    "title": "惊魂夜 实装",
+    "date": "2023-11-15",
+    "version": "1.5",
+    "relatedLightConeId": "惊魂夜"
+  },
+  {
+    "id": "ev-version-1.5",
+    "type": "version",
+    "title": "v1.5 版本更新",
+    "date": "2023-11-15",
+    "version": "1.5"
+  },
+  {
+    "id": "ev-char-寒鸦",
+    "type": "character",
+    "title": "寒鸦 实装",
+    "date": "2023-12-06",
+    "version": "1.5",
+    "relatedCharacterId": "寒鸦"
+  },
+  {
+    "id": "ev-char-银枝",
+    "type": "character",
+    "title": "银枝 实装",
+    "date": "2023-12-06",
+    "version": "1.5",
+    "relatedCharacterId": "银枝"
+  },
+  {
+    "id": "ev-cone-片刻，留在眼底",
+    "type": "lightcone",
+    "title": "片刻，留在眼底 实装",
+    "date": "2023-12-06",
+    "version": "1.5",
+    "relatedLightConeId": "片刻，留在眼底"
+  },
+  {
+    "id": "ev-char-阮•梅",
+    "type": "character",
+    "title": "阮•梅 实装",
+    "date": "2023-12-27",
+    "version": "1.6",
+    "relatedCharacterId": "阮•梅"
+  },
+  {
+    "id": "ev-char-雪衣",
+    "type": "character",
+    "title": "雪衣 实装",
+    "date": "2023-12-27",
+    "version": "1.6",
+    "relatedCharacterId": "雪衣"
+  },
+  {
+    "id": "ev-cone-镜中故我",
+    "type": "lightcone",
+    "title": "镜中故我 实装",
+    "date": "2023-12-27",
+    "version": "1.6",
+    "relatedLightConeId": "镜中故我"
+  },
+  {
+    "id": "ev-version-1.6",
+    "type": "version",
+    "title": "v1.6 版本更新",
+    "date": "2023-12-27",
+    "version": "1.6"
+  },
+  {
+    "id": "ev-char-真理医生",
+    "type": "character",
+    "title": "真理医生 实装",
+    "date": "2024-01-17",
+    "version": "1.6",
+    "relatedCharacterId": "真理医生"
+  },
+  {
+    "id": "ev-cone-纯粹思维的洗礼",
+    "type": "lightcone",
+    "title": "纯粹思维的洗礼 实装",
+    "date": "2024-01-17",
+    "version": "1.6",
+    "relatedLightConeId": "纯粹思维的洗礼"
+  },
+  {
+    "id": "ev-char-黑天鹅",
+    "type": "character",
+    "title": "黑天鹅 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedCharacterId": "黑天鹅"
+  },
+  {
+    "id": "ev-char-米沙",
+    "type": "character",
+    "title": "米沙 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedCharacterId": "米沙"
+  },
+  {
+    "id": "ev-cone-好戏开演",
+    "type": "lightcone",
+    "title": "好戏开演 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedLightConeId": "好戏开演"
+  },
+  {
+    "id": "ev-cone-何物为真",
+    "type": "lightcone",
+    "title": "何物为真 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedLightConeId": "何物为真"
+  },
+  {
+    "id": "ev-cone-美梦小镇大冒险",
+    "type": "lightcone",
+    "title": "美梦小镇大冒险 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedLightConeId": "美梦小镇大冒险"
+  },
+  {
+    "id": "ev-cone-铭记于心的约定",
+    "type": "lightcone",
+    "title": "铭记于心的约定 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedLightConeId": "铭记于心的约定"
+  },
+  {
+    "id": "ev-cone-银河沦陷日",
+    "type": "lightcone",
+    "title": "银河沦陷日 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedLightConeId": "银河沦陷日"
+  },
+  {
+    "id": "ev-cone-在火的远处",
+    "type": "lightcone",
+    "title": "在火的远处 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedLightConeId": "在火的远处"
+  },
+  {
+    "id": "ev-cone-织造命运之线",
+    "type": "lightcone",
+    "title": "织造命运之线 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedLightConeId": "织造命运之线"
+  },
+  {
+    "id": "ev-cone-重塑时光之忆",
+    "type": "lightcone",
+    "title": "重塑时光之忆 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedLightConeId": "重塑时光之忆"
+  },
+  {
+    "id": "ev-cone-最后的赢家",
+    "type": "lightcone",
+    "title": "最后的赢家 实装",
+    "date": "2024-02-06",
+    "version": "2.0",
+    "relatedLightConeId": "最后的赢家"
+  },
+  {
+    "id": "ev-version-2.0",
+    "type": "version",
+    "title": "v2.0 版本更新",
+    "date": "2024-02-06",
+    "version": "2.0"
+  },
+  {
+    "id": "ev-char-花火",
+    "type": "character",
+    "title": "花火 实装",
+    "date": "2024-02-29",
+    "version": "2.0",
+    "relatedCharacterId": "花火"
+  },
+  {
+    "id": "ev-cone-游戏尘寰",
+    "type": "lightcone",
+    "title": "游戏尘寰 实装",
+    "date": "2024-02-29",
+    "version": "2.0",
+    "relatedLightConeId": "游戏尘寰"
+  },
+  {
+    "id": "ev-char-黄泉",
+    "type": "character",
+    "title": "黄泉 实装",
+    "date": "2024-03-27",
+    "version": "2.1",
+    "relatedCharacterId": "黄泉"
+  },
+  {
+    "id": "ev-char-加拉赫",
+    "type": "character",
+    "title": "加拉赫 实装",
+    "date": "2024-03-27",
+    "version": "2.1",
+    "relatedCharacterId": "加拉赫"
+  },
+  {
+    "id": "ev-cone-行于流逝的岸",
+    "type": "lightcone",
+    "title": "行于流逝的岸 实装",
+    "date": "2024-03-27",
+    "version": "2.1",
+    "relatedLightConeId": "行于流逝的岸"
+  },
+  {
+    "id": "ev-version-2.1",
+    "type": "version",
+    "title": "v2.1 版本更新",
+    "date": "2024-03-27",
+    "version": "2.1"
+  },
+  {
+    "id": "ev-char-砂金",
+    "type": "character",
+    "title": "砂金 实装",
+    "date": "2024-04-17",
+    "version": "2.1",
+    "relatedCharacterId": "砂金"
+  },
+  {
+    "id": "ev-cone-两个人的演唱会",
+    "type": "lightcone",
+    "title": "两个人的演唱会 实装",
+    "date": "2024-04-17",
+    "version": "2.1",
+    "relatedLightConeId": "两个人的演唱会"
+  },
+  {
+    "id": "ev-cone-命运从未公平",
+    "type": "lightcone",
+    "title": "命运从未公平 实装",
+    "date": "2024-04-17",
+    "version": "2.1",
+    "relatedLightConeId": "命运从未公平"
+  },
+  {
+    "id": "ev-char-开拓者•同谐",
+    "type": "character",
+    "title": "开拓者•同谐 实装",
+    "date": "2024-05-08",
+    "version": "2.2",
+    "relatedCharacterId": "开拓者•同谐"
+  },
+  {
+    "id": "ev-char-知更鸟",
+    "type": "character",
+    "title": "知更鸟 实装",
+    "date": "2024-05-08",
+    "version": "2.2",
+    "relatedCharacterId": "知更鸟"
+  },
+  {
+    "id": "ev-cone-为了明日的旅途",
+    "type": "lightcone",
+    "title": "为了明日的旅途 实装",
+    "date": "2024-05-08",
+    "version": "2.2",
+    "relatedLightConeId": "为了明日的旅途"
+  },
+  {
+    "id": "ev-cone-无边曼舞",
+    "type": "lightcone",
+    "title": "无边曼舞 实装",
+    "date": "2024-05-08",
+    "version": "2.2",
+    "relatedLightConeId": "无边曼舞"
+  },
+  {
+    "id": "ev-cone-夜色流光溢彩",
+    "type": "lightcone",
+    "title": "夜色流光溢彩 实装",
+    "date": "2024-05-08",
+    "version": "2.2",
+    "relatedLightConeId": "夜色流光溢彩"
+  },
+  {
+    "id": "ev-version-2.2",
+    "type": "version",
+    "title": "v2.2 版本更新",
+    "date": "2024-05-08",
+    "version": "2.2"
+  },
+  {
+    "id": "ev-char-波提欧",
+    "type": "character",
+    "title": "波提欧 实装",
+    "date": "2024-05-29",
+    "version": "2.2",
+    "relatedCharacterId": "波提欧"
+  },
+  {
+    "id": "ev-cone-驶向第二次生命",
+    "type": "lightcone",
+    "title": "驶向第二次生命 实装",
+    "date": "2024-05-29",
+    "version": "2.2",
+    "relatedLightConeId": "驶向第二次生命"
+  },
+  {
+    "id": "ev-char-流萤",
+    "type": "character",
+    "title": "流萤 实装",
+    "date": "2024-06-19",
+    "version": "2.3",
+    "relatedCharacterId": "流萤"
+  },
+  {
+    "id": "ev-cone-不息的演算",
+    "type": "lightcone",
+    "title": "不息的演算 实装",
+    "date": "2024-06-19",
+    "version": "2.3",
+    "relatedLightConeId": "不息的演算"
+  },
+  {
+    "id": "ev-cone-梦应归于何处",
+    "type": "lightcone",
+    "title": "梦应归于何处 实装",
+    "date": "2024-06-19",
+    "version": "2.3",
+    "relatedLightConeId": "梦应归于何处"
+  },
+  {
+    "id": "ev-version-2.3",
+    "type": "version",
+    "title": "v2.3 版本更新",
+    "date": "2024-06-19",
+    "version": "2.3"
+  },
+  {
+    "id": "ev-char-翡翠",
+    "type": "character",
+    "title": "翡翠 实装",
+    "date": "2024-07-10",
+    "version": "2.3",
+    "relatedCharacterId": "翡翠"
+  },
+  {
+    "id": "ev-cone-偏偏希望无价",
+    "type": "lightcone",
+    "title": "偏偏希望无价 实装",
+    "date": "2024-07-10",
+    "version": "2.3",
+    "relatedLightConeId": "偏偏希望无价"
+  },
+  {
+    "id": "ev-cone-谐乐静默之后",
+    "type": "lightcone",
+    "title": "谐乐静默之后 实装",
+    "date": "2024-07-10",
+    "version": "2.3",
+    "relatedLightConeId": "谐乐静默之后"
+  },
+  {
+    "id": "ev-char-三月七•巡猎",
+    "type": "character",
+    "title": "三月七•巡猎 实装",
+    "date": "2024-07-31",
+    "version": "2.4",
+    "relatedCharacterId": "三月七•巡猎"
+  },
+  {
+    "id": "ev-char-云璃",
+    "type": "character",
+    "title": "云璃 实装",
+    "date": "2024-07-31",
+    "version": "2.4",
+    "relatedCharacterId": "云璃"
+  },
+  {
+    "id": "ev-cone-落日时起舞",
+    "type": "lightcone",
+    "title": "落日时起舞 实装",
+    "date": "2024-07-31",
+    "version": "2.4",
+    "relatedLightConeId": "落日时起舞"
+  },
+  {
+    "id": "ev-version-2.4",
+    "type": "version",
+    "title": "v2.4 版本更新",
+    "date": "2024-07-31",
+    "version": "2.4"
+  },
+  {
+    "id": "ev-char-椒丘",
+    "type": "character",
+    "title": "椒丘 实装",
+    "date": "2024-08-21",
+    "version": "2.4",
+    "relatedCharacterId": "椒丘"
+  },
+  {
+    "id": "ev-cone-芳华待灼",
+    "type": "lightcone",
+    "title": "芳华待灼 实装",
+    "date": "2024-08-21",
+    "version": "2.4",
+    "relatedLightConeId": "芳华待灼"
+  },
+  {
+    "id": "ev-cone-那无数个春天",
+    "type": "lightcone",
+    "title": "那无数个春天 实装",
+    "date": "2024-08-21",
+    "version": "2.4",
+    "relatedLightConeId": "那无数个春天"
+  },
+  {
+    "id": "ev-char-飞霄",
+    "type": "character",
+    "title": "飞霄 实装",
+    "date": "2024-09-10",
+    "version": "2.5",
+    "relatedCharacterId": "飞霄"
+  },
+  {
+    "id": "ev-char-貊泽",
+    "type": "character",
+    "title": "貊泽 实装",
+    "date": "2024-09-10",
+    "version": "2.5",
+    "relatedCharacterId": "貊泽"
+  },
+  {
+    "id": "ev-cone-我将，巡征追猎",
+    "type": "lightcone",
+    "title": "我将，巡征追猎 实装",
+    "date": "2024-09-10",
+    "version": "2.5",
+    "relatedLightConeId": "我将，巡征追猎"
+  },
+  {
+    "id": "ev-version-2.5",
+    "type": "version",
+    "title": "v2.5 版本更新",
+    "date": "2024-09-10",
+    "version": "2.5"
+  },
+  {
+    "id": "ev-char-灵砂",
+    "type": "character",
+    "title": "灵砂 实装",
+    "date": "2024-10-02",
+    "version": "2.5",
+    "relatedCharacterId": "灵砂"
+  },
+  {
+    "id": "ev-cone-黑夜如影随行",
+    "type": "lightcone",
+    "title": "黑夜如影随行 实装",
+    "date": "2024-10-02",
+    "version": "2.5",
+    "relatedLightConeId": "黑夜如影随行"
+  },
+  {
+    "id": "ev-cone-唯有香如故",
+    "type": "lightcone",
+    "title": "唯有香如故 实装",
+    "date": "2024-10-02",
+    "version": "2.5",
+    "relatedLightConeId": "唯有香如故"
+  },
+  {
+    "id": "ev-char-乱破",
+    "type": "character",
+    "title": "乱破 实装",
+    "date": "2024-10-23",
+    "version": "2.6",
+    "relatedCharacterId": "乱破"
+  },
+  {
+    "id": "ev-cone-梦的蒙太奇",
+    "type": "lightcone",
+    "title": "梦的蒙太奇 实装",
+    "date": "2024-10-23",
+    "version": "2.6",
+    "relatedLightConeId": "梦的蒙太奇"
+  },
+  {
+    "id": "ev-cone-忍法帖•缭乱破魔",
+    "type": "lightcone",
+    "title": "忍法帖•缭乱破魔 实装",
+    "date": "2024-10-23",
+    "version": "2.6",
+    "relatedLightConeId": "忍法帖•缭乱破魔"
+  },
+  {
+    "id": "ev-cone-忍事录•音律狩猎",
+    "type": "lightcone",
+    "title": "忍事录•音律狩猎 实装",
+    "date": "2024-10-23",
+    "version": "2.6",
+    "relatedLightConeId": "忍事录•音律狩猎"
+  },
+  {
+    "id": "ev-version-2.6",
+    "type": "version",
+    "title": "v2.6 版本更新",
+    "date": "2024-10-23",
+    "version": "2.6"
+  },
+  {
+    "id": "ev-char-星期日",
+    "type": "character",
+    "title": "星期日 实装",
+    "date": "2024-12-04",
+    "version": "2.7",
+    "relatedCharacterId": "星期日"
+  },
+  {
+    "id": "ev-cone-回到大地的飞行",
+    "type": "lightcone",
+    "title": "回到大地的飞行 实装",
+    "date": "2024-12-04",
+    "version": "2.7",
+    "relatedLightConeId": "回到大地的飞行"
+  },
+  {
+    "id": "ev-version-2.7",
+    "type": "version",
+    "title": "v2.7 版本更新",
+    "date": "2024-12-04",
+    "version": "2.7"
+  },
+  {
+    "id": "ev-char-忘归人",
+    "type": "character",
+    "title": "忘归人 实装",
+    "date": "2024-12-25",
+    "version": "2.7",
+    "relatedCharacterId": "忘归人"
+  },
+  {
+    "id": "ev-cone-长路终有归途",
+    "type": "lightcone",
+    "title": "长路终有归途 实装",
+    "date": "2024-12-25",
+    "version": "2.7",
+    "relatedLightConeId": "长路终有归途"
+  },
+  {
+    "id": "ev-char-大黑塔",
+    "type": "character",
+    "title": "大黑塔 实装",
+    "date": "2025-01-15",
+    "version": "3.0",
+    "relatedCharacterId": "大黑塔"
+  },
+  {
+    "id": "ev-char-开拓者•记忆",
+    "type": "character",
+    "title": "开拓者•记忆 实装",
+    "date": "2025-01-15",
+    "version": "3.0",
+    "relatedCharacterId": "开拓者•记忆"
+  },
+  {
+    "id": "ev-cone-多流汗，少流泪",
+    "type": "lightcone",
+    "title": "多流汗，少流泪 实装",
+    "date": "2025-01-15",
+    "version": "3.0",
+    "relatedLightConeId": "多流汗，少流泪"
+  },
+  {
+    "id": "ev-cone-焚影",
+    "type": "lightcone",
+    "title": "焚影 实装",
+    "date": "2025-01-15",
+    "version": "3.0",
+    "relatedLightConeId": "焚影"
+  },
+  {
+    "id": "ev-cone-胜利只在朝夕间",
+    "type": "lightcone",
+    "title": "胜利只在朝夕间 实装",
+    "date": "2025-01-15",
+    "version": "3.0",
+    "relatedLightConeId": "胜利只在朝夕间"
+  },
+  {
+    "id": "ev-cone-溯忆",
+    "type": "lightcone",
+    "title": "溯忆 实装",
+    "date": "2025-01-15",
+    "version": "3.0",
+    "relatedLightConeId": "溯忆"
+  },
+  {
+    "id": "ev-cone-向着不可追问处",
+    "type": "lightcone",
+    "title": "向着不可追问处 实装",
+    "date": "2025-01-15",
+    "version": "3.0",
+    "relatedLightConeId": "向着不可追问处"
+  },
+  {
+    "id": "ev-version-3.0",
+    "type": "version",
+    "title": "v3.0 版本更新",
+    "date": "2025-01-15",
+    "version": "3.0"
+  },
+  {
+    "id": "ev-char-阿格莱雅",
+    "type": "character",
+    "title": "阿格莱雅 实装",
+    "date": "2025-02-05",
+    "version": "3.0",
+    "relatedCharacterId": "阿格莱雅"
+  },
+  {
+    "id": "ev-cone-将光阴织成黄金",
+    "type": "lightcone",
+    "title": "将光阴织成黄金 实装",
+    "date": "2025-02-05",
+    "version": "3.0",
+    "relatedLightConeId": "将光阴织成黄金"
+  },
+  {
+    "id": "ev-cone-天才们的问候",
+    "type": "lightcone",
+    "title": "天才们的问候 实装",
+    "date": "2025-02-05",
+    "version": "3.0",
+    "relatedLightConeId": "天才们的问候"
+  },
+  {
+    "id": "ev-char-缇宝",
+    "type": "character",
+    "title": "缇宝 实装",
+    "date": "2025-02-26",
+    "version": "3.1",
+    "relatedCharacterId": "缇宝"
+  },
+  {
+    "id": "ev-cone-记忆永不落幕",
+    "type": "lightcone",
+    "title": "记忆永不落幕 实装",
+    "date": "2025-02-26",
+    "version": "3.1",
+    "relatedLightConeId": "记忆永不落幕"
+  },
+  {
+    "id": "ev-cone-如果时间是一朵花",
+    "type": "lightcone",
+    "title": "如果时间是一朵花 实装",
+    "date": "2025-02-26",
+    "version": "3.1",
+    "relatedLightConeId": "如果时间是一朵花"
+  },
+  {
+    "id": "ev-version-3.1",
+    "type": "version",
+    "title": "v3.1 版本更新",
+    "date": "2025-02-26",
+    "version": "3.1"
+  },
+  {
+    "id": "ev-char-万敌",
+    "type": "character",
+    "title": "万敌 实装",
+    "date": "2025-03-19",
+    "version": "3.1",
+    "relatedCharacterId": "万敌"
+  },
+  {
+    "id": "ev-cone-血火啊，燃烧前路",
+    "type": "lightcone",
+    "title": "血火啊，燃烧前路 实装",
+    "date": "2025-03-19",
+    "version": "3.1",
+    "relatedLightConeId": "血火啊，燃烧前路"
+  },
+  {
+    "id": "ev-char-遐蝶",
+    "type": "character",
+    "title": "遐蝶 实装",
+    "date": "2025-04-09",
+    "version": "3.2",
+    "relatedCharacterId": "遐蝶"
+  },
+  {
+    "id": "ev-cone-让告别，更美一些",
+    "type": "lightcone",
+    "title": "让告别，更美一些 实装",
+    "date": "2025-04-09",
+    "version": "3.2",
+    "relatedLightConeId": "让告别，更美一些"
+  },
+  {
+    "id": "ev-cone-宇宙大生意",
+    "type": "lightcone",
+    "title": "宇宙大生意 实装",
+    "date": "2025-04-09",
+    "version": "3.2",
+    "relatedLightConeId": "宇宙大生意"
+  },
+  {
+    "id": "ev-version-3.2",
+    "type": "version",
+    "title": "v3.2 版本更新",
+    "date": "2025-04-09",
+    "version": "3.2"
+  },
+  {
+    "id": "ev-char-那刻夏",
+    "type": "character",
+    "title": "那刻夏 实装",
+    "date": "2025-04-30",
+    "version": "3.2",
+    "relatedCharacterId": "那刻夏"
+  },
+  {
+    "id": "ev-cone-生命当付之一炬",
+    "type": "lightcone",
+    "title": "生命当付之一炬 实装",
+    "date": "2025-04-30",
+    "version": "3.2",
+    "relatedLightConeId": "生命当付之一炬"
+  },
+  {
+    "id": "ev-char-风堇",
+    "type": "character",
+    "title": "风堇 实装",
+    "date": "2025-05-21",
+    "version": "3.3",
+    "relatedCharacterId": "风堇"
+  },
+  {
+    "id": "ev-cone-愿虹光永驻天空",
+    "type": "lightcone",
+    "title": "愿虹光永驻天空 实装",
+    "date": "2025-05-21",
+    "version": "3.3",
+    "relatedLightConeId": "愿虹光永驻天空"
+  },
+  {
+    "id": "ev-version-3.3",
+    "type": "version",
+    "title": "v3.3 版本更新",
+    "date": "2025-05-21",
+    "version": "3.3"
+  },
+  {
+    "id": "ev-char-赛飞儿",
+    "type": "character",
+    "title": "赛飞儿 实装",
+    "date": "2025-06-11",
+    "version": "3.3",
+    "relatedCharacterId": "赛飞儿"
+  },
+  {
+    "id": "ev-cone-谎言在风中飘扬",
+    "type": "lightcone",
+    "title": "谎言在风中飘扬 实装",
+    "date": "2025-06-11",
+    "version": "3.3",
+    "relatedLightConeId": "谎言在风中飘扬"
+  },
+  {
+    "id": "ev-char-白厄",
+    "type": "character",
+    "title": "白厄 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedCharacterId": "白厄"
+  },
+  {
+    "id": "ev-cone-故事的下一页",
+    "type": "lightcone",
+    "title": "故事的下一页 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "故事的下一页"
+  },
+  {
+    "id": "ev-cone-花儿不会忘记",
+    "type": "lightcone",
+    "title": "花儿不会忘记 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "花儿不会忘记"
+  },
+  {
+    "id": "ev-cone-假日浴场大冒险",
+    "type": "lightcone",
+    "title": "假日浴场大冒险 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "假日浴场大冒险"
+  },
+  {
+    "id": "ev-cone-黎明恰如此燃烧",
+    "type": "lightcone",
+    "title": "黎明恰如此燃烧 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "黎明恰如此燃烧"
+  },
+  {
+    "id": "ev-cone-一行往日的血",
+    "type": "lightcone",
+    "title": "一行往日的血 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "一行往日的血"
+  },
+  {
+    "id": "ev-cone-氤氲麦香的梦",
+    "type": "lightcone",
+    "title": "氤氲麦香的梦 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "氤氲麦香的梦"
+  },
+  {
+    "id": "ev-cone-于那终点再见",
+    "type": "lightcone",
+    "title": "于那终点再见 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "于那终点再见"
+  },
+  {
+    "id": "ev-cone-愿旅途永远坦然",
+    "type": "lightcone",
+    "title": "愿旅途永远坦然 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "愿旅途永远坦然"
+  },
+  {
+    "id": "ev-cone-直到明天的明天",
+    "type": "lightcone",
+    "title": "直到明天的明天 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "直到明天的明天"
+  },
+  {
+    "id": "ev-cone-追逐风的时候",
+    "type": "lightcone",
+    "title": "追逐风的时候 实装",
+    "date": "2025-07-02",
+    "version": "3.4",
+    "relatedLightConeId": "追逐风的时候"
+  },
+  {
+    "id": "ev-version-3.4",
+    "type": "version",
+    "title": "v3.4 版本更新",
+    "date": "2025-07-02",
+    "version": "3.4"
+  },
+  {
+    "id": "ev-char-Archer",
+    "type": "character",
+    "title": "Archer 实装",
+    "date": "2025-07-11",
+    "version": "3.4",
+    "relatedCharacterId": "Archer"
+  },
+  {
+    "id": "ev-char-Saber",
+    "type": "character",
+    "title": "Saber 实装",
+    "date": "2025-07-11",
+    "version": "3.4",
+    "relatedCharacterId": "Saber"
+  },
+  {
+    "id": "ev-cone-理想燃烧的地狱",
+    "type": "lightcone",
+    "title": "理想燃烧的地狱 实装",
+    "date": "2025-07-11",
+    "version": "3.4",
+    "relatedLightConeId": "理想燃烧的地狱"
+  },
+  {
+    "id": "ev-cone-没有回报的加冕",
+    "type": "lightcone",
+    "title": "没有回报的加冕 实装",
+    "date": "2025-07-11",
+    "version": "3.4",
+    "relatedLightConeId": "没有回报的加冕"
+  },
+  {
+    "id": "ev-char-海瑟音",
+    "type": "character",
+    "title": "海瑟音 实装",
+    "date": "2025-08-13",
+    "version": "3.5",
+    "relatedCharacterId": "海瑟音"
+  },
+  {
+    "id": "ev-cone-海洋为何而歌",
+    "type": "lightcone",
+    "title": "海洋为何而歌 实装",
+    "date": "2025-08-13",
+    "version": "3.5",
+    "relatedLightConeId": "海洋为何而歌"
+  },
+  {
+    "id": "ev-cone-永远的迷境饭",
+    "type": "lightcone",
+    "title": "永远的迷境饭 实装",
+    "date": "2025-08-13",
+    "version": "3.5",
+    "relatedLightConeId": "永远的迷境饭"
+  },
+  {
+    "id": "ev-version-3.5",
+    "type": "version",
+    "title": "v3.5 版本更新",
+    "date": "2025-08-13",
+    "version": "3.5"
+  },
+  {
+    "id": "ev-char-刻律德菈",
+    "type": "character",
+    "title": "刻律德菈 实装",
+    "date": "2025-09-02",
+    "version": "3.5",
+    "relatedCharacterId": "刻律德菈"
+  },
+  {
+    "id": "ev-cone-金血铭刻的时代",
+    "type": "lightcone",
+    "title": "金血铭刻的时代 实装",
+    "date": "2025-09-02",
+    "version": "3.5",
+    "relatedLightConeId": "金血铭刻的时代"
+  },
+  {
+    "id": "ev-char-长夜月",
+    "type": "character",
+    "title": "长夜月 实装",
+    "date": "2025-09-24",
+    "version": "3.6",
+    "relatedCharacterId": "长夜月"
+  },
+  {
+    "id": "ev-cone-致长夜的星光",
+    "type": "lightcone",
+    "title": "致长夜的星光 实装",
+    "date": "2025-09-24",
+    "version": "3.6",
+    "relatedLightConeId": "致长夜的星光"
+  },
+  {
+    "id": "ev-version-3.6",
+    "type": "version",
+    "title": "v3.6 版本更新",
+    "date": "2025-09-24",
+    "version": "3.6"
+  },
+  {
+    "id": "ev-char-丹恒•腾荒",
+    "type": "character",
+    "title": "丹恒•腾荒 实装",
+    "date": "2025-10-15",
+    "version": "3.6",
+    "relatedCharacterId": "丹恒•腾荒"
+  },
+  {
+    "id": "ev-cone-纵然山河万程",
+    "type": "lightcone",
+    "title": "纵然山河万程 实装",
+    "date": "2025-10-15",
+    "version": "3.6",
+    "relatedLightConeId": "纵然山河万程"
+  },
+  {
+    "id": "ev-char-昔涟",
+    "type": "character",
+    "title": "昔涟 实装",
+    "date": "2025-11-05",
+    "version": "3.7",
+    "relatedCharacterId": "昔涟"
+  },
+  {
+    "id": "ev-cone-爱如此刻永恒",
+    "type": "lightcone",
+    "title": "爱如此刻永恒 实装",
+    "date": "2025-11-05",
+    "version": "3.7",
+    "relatedLightConeId": "爱如此刻永恒"
+  },
+  {
+    "id": "ev-cone-飞向粉色的明天",
+    "type": "lightcone",
+    "title": "飞向粉色的明天 实装",
+    "date": "2025-11-05",
+    "version": "3.7",
+    "relatedLightConeId": "飞向粉色的明天"
+  },
+  {
+    "id": "ev-version-3.7",
+    "type": "version",
+    "title": "v3.7 版本更新",
+    "date": "2025-11-05",
+    "version": "3.7"
+  },
+  {
+    "id": "ev-char-大丽花",
+    "type": "character",
+    "title": "大丽花 实装",
+    "date": "2025-12-17",
+    "version": "3.8",
+    "relatedCharacterId": "大丽花"
+  },
+  {
+    "id": "ev-cone-勿忘她的火焰",
+    "type": "lightcone",
+    "title": "勿忘她的火焰 实装",
+    "date": "2025-12-17",
+    "version": "3.8",
+    "relatedLightConeId": "勿忘她的火焰"
+  },
+  {
+    "id": "ev-version-3.8",
+    "type": "version",
+    "title": "v3.8 版本更新",
+    "date": "2025-12-17",
+    "version": "3.8"
+  },
+  {
+    "id": "ev-char-爻光",
+    "type": "character",
+    "title": "爻光 实装",
+    "date": "2026-02-13",
+    "version": "4.0",
+    "relatedCharacterId": "爻光"
+  },
+  {
+    "id": "ev-cone-残泪",
+    "type": "lightcone",
+    "title": "残泪 实装",
+    "date": "2026-02-13",
+    "version": "4.0",
+    "relatedLightConeId": "残泪"
+  },
+  {
+    "id": "ev-cone-嗤笑",
+    "type": "lightcone",
+    "title": "嗤笑 实装",
+    "date": "2026-02-13",
+    "version": "4.0",
+    "relatedLightConeId": "嗤笑"
+  },
+  {
+    "id": "ev-cone-当她决定看见",
+    "type": "lightcone",
+    "title": "当她决定看见 实装",
+    "date": "2026-02-13",
+    "version": "4.0",
+    "relatedLightConeId": "当她决定看见"
+  },
+  {
+    "id": "ev-cone-菇菇嘎嘎历险记",
+    "type": "lightcone",
+    "title": "菇菇嘎嘎历险记 实装",
+    "date": "2026-02-13",
+    "version": "4.0",
+    "relatedLightConeId": "菇菇嘎嘎历险记"
+  },
+  {
+    "id": "ev-cone-今日好手气",
+    "type": "lightcone",
+    "title": "今日好手气 实装",
+    "date": "2026-02-13",
+    "version": "4.0",
+    "relatedLightConeId": "今日好手气"
+  },
+  {
+    "id": "ev-version-4.0",
+    "type": "version",
+    "title": "v4.0 版本更新",
+    "date": "2026-02-13",
+    "version": "4.0"
+  },
+  {
+    "id": "ev-char-火花",
+    "type": "character",
+    "title": "火花 实装",
+    "date": "2026-03-03",
+    "version": "4.0",
+    "relatedCharacterId": "火花"
+  },
+  {
+    "id": "ev-cone-花花世界迷人眼",
+    "type": "lightcone",
+    "title": "花花世界迷人眼 实装",
+    "date": "2026-03-03",
+    "version": "4.0",
+    "relatedLightConeId": "花花世界迷人眼"
+  },
+  {
+    "id": "ev-char-不死途",
+    "type": "character",
+    "title": "不死途 实装",
+    "date": "2026-03-25",
+    "version": "4.1",
+    "relatedCharacterId": "不死途"
+  },
+  {
+    "id": "ev-cone-欢愉满溢祝福",
+    "type": "lightcone",
+    "title": "欢愉满溢祝福 实装",
+    "date": "2026-03-25",
+    "version": "4.1",
+    "relatedLightConeId": "欢愉满溢祝福"
+  },
+  {
+    "id": "ev-cone-一场谎言的终幕",
+    "type": "lightcone",
+    "title": "一场谎言的终幕 实装",
+    "date": "2026-03-25",
+    "version": "4.1",
+    "relatedLightConeId": "一场谎言的终幕"
+  },
+  {
+    "id": "ev-version-4.1",
+    "type": "version",
+    "title": "v4.1 版本更新",
+    "date": "2026-03-25",
+    "version": "4.1"
+  },
+  {
+    "id": "ev-char-开拓者•欢愉",
+    "type": "character",
+    "title": "开拓者•欢愉 实装",
+    "date": "2026-04-22",
+    "version": "4.2",
+    "relatedCharacterId": "开拓者•欢愉"
+  },
+  {
+    "id": "ev-char-银狼LV.999",
+    "type": "character",
+    "title": "银狼LV.999 实装",
+    "date": "2026-04-22",
+    "version": "4.2",
+    "relatedCharacterId": "银狼LV.999"
+  },
+  {
+    "id": "ev-cone-欢迎来到银河城",
+    "type": "lightcone",
+    "title": "欢迎来到银河城 实装",
+    "date": "2026-04-22",
+    "version": "4.2",
+    "relatedLightConeId": "欢迎来到银河城"
+  },
+  {
+    "id": "ev-cone-未来，有我们一起",
+    "type": "lightcone",
+    "title": "未来，有我们一起 实装",
+    "date": "2026-04-22",
+    "version": "4.2",
+    "relatedLightConeId": "未来，有我们一起"
+  },
+  {
+    "id": "ev-version-4.2",
+    "type": "version",
+    "title": "v4.2 版本更新",
+    "date": "2026-04-22",
+    "version": "4.2"
+  },
+  {
+    "id": "ev-char-绯英",
+    "type": "character",
+    "title": "绯英 实装",
+    "date": "2026-05-13",
+    "version": "4.2",
+    "relatedCharacterId": "绯英"
+  },
+  {
+    "id": "ev-cone-邂逅于下一个花季",
+    "type": "lightcone",
+    "title": "邂逅于下一个花季 实装",
+    "date": "2026-05-13",
+    "version": "4.2",
+    "relatedLightConeId": "邂逅于下一个花季"
+  },
+  {
+    "id": "ev-char-千冶•刃",
+    "type": "character",
+    "title": "千冶•刃 实装",
+    "date": "2026-06-01",
+    "version": "4.3",
+    "relatedCharacterId": "千冶•刃"
+  },
+  {
+    "id": "ev-cone-灼尽炼狱的新骸",
+    "type": "lightcone",
+    "title": "灼尽炼狱的新骸 实装",
+    "date": "2026-06-01",
+    "version": "4.3",
+    "relatedLightConeId": "灼尽炼狱的新骸"
+  },
+  {
+    "id": "ev-version-4.3",
+    "type": "version",
+    "title": "v4.3 版本更新",
+    "date": "2026-06-01",
+    "version": "4.3"
+  },
+  {
+    "id": "ev-char-姬子•启行",
+    "type": "character",
+    "title": "姬子•启行 实装",
+    "date": "2026-07-15",
+    "version": "4.4",
+    "relatedCharacterId": "姬子•启行"
+  },
+  {
+    "id": "ev-cone-当一颗星照亮夜空",
+    "type": "lightcone",
+    "title": "当一颗星照亮夜空 实装",
+    "date": "2026-07-15",
+    "version": "4.4",
+    "relatedLightConeId": "当一颗星照亮夜空"
+  },
+  {
+    "id": "ev-version-4.4",
+    "type": "version",
+    "title": "v4.4 版本更新",
+    "date": "2026-07-15",
+    "version": "4.4"
+  },
+  {
+    "id": "ev-char-吉尔伽美什",
+    "type": "character",
+    "title": "吉尔伽美什 实装",
+    "date": "2026-07-24",
+    "version": "4.4",
+    "relatedCharacterId": "吉尔伽美什"
+  },
+  {
+    "id": "ev-char-远坂凛",
+    "type": "character",
+    "title": "远坂凛 实装",
+    "date": "2026-07-24",
+    "version": "4.4",
+    "relatedCharacterId": "远坂凛"
+  },
+  {
+    "id": "ev-cone-所见即我",
+    "type": "lightcone",
+    "title": "所见即我 实装",
+    "date": "2026-07-24",
+    "version": "4.4",
+    "relatedLightConeId": "所见即我"
+  },
+  {
+    "id": "ev-cone-星火悄然闪耀",
+    "type": "lightcone",
+    "title": "星火悄然闪耀 实装",
+    "date": "2026-07-24",
+    "version": "4.4",
+    "relatedLightConeId": "星火悄然闪耀"
+  },
+  {
+    "id": "ev-char-知更鸟•晴歌",
+    "type": "character",
+    "title": "知更鸟•晴歌 实装",
+    "date": "2026-08-26",
+    "version": "4.5",
+    "relatedCharacterId": "知更鸟•晴歌"
+  },
+  {
+    "id": "ev-cone-放个短假",
+    "type": "lightcone",
+    "title": "放个短假 实装",
+    "date": "2026-08-26",
+    "version": "4.5",
+    "relatedLightConeId": "放个短假"
+  },
+  {
+    "id": "ev-cone-你将起身歌唱",
+    "type": "lightcone",
+    "title": "你将起身歌唱 实装",
+    "date": "2026-08-26",
+    "version": "4.5",
+    "relatedLightConeId": "你将起身歌唱"
+  },
+  {
+    "id": "ev-cone-向着地平线的终点",
+    "type": "lightcone",
+    "title": "向着地平线的终点 实装",
+    "date": "2026-08-26",
+    "version": "4.5",
+    "relatedLightConeId": "向着地平线的终点"
+  },
+  {
+    "id": "ev-version-4.5",
+    "type": "version",
+    "title": "v4.5 版本更新",
+    "date": "2026-08-26",
+    "version": "4.5"
+  },
+  {
+    "id": "ev-char-砂金•戏浪",
+    "type": "character",
+    "title": "砂金•戏浪 实装",
+    "date": "2026-09-12",
+    "version": "4.5",
+    "relatedCharacterId": "砂金•戏浪"
+  },
+  {
+    "id": "ev-cone-向浪花掷下盛夏",
+    "type": "lightcone",
+    "title": "向浪花掷下盛夏 实装",
+    "date": "2026-09-12",
+    "version": "4.5",
+    "relatedLightConeId": "向浪花掷下盛夏"
+  },
+  {
+    "id": "ev-char-真珠",
+    "type": "character",
+    "title": "真珠 实装",
+    "date": "2026-09-28",
+    "version": "4.6",
+    "relatedCharacterId": "真珠"
+  },
+  {
+    "id": "ev-cone-献给明日的色彩",
+    "type": "lightcone",
+    "title": "献给明日的色彩 实装",
+    "date": "2026-09-28",
+    "version": "4.6",
+    "relatedLightConeId": "献给明日的色彩"
+  },
+  {
+    "id": "ev-version-4.6",
+    "type": "version",
+    "title": "v4.6 版本更新",
+    "date": "2026-09-28",
+    "version": "4.6"
+  }
+]
