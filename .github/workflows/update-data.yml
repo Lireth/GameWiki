@@ -1,9 +1,11 @@
 # 每 3 天自动从 bilibili 星穹铁道 Wiki 抓取最新数据（角色 / 光锥 / 遗器 /
 # 资讯与卡池时间线），本地化新增图片资产并重新合成 src/data/seed.ts。
-# 有数据变更时提交推送到 main，随后自动触发 CI 与 GitHub Pages 部署工作流。
+# 有数据变更时提交推送到 main，随后自动触发 CI，CI 通过后由 Deploy 工作流
+# 上线（坏产物不会发布）。
 # 手动触发：Actions → Update Data → Run workflow。
 # 注意：脚本对 B 站 WAF（HTTP 567）已有指数退避重试；若 GitHub Runner IP
 # 被拦截导致持续失败，可改用 self-hosted runner 或在 Actions 页手动重跑。
+# 失败时自动在仓库开 / 更新 issue 提醒人工排查。
 name: Update Data
 
 on:
@@ -14,6 +16,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: update-data
@@ -22,7 +25,9 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # 请求重试退避最坏 225s/次（15+30+60+120）叠加 2.5s 间隔与多步抓取，
+    # 30 分钟余量偏紧，取 60 分钟
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,6 +38,40 @@ jobs:
 
       - name: 抓取并更新种子数据（数据源：bilibili wiki）
         run: npm run update:data
+
+      - name: 失败时开 / 更新 issue 提醒
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = '自动数据更新失败（update-data）';
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              `自动抓取更新于 ${new Date().toISOString()} 失败，运行日志：${runUrl}`,
+              '',
+              '常见原因：',
+              '- wiki 页面 / 分类结构变更导致解析失败；',
+              '- B 站 WAF 拦截 Runner IP（脚本有退避重试，可手动重跑工作流）；',
+              '- 数量守卫触发：上游条目数骤降，疑似半量返回（已在日志标明）；',
+              '- SMW limit=500 截断告警或包体预算（seed 增长）超限。',
+              '',
+              '排查修复后请关闭本 issue；下次失败会追加评论。',
+            ].join('\n');
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              ...context.repo,
+              state: 'open',
+              per_page: 100,
+            });
+            const dup = issues.find((issue) => issue.title === title);
+            if (dup) {
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number: dup.number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({ ...context.repo, title, body });
+            }
 
       - name: 检查数据是否变更
         id: changes

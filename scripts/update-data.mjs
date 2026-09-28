@@ -5,6 +5,8 @@
  * 用法：npm run update:data（或 node scripts/update-data.mjs）
  * 已本地化的图片按 id 保留，不会重复下载；头像 / 图片本地化的单张失败
  * 仅告警不阻断（种子回退为 wiki 热链，下次运行重试）。
+ * 门禁：种子质量测试（vitest）→ 构建 → 包体预算（seed 增长超预算即失败，
+ * 与 CI 同口径），任一失败则中止，不会产出可推送的坏数据。
  */
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
@@ -21,6 +23,7 @@ const steps = [
   { name: '合成 src/data/seed.ts', cmd: 'node .scrape/gen_seed_ts.cjs' },
   { name: '种子质量门禁（vitest）', cmd: 'npm run test' },
   { name: '构建验证（tsc + vite）', cmd: 'npm run build' },
+  { name: '包体预算检查（seed 增长门禁）', cmd: 'npm run check:size' },
 ];
 
 let failed = false;
