@@ -55,7 +55,7 @@ export type AcquisitionType = (typeof ACQUISITION_TYPES)[number];
 export const GENDERS = ['female', 'male'] as const;
 export type Gender = (typeof GENDERS)[number];
 
-/** 体型（男系 → 女系） */
+/** 体型（男系 → 女系，末位为开拓者专属「星」） */
 export const BODY_TYPES = [
   'adultMale',
   'youngMale',
@@ -64,6 +64,7 @@ export const BODY_TYPES = [
   'youngFemale',
   'teenGirl',
   'littleGirl',
+  'star',
 ] as const;
 export type BodyType = (typeof BODY_TYPES)[number];
 

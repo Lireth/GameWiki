@@ -70,7 +70,7 @@ export const GENDER_LABEL: Record<Gender, string> = {
   male: '男',
 };
 
-/** 体型展示名（男系 → 女系） */
+/** 体型展示名（男系 → 女系，末位为开拓者专属「星」） */
 export const BODY_TYPE_LABEL: Record<BodyType, string> = {
   adultMale: '成男',
   youngMale: '男青年',
@@ -79,12 +79,14 @@ export const BODY_TYPE_LABEL: Record<BodyType, string> = {
   youngFemale: '女青年',
   teenGirl: '少女',
   littleGirl: '幼女',
+  star: '星',
 };
 
-/** 体型筛选分组：第一行男性、第二行女性 */
+/** 体型筛选分组：第一行男性、第二行女性、第三行开拓者专属 */
 export const BODY_TYPE_GROUPS: { title: string; values: BodyType[] }[] = [
   { title: '男', values: ['adultMale', 'youngMale', 'teenBoy'] },
   { title: '女', values: ['adultFemale', 'youngFemale', 'teenGirl', 'littleGirl'] },
+  { title: '星', values: ['star'] },
 ];
 
 /**
