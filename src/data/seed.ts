@@ -5,7 +5,7 @@ import type { Character, LightCone, NewsEvent, RelicSet } from '../db/types';
  *  种子数据文件（由 .scrape 脚本生成，勿直接手改）
  * ============================================================
  *  生成方式：node .scrape/scrape_wiki.cjs && node .scrape/gen_seed_ts.cjs
- *  当前规模：角色 93 · 光锥 170 · 遗器 62 · 资讯 578（抓取日期 2026-10-07，仅含已实装内容）。
+ *  当前规模：角色 93 · 光锥 170 · 遗器 62 · 资讯 578（抓取日期 2026-10-10，仅含已实装内容）。
  *  页面不写死任何游戏数据，所有数据从这里录入 IndexedDB；
  *  字段与类型说明见 README.md 和 src/db/types.ts。
  *  种子内容变化由启动时的内容指纹自动检测，在「数据管理」中删除过的
@@ -4333,6 +4333,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "暴击伤害提高12%。",
     effect4: "使装备者普攻造成的伤害提高36%。当装备者施放普攻时，使装备者的攻击力提高20%，持续2回合。",
     releaseVersion: "4.6",
+    image: "/relics/贪噬禁果的异端.png",
     pieces: [
       {
         slot: "head",
@@ -4347,7 +4348,6 @@ export const relicSeed: RelicSet[] = [
         name: "异端的饥饿短靴",
       },
     ],
-    image: "/relics/贪噬禁果的异端.png",
   },
   {
     id: "天国@直播间",
@@ -4414,6 +4414,7 @@ export const relicSeed: RelicSet[] = [
     effect2: "速度提高6%。",
     effect4: "当装备者对我方其他单体目标施放战技或终结技时，使技能目标的欢愉度提高16%，持续3回合，若装备者持有的好活当赏大于等于10点，则额外使我方全体目标的暴击伤害提高12%，持续3回合。",
     releaseVersion: "4.6",
+    image: "/relics/戏梦点星的伶人.png",
     pieces: [
       {
         slot: "head",
@@ -4428,7 +4429,6 @@ export const relicSeed: RelicSet[] = [
         name: "伶人的弯月舞靴",
       },
     ],
-    image: "/relics/戏梦点星的伶人.png",
   },
   {
     id: "星如我见的领航员",
