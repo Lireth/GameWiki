@@ -5,7 +5,7 @@ import type { Character, LightCone, NewsEvent, RelicSet } from '../db/types';
  *  种子数据文件（由 .scrape 脚本生成，勿直接手改）
  * ============================================================
  *  生成方式：node .scrape/scrape_wiki.cjs && node .scrape/gen_seed_ts.cjs
- *  当前规模：角色 93 · 光锥 170 · 遗器 62 · 资讯 578（抓取日期 2026-10-13，仅含已实装内容）。
+ *  当前规模：角色 93 · 光锥 170 · 遗器 62 · 资讯 580（抓取日期 2026-10-22，仅含已实装内容）。
  *  页面不写死任何游戏数据，所有数据从这里录入 IndexedDB；
  *  字段与类型说明见 README.md 和 src/db/types.ts。
  *  种子内容变化由启动时的内容指纹自动检测，在「数据管理」中删除过的
@@ -9627,6 +9627,24 @@ export const newsEventSeed: NewsEvent[] = [
     title: "v4.6 版本更新",
     date: "2026-09-28",
     version: "4.6",
+  },
+  {
+    id: "ev-banner-c-4.6-2-1-千冶•刃",
+    type: "banner",
+    title: "我身即刃",
+    date: "2026-10-21",
+    endDate: "2026-11-11",
+    version: "4.6",
+    relatedCharacterId: "千冶•刃",
+  },
+  {
+    id: "ev-banner-lc-4.6-2-1-灼尽炼狱的新骸",
+    type: "banner",
+    title: "光锥活动跃迁 · 灼尽炼狱的新骸",
+    date: "2026-10-21",
+    endDate: "2026-11-11",
+    version: "4.6",
+    relatedLightConeId: "灼尽炼狱的新骸",
   },
 ];
 

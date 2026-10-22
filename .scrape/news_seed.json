@@ -4867,5 +4867,23 @@
     "title": "v4.6 版本更新",
     "date": "2026-09-28",
     "version": "4.6"
+  },
+  {
+    "id": "ev-banner-c-4.6-2-1-千冶•刃",
+    "type": "banner",
+    "title": "我身即刃",
+    "date": "2026-10-21",
+    "endDate": "2026-11-11",
+    "version": "4.6",
+    "relatedCharacterId": "千冶•刃"
+  },
+  {
+    "id": "ev-banner-lc-4.6-2-1-灼尽炼狱的新骸",
+    "type": "banner",
+    "title": "光锥活动跃迁 · 灼尽炼狱的新骸",
+    "date": "2026-10-21",
+    "endDate": "2026-11-11",
+    "version": "4.6",
+    "relatedLightConeId": "灼尽炼狱的新骸"
   }
 ]
