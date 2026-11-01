@@ -5,7 +5,7 @@ import type { Character, LightCone, NewsEvent, RelicSet } from '../db/types';
  *  种子数据文件（由 .scrape 脚本生成，勿直接手改）
  * ============================================================
  *  生成方式：node .scrape/scrape_wiki.cjs && node .scrape/gen_seed_ts.cjs
- *  当前规模：角色 93 · 光锥 170 · 遗器 62 · 资讯 580（抓取日期 2026-10-28，仅含已实装内容）。
+ *  当前规模：角色 93 · 光锥 170 · 遗器 62 · 资讯 580（抓取日期 2026-11-01，仅含已实装内容）。
  *  页面不写死任何游戏数据，所有数据从这里录入 IndexedDB；
  *  字段与类型说明见 README.md 和 src/db/types.ts。
  *  种子内容变化由启动时的内容指纹自动检测，在「数据管理」中删除过的
